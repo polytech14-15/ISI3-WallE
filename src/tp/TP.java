@@ -1,6 +1,6 @@
 package tp;
 
-import graph.*;
+import model.graph.*;
 
 public class TP {
 
