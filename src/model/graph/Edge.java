@@ -12,7 +12,7 @@ public class Edge {
         this.b = b;
         this.type = type;
         this.flooded = false;
-        this.value = Math.sqrt(Math.pow((a.getX() - a.getY()), 2) + Math.pow((b.getX() - b.getY()), 2));
+        this.value = Math.sqrt(Math.pow((b.getX() - a.getX()), 2) + Math.pow((b.getY() - a.getY()), 2));
     }
 
     public Node getA() {

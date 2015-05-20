@@ -87,15 +87,19 @@ public class Node {
     public void setType(String type) {
         this.type = type;
     }
-    
-    public double getDistance(int x_point, int y_point){
-         return Math.sqrt(Math.pow(x - x_point, 2) + Math.pow(y - y_point, 2));
+
+    public double getDistance(int x_point, int y_point) {
+        return Math.sqrt(Math.pow(x - x_point, 2) + Math.pow(y - y_point, 2));
     }
 
     @Override
     public String toString() {
         String info = "<node id=\"" + this.id + "\" x=\"" + this.x + "\" y=\"" + this.y + "\" type=\"" + this.type + "\" />";
         return info;
+    }
+
+    public boolean equals(Node n) {
+        return this.id == n.getId();
     }
 
 }

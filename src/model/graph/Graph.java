@@ -91,5 +91,23 @@ public class Graph {
             System.out.println("Erreur lors de l'écriture : " + exception.getMessage());
         }
     }
+    
+    public double distance(Node n1, Node n2){
+        // return the weight of the edge between these 2 nodes
+        Edge e = getEdge(n1, n2);
+        if (e != null){
+            return e.getValue();
+        } else {
+            return 0;
+        }
+    }
+
+    public Edge getEdge(Node n1, Node n2) {
+        // returns the edge between the nodes n1 and n2
+        for (Edge e : edges){
+            if ((e.getA().equals(n1) && e.getB().equals(n2)) || (e.getA().equals(n2) && e.getB().equals(n1))) return e;
+        }
+        return null;
+    }
 
 }
