@@ -9,10 +9,18 @@ import java.util.ArrayList;
 
 public class Graph {
 
-    protected ArrayList<Node> nodes = new ArrayList<>();
-    protected ArrayList<Edge> edges = new ArrayList<>();
+    private ArrayList<Node> nodes = new ArrayList<>();
+    private ArrayList<Edge> edges = new ArrayList<>();
 
     public Graph() {
+    }
+
+    public ArrayList<Node> getNodes() {
+        return nodes;
+    }
+
+    public ArrayList<Edge> getEdges() {
+        return edges;
     }
 
     public void addNode(Node a) {
@@ -29,6 +37,11 @@ public class Graph {
         }
     }
 
+    /**
+     * Retourne la liste des noeuds voisins du noeud a
+     * @param a
+     * @return 
+     */
     public ArrayList<Node> getNeighbors(Node a) {
         ArrayList<Node> neighbors = new ArrayList<>();
         for (Edge edge : edges) {
@@ -43,6 +56,9 @@ public class Graph {
         return neighbors;
     }
 
+    /**
+     * Crée le fichier XML du graph
+     */
     public void printXML() {
         File f = new File("mapgraph.xml");
         try {
