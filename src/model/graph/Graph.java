@@ -22,16 +22,8 @@ public class Graph {
     public ArrayList<Edge> getEdges() {
         return edges;
     }
-
-    public ArrayList<Node> getNodes() {
-        return nodes;
-    }
-
-    public ArrayList<Edge> getEdges() {
-        return edges;
-    }
     
-        /**
+    /**
      * @param nodes the nodes to set
      */
     public void setNodes(ArrayList<Node> nodes) {
