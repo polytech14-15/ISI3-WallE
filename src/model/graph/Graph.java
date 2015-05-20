@@ -22,6 +22,14 @@ public class Graph {
     public ArrayList<Edge> getEdges() {
         return edges;
     }
+
+    public ArrayList<Node> getNodes() {
+        return nodes;
+    }
+
+    public ArrayList<Edge> getEdges() {
+        return edges;
+    }
     
         /**
      * @param nodes the nodes to set
@@ -91,7 +99,5 @@ public class Graph {
             System.out.println("Erreur lors de l'écriture : " + exception.getMessage());
         }
     }
-
-
 
 }
