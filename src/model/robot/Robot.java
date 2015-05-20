@@ -8,7 +8,7 @@ public abstract class Robot {
     protected String name;
     protected Node currentNode;
     protected int capacity;
-    protected State state;
+    protected String state;
     public static final int SPEED = 12;
 
     public void move(ArrayList<Node> n){
