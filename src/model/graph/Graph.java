@@ -1,4 +1,4 @@
-package graph;
+package model.graph;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -15,6 +15,28 @@ public class Graph {
     public Graph() {
     }
 
+    public ArrayList<Node> getNodes() {
+        return nodes;
+    }
+
+    public ArrayList<Edge> getEdges() {
+        return edges;
+    }
+    
+        /**
+     * @param nodes the nodes to set
+     */
+    public void setNodes(ArrayList<Node> nodes) {
+        this.nodes = nodes;
+    }
+
+    /**
+     * @param edges the edges to set
+     */
+    public void setEdges(ArrayList<Edge> edges) {
+        this.edges = edges;
+    }
+
     public void addNode(Node a) {
         getNodes().add(a);
     }
@@ -29,6 +51,11 @@ public class Graph {
         }
     }
 
+    /**
+     * Retourne la liste des noeuds voisins du noeud a
+     * @param a
+     * @return 
+     */
     public ArrayList<Node> getNeighbors(Node a) {
         ArrayList<Node> neighbors = new ArrayList<>();
         for (Edge edge : getEdges()) {
@@ -43,6 +70,9 @@ public class Graph {
         return neighbors;
     }
 
+    /**
+     * Crée le fichier XML du graph
+     */
     public void printXML() {
         File f = new File("mapgraph.xml");
         try {
@@ -62,32 +92,6 @@ public class Graph {
         }
     }
 
-    /**
-     * @return the nodes
-     */
-    public ArrayList<Node> getNodes() {
-        return nodes;
-    }
 
-    /**
-     * @param nodes the nodes to set
-     */
-    public void setNodes(ArrayList<Node> nodes) {
-        this.nodes = nodes;
-    }
-
-    /**
-     * @return the edges
-     */
-    public ArrayList<Edge> getEdges() {
-        return edges;
-    }
-
-    /**
-     * @param edges the edges to set
-     */
-    public void setEdges(ArrayList<Edge> edges) {
-        this.edges = edges;
-    }
 
 }

@@ -1,4 +1,4 @@
-package graph;
+package model.graph;
 
 public class Node {
 
@@ -7,7 +7,9 @@ public class Node {
     private Double y;
     private String type;
     private boolean visited;
+    private Integer valueFire;
     private static Integer previousId = 1;
+    private static final Integer INIT_VALUE_FIRE = 15;
 
     public Node() {
     }
@@ -18,13 +20,34 @@ public class Node {
         this.y = y;
         this.type = type;
         this.visited = false;
+        this.valueFire = 0;
         Node.previousId++;
     }
 
+    /**
+     * Allume le feu
+     */
+    public void initFire() {
+        this.valueFire = INIT_VALUE_FIRE;
+    }
+
+    /**
+     * Eteind le feu
+     */
+    public void extinctFire() {
+        this.valueFire = 0;
+    }
+
+    /**
+     * Visite le noeud
+     */
     public void visit() {
         visited = true;
     }
 
+    /**
+     * Annule la visite du noeud
+     */
     public void unvisit() {
         visited = false;
     }
