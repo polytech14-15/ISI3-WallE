@@ -6,7 +6,10 @@ public class CaterpillarRobot extends Robot {
 
     @Override
     public boolean canMove(Edge e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (e.getType().equals("ESCARPE")) {
+            return false;
+        }
+        return true;
     }
 
 }
