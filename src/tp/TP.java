@@ -1,7 +1,9 @@
 package tp;
 
 import controller.Controller;
-import graph.*;
+import model.graph.Edge;
+import model.graph.Graph;
+import model.graph.Node;
 
 public class TP {
 

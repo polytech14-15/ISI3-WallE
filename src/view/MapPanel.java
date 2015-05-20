@@ -4,14 +4,14 @@
  */
 package view;
 
-import graph.Edge;
-import graph.Graph;
-import graph.Node;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.Iterator;
 import javax.swing.JPanel;
+import model.graph.Edge;
+import model.graph.Graph;
+import model.graph.Node;
 
 /**
  *

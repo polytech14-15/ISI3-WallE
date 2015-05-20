@@ -4,12 +4,12 @@
  */
 package controller;
 
-import graph.Edge;
-import graph.Node;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import model.graph.Edge;
+import model.graph.Node;
 import model.manager.Manager;
 import view.MainFrame;
 import view.MapPanel;
