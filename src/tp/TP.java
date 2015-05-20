@@ -1,5 +1,6 @@
 package tp;
 
+import controller.Controller;
 import graph.*;
 
 public class TP {
@@ -18,6 +19,8 @@ public class TP {
         graph.addEdge(new Edge(n2, n3, "PLAT"));
         graph.addEdge(new Edge(n1, n4, "ESCARPE"));
         graph.printXML();
+        
+        Controller controller = new Controller();
     }
 
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<osm>
+ <node id="1" x="227.0" y="105.0" type="NORMAL" />
+ <node id="2" x="189.0" y="184.0" type="NORMAL" />
+ <node id="3" x="103.0" y="278.0" type="INCENDIE" />
+ <node id="4" x="233.0" y="148.0" type="NORMAL" />
+ <edge nd1="1" nd2="2" type="ESCARPE" />
+ <edge nd1="2" nd2="3" type="PLAT" />
+ <edge nd1="1" nd2="4" type="ESCARPE" />
+</osm>

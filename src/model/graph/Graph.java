@@ -9,29 +9,29 @@ import java.util.ArrayList;
 
 public class Graph {
 
-    protected ArrayList<Node> nodes = new ArrayList<>();
-    protected ArrayList<Edge> edges = new ArrayList<>();
+    private ArrayList<Node> nodes = new ArrayList<>();
+    private ArrayList<Edge> edges = new ArrayList<>();
 
     public Graph() {
     }
 
     public void addNode(Node a) {
-        nodes.add(a);
+        getNodes().add(a);
     }
 
     public void addEdge(Edge e) {
-        edges.add(e);
+        getEdges().add(e);
     }
 
     public void unvisitAllNodes() {
-        for (Node node : nodes) {
+        for (Node node : getNodes()) {
             node.unvisit();
         }
     }
 
     public ArrayList<Node> getNeighbors(Node a) {
         ArrayList<Node> neighbors = new ArrayList<>();
-        for (Edge edge : edges) {
+        for (Edge edge : getEdges()) {
             if (edge.getA() == a && !neighbors.contains(edge.getB())) {
                 neighbors.add(edge.getB());
             }
@@ -49,10 +49,10 @@ public class Graph {
             PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(f)));
             pw.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             pw.println("<osm>");
-            for (Node node : nodes) {
+            for (Node node : getNodes()) {
                 pw.println(" " + node.toString());
             }
-            for (Edge edge : edges) {
+            for (Edge edge : getEdges()) {
                 pw.println(" " + edge.toString());
             }
             pw.println("</osm>");
@@ -60,6 +60,34 @@ public class Graph {
         } catch (IOException exception) {
             System.out.println("Erreur lors de l'écriture : " + exception.getMessage());
         }
+    }
+
+    /**
+     * @return the nodes
+     */
+    public ArrayList<Node> getNodes() {
+        return nodes;
+    }
+
+    /**
+     * @param nodes the nodes to set
+     */
+    public void setNodes(ArrayList<Node> nodes) {
+        this.nodes = nodes;
+    }
+
+    /**
+     * @return the edges
+     */
+    public ArrayList<Edge> getEdges() {
+        return edges;
+    }
+
+    /**
+     * @param edges the edges to set
+     */
+    public void setEdges(ArrayList<Edge> edges) {
+        this.edges = edges;
     }
 
 }

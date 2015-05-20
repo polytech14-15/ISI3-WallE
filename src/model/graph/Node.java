@@ -64,6 +64,10 @@ public class Node {
     public void setType(String type) {
         this.type = type;
     }
+    
+    public double getDistance(int x_point, int y_point){
+         return Math.sqrt(Math.pow(x - x_point, 2) + Math.pow(y - y_point, 2));
+    }
 
     @Override
     public String toString() {
