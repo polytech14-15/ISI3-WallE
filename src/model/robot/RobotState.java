@@ -1,7 +1,17 @@
 package model.robot;
 
 public enum RobotState {
-    AVAILABLE,
-    ONWAY,
-    BUSY;
+    AVAILABLE("AVAILABLE"),
+    ONWAY("ONWAY"),
+    BUSY("BUSY");
+    
+    private final String text;
+    private RobotState(final String text) {
+        this.text = text;
+    }
+
+    @Override
+    public String toString() {
+        return text;
+    }
 }
