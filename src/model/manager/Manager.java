@@ -5,22 +5,32 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.algo.IAlgo;
 import model.graph.Graph;
 import model.graph.Node;
+import model.graph.TypeNode;
 import model.robot.Robot;
 import model.robot.RobotState;
 
 public class Manager extends Observable implements Runnable {
-    List<Robot> robots;
-    List<Node> fires;
-    Graph graph;
-    IAlgo algo;
-
+    
+    public static final int TIME_STEP_SIMU = 3000; // 3secondes
+    private static int WAIT_FOR_ASK = Manager.TIME_STEP_SIMU * 3; 
+    
+    private List<Robot> robots;
+    private Map<Node, Robot> mapFires;
+    private Graph graph;
+    private IAlgo algo;
+    private boolean canAskRobots;
+    
     public Manager(Graph graph, IAlgo algo) {
         this.robots = new ArrayList<>();
-        this.fires = new ArrayList<>();
+        this.mapFires = new HashMap<>();
         this.graph = graph;
         this.algo = algo;
+        this.canAskRobots = true;
     }
     
     public List<Robot> getRobots() {
@@ -31,20 +41,20 @@ public class Manager extends Observable implements Runnable {
         this.robots = robots;
     }
 
-    public List<Node> getFires() {
-        return this.fires;
+    public Map<Node, Robot> getMapFires() {
+        return mapFires;
     }
 
-    public void setFires(List<Node> fires) {
-        this.fires = fires;
+    public void setMapFires(Map<Node, Robot> mapFires) {
+        this.mapFires = mapFires;
     }
 
     public Graph getGraph() {
-        return this.g;
+        return this.graph;
     }
 
     public void setGraph(Graph graph) {
-        this.g = g;
+        this.graph = graph;
     }
 
     public IAlgo getAlgo() {
@@ -55,35 +65,192 @@ public class Manager extends Observable implements Runnable {
         this.algo = algo;
     }
     
+    /**
+     * Permet d'ajouter un robot
+     * @param r - Robot a ajouter
+     */
+    public void addRobot(Robot r){
+        this.robots.add(r);
+    }
+    
+    /**
+     * Initialise la mapFires
+     */
+    private void initMapFires(){
+        for (Node n : this.graph.getNodes()){
+            if (n.getType().equals(TypeNode.INCENDIE.toString())){
+                this.mapFires.put(n, null);
+            }
+        }
+    }
+    
+    /**
+     * Met a jour la mapFires
+     */
+    private void updateMapFires(){
+        // Pour chaque entree de la mapFires
+        for (Map.Entry<Node, Robot> entry : this.mapFires.entrySet()) {
+            // Si le robot qui s'occupait du feu est dispo, cela siginifie que le feu est soit eteint 
+            // ou soit que le robot ne peut plus atteindre sa destination
+            if (entry.getValue().getState().equals(RobotState.AVAILABLE.toString())){
+                this.mapFires.put(entry.getKey(), null);
+            }
+            // Si le noeud n'est plus un feu
+            if (entry.getKey().getType().equals(TypeNode.NORMAL.toString())){
+                this.mapFires.remove(entry.getKey());
+            }
+	}
+        
+        // Pour chaque noeud
+        for (Node n : this.graph.getNodes()){
+            // Si le noeud n'est pas contenu dans la mapFires
+            if (!this.mapFires.containsKey(n)){
+                this.mapFires.put(n, null);
+            }
+        }
+    }
+    
+    /**
+     * Chaque robot occupe eteint son feu
+     */
+    private void extinguishFires(){
+        for (Robot r : this.getRobotsBusy()){
+            r.extinguishFire();
+        }
+    }
+    
+    /**
+     * 
+     * @param n
+     * @return 
+     */
     public Map<Robot, List<Node>> getBestRobot(Node n){
         Map<Robot, List<Node>> bestRobot = new HashMap<>();
-        Map<Integer, List<Node>> map;;
+        Map<Integer, List<Node>> map;
         Integer minValue = Integer.MAX_VALUE;
         Integer tempValue;
         
-        for(Robot r : this.robots){
-            // Si le robot est disponible
-            if (r.getState.equals(RobotState.AVAILABLE)){
-                 map = this.algo.shortestPath(r.getCurrentNode, n, this.graph, r);
-                // Si le robot est capable de se rendre sur l'objectif
-                if (map != null){
-                    // Recupere la valeur du trajet
-                    tempValue = (int) map.keySet().toArray()[0];
-                    // Si la nouvelle valeur est plus petite que la
-                    if (tempValue < minValue){
-                        minValue = tempValue;
-                        bestRobot.put(r, map.get(minValue));
-                    }
-                }
-            }
+        // Pour chaque robot disponible
+        for(Robot r : this.getRobotsAvailable()){
+            map = this.algo.shortestPath(n, this.graph, r);
+           // Si le robot est capable de se rendre sur l'objectif
+           if (map != null){
+               // Recupere la valeur du trajet
+               tempValue = (int) map.keySet().toArray()[0];
+               // Si la nouvelle valeur est plus petite que la
+               if (tempValue < minValue){
+                   minValue = tempValue;
+                   bestRobot.put(r, map.get(minValue));
+               }
+           }
         }
         return bestRobot;
     }
 
-    @Override
-    public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    /**
+     * Recupere la liste de robots disponibles
+     * @return Liste de robots disponibles
+     */
+    private List<Robot> getRobotsAvailable(){
+        List<Robot> robotsAvailable = new ArrayList<>();
+        for (Robot r : this.robots){
+            if (r.getState().equals(RobotState.AVAILABLE.toString())){
+                robotsAvailable.add(r);
+            }
+        }
+        return robotsAvailable;
     }
     
+    /**
+     * Recupere la liste de robots occupes
+     * @return Liste de robots disponibles
+     */
+    private List<Robot> getRobotsBusy(){
+        List<Robot> robotsBusy = new ArrayList<>();
+        for (Robot r : this.robots){
+            if (r.getState().equals(RobotState.BUSY.toString())){
+                robotsBusy.add(r);
+            }
+        }
+        return robotsBusy;
+    }
+    
+    private Graph prepareRouteForRobot (List<Node> lNodes){
+//        TODO
+        return null;
+    }
+    
+    @Override
+    public void run() {
+        Map<Robot, List<Node>> bestRobot;
+        Map.Entry<Robot, List<Node>> entry;
+        
+        // Initialise la mapFires
+        this.initMapFires();
+        
+        while(true){
+            
+            // Si le manager peut requeter les robots
+            if (this.canAskRobots){
+                this.changeCanAskRobots();
+                
+                // Pour chaque feu
+                for (Node n : this.mapFires.keySet()){
+                    // Si aucun robot ne s'occupe de ce feu
+                    if (this.mapFires.get(n) != null){
+                         // Recupere le meilleur robot pour eteindre ce feu
+                        bestRobot = this.getBestRobot(n);
+                        // Si un robot est capable d'accepter sa mission
+                        if (!bestRobot.isEmpty()){
+                            // Recupere le 1er element de la map
+                            entry = bestRobot.entrySet().iterator().next();
+                            // Appelle fonction move du robot avec le graph en paramètre
+                            entry.getKey().move(this.prepareRouteForRobot(entry.getValue()));
+                            // Indique quel robot s'occupe du feu en question
+                            this.mapFires.put(n, entry.getKey());
+                        }
+                    }
+                }
+                this.waitAskRobots();
+            }
+            
+            this.extinguishFires();
+            
+            this.updateMapFires();
+            
+            setChanged();
+            notifyObservers();
+            
+            try {
+                Thread.sleep(Manager.TIME_STEP_SIMU);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    /**
+     * Change la valeur du boolean
+     */
+    private void changeCanAskRobots(){
+        this.canAskRobots = !this.canAskRobots;
+    }
+    
+    /**
+     * Thread interne qui permet d'attendre avant de refaire une demande aux robots
+     */
+    private void waitAskRobots() {
+        // Etablis le Thread 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(Manager.WAIT_FOR_ASK);
+                } catch (InterruptedException e) {
+                }
+                changeCanAskRobots();
+            }
+        }).start();
+    }
     
 }
