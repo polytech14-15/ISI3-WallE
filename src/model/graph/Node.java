@@ -87,6 +87,14 @@ public class Node {
     public void setType(String type) {
         this.type = type;
     }
+    
+    public Integer getValueFire() {
+        return this.valueFire;
+    }
+
+    public void setValueFire(Integer valueFire) {
+        this.valueFire = valueFire;
+    }
 
     public double getDistance(int x_point, int y_point) {
         return Math.sqrt(Math.pow(x - x_point, 2) + Math.pow(y - y_point, 2));
