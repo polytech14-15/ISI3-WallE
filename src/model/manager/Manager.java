@@ -8,6 +8,7 @@ import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.algo.IAlgo;
+import model.graph.Edge;
 import model.graph.Graph;
 import model.graph.Node;
 import model.graph.TypeNode;
@@ -16,7 +17,7 @@ import model.robot.RobotState;
 
 public class Manager extends Observable implements Runnable {
     
-    public static final int TIME_STEP_SIMU = 3000; // 3secondes
+    public static final int TIME_STEP_SIMU = 1000; // 1sec
     private static int WAIT_FOR_ASK = Manager.TIME_STEP_SIMU * 3; 
     
     private List<Robot> robots;
@@ -120,9 +121,9 @@ public class Manager extends Observable implements Runnable {
     }
     
     /**
-     * 
-     * @param n
-     * @return 
+     * Recupere le meilleur robot
+     * @param n - Noeud a atteindre
+     * @return - Le meilleur robot et la liste de noeuds qu'il doit parcourir
      */
     public Map<Robot, List<Node>> getBestRobot(Node n){
         Map<Robot, List<Node>> bestRobot = new HashMap<>();
@@ -152,13 +153,7 @@ public class Manager extends Observable implements Runnable {
      * @return Liste de robots disponibles
      */
     private List<Robot> getRobotsAvailable(){
-        List<Robot> robotsAvailable = new ArrayList<>();
-        for (Robot r : this.robots){
-            if (r.getState().equals(RobotState.AVAILABLE.toString())){
-                robotsAvailable.add(r);
-            }
-        }
-        return robotsAvailable;
+        return this.getRobotsAccordingToState(RobotState.AVAILABLE.toString());
     }
     
     /**
@@ -166,18 +161,46 @@ public class Manager extends Observable implements Runnable {
      * @return Liste de robots disponibles
      */
     private List<Robot> getRobotsBusy(){
-        List<Robot> robotsBusy = new ArrayList<>();
-        for (Robot r : this.robots){
-            if (r.getState().equals(RobotState.BUSY.toString())){
-                robotsBusy.add(r);
-            }
-        }
-        return robotsBusy;
+        return this.getRobotsAccordingToState(RobotState.BUSY.toString());
     }
     
+    /**
+     * Recupere une liste de robots
+     * @param state - Etat du robot
+     * @return Liste de robots
+     */
+    private List<Robot> getRobotsAccordingToState(String state){
+        List<Robot> lRobots = new ArrayList<>();
+        for (Robot r : this.robots){
+            if (r.getState().equals(state)){
+                lRobots.add(r);
+            }
+        }
+        return lRobots;
+    }
+    
+    /**
+     * Creer un sous-graphe a partir d'une liste de noeuds
+     * @param lNodes - Liste de noeuds
+     * @return Un graphe (sous-graphe du principal)
+     */
     private Graph prepareRouteForRobot (List<Node> lNodes){
-//        TODO
-        return null;
+        Graph route = new Graph();
+        
+        // Ajoute les noeuds au graphe
+        for(Node n : lNodes){
+            route.addNode(n);
+        }
+        
+        // Ajoute les arcs au graphe
+        Edge e;
+        for (int i=0; i<lNodes.size()-1; i++){
+            e  = graph.getEdge(lNodes.get(i), lNodes.get(i+1));
+            if (e != null){
+                route.addEdge(e);
+            }
+        }
+        return route;
     }
     
     @Override
