@@ -34,11 +34,13 @@ public class Controller extends MouseAdapter implements ActionListener {
         /*
          * Quand on importe xml
          *      Arreter thread s'il y en a en cours + charger xml + creer nouveau manager(graph,robots,algo)
+         *      + maj manager dans mainFrame + maj graph dans mapPanel + ( maj observer ?)
          */
         
         /*
          * Quand on lance la simu
          *      Voir avec jerem la gestion de creation de robot
+         *      Ne pas oublier de setter un algo dans le manager!!!!!!
          */
         
         
