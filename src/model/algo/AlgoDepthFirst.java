@@ -83,11 +83,11 @@ public class AlgoDepthFirst extends IAlgo {
                 if (rn == null) {
                     // if we're here, it means the corresponding ResearchNode doesn't exist yet.
                     // So we create it
-                    rn = new ResearchNode(n, parent, parent.getValue() + g.distance(n, parent.getAssociated()));
+                    rn = new ResearchNode(n, parent, parent.getValue() + g.getDistance(n, parent.getAssociated()));
                 } else {
                     // else, it exists, we update its value to get the minimum
                     int previousVal = rn.getValue();
-                    int currentVal = parent.getValue() + g.distance(n, parent.getAssociated());
+                    int currentVal = parent.getValue() + g.getDistance(n, parent.getAssociated());
                     if (previousVal > currentVal) {
                         rn.setParent(parent);
                         rn.setValue(currentVal);
@@ -96,7 +96,7 @@ public class AlgoDepthFirst extends IAlgo {
             } else {
                 // the corresponding ResearchNode exists, we update its value to get the minimum
                 int previousVal = rn.getValue();
-                int currentVal = parent.getValue() + g.distance(n, parent.getAssociated());
+                int currentVal = parent.getValue() + g.getDistance(n, parent.getAssociated());
                 if (previousVal > currentVal) {
                     rn.setParent(parent);
                     rn.setValue(currentVal);

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import java.awt.event.ActionEvent;
@@ -9,22 +5,19 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import model.graph.Edge;
+import model.graph.Graph;
 import model.graph.Node;
 import model.manager.Manager;
 import view.MainFrame;
 import view.MapPanel;
 
-/**
- *
- * @author Sébastien
- */
-public class Controller extends MouseAdapter implements ActionListener{
+public class Controller extends MouseAdapter implements ActionListener {
     
     private MainFrame mainFrame;
     private Manager manager;
     
     public Controller(){
-        manager = new Manager();
+        manager = new Manager(new Graph());
         mainFrame = new MainFrame(this);        
         manager.addObserver(mainFrame);
     }
@@ -45,12 +38,14 @@ public class Controller extends MouseAdapter implements ActionListener{
                 mainFrame.getMap().setSelectedNode(n);
             }else{    
                 Edge edge = new Edge(mainFrame.getMap().getSelectedNode(), n, "");
-                mainFrame.getMap().addEdge(edge);
+//                mainFrame.getMap().addEdge(edge);
+                this.manager.getGraph().addEdge(edge);
                 mainFrame.getMap().setSelectedNode(null);
             }
         }else{
             Node n2 = new Node(new Integer(x_point).doubleValue(), new Integer(y_point).doubleValue(), mainFrame.getTypeRobot().getSelectedItem().toString());
-            mainFrame.getMap().addNode(n2);
+//            mainFrame.getMap().addNode(n2);
+            this.manager.getGraph().addNode(n2);
             mainFrame.getMap().setSelectedNode(null);
         }
         mainFrame.getMap().repaint();
@@ -63,12 +58,16 @@ public class Controller extends MouseAdapter implements ActionListener{
      * @return 
      */
     public Node clickIsInANode(int x_point, int y_point){
-        for(Node n : mainFrame.getMap().getGraph().getNodes()){
-            if(n.getDistance(x_point, y_point) <= MapPanel.RADIUS){
+        for(Node n : this.manager.getGraph().getNodes()){
+            if(this.manager.getGraph().getDistance(n, x_point, y_point) <= MapPanel.RADIUS){
                 return n;
             }
         }
         return null;
+    }
+    
+    public Manager getManager(){
+        return this.manager;
     }
     
 }

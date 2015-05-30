@@ -96,10 +96,6 @@ public class Node {
         this.valueFire = valueFire;
     }
 
-    public double getDistance(int x_point, int y_point) {
-        return Math.sqrt(Math.pow(x - x_point, 2) + Math.pow(y - y_point, 2));
-    }
-
     @Override
     public String toString() {
         String info = "<node id=\"" + this.id + "\" x=\"" + this.x + "\" y=\"" + this.y + "\" type=\"" + this.type + "\" />";

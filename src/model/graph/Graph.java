@@ -92,7 +92,11 @@ public class Graph {
         }
     }
     
-    public int distance(Node n1, Node n2){
+    public int getDistance(Node n, int x_point, int y_point) {
+        return (int) Math.sqrt(Math.pow(n.getX() - x_point, 2) + Math.pow(n.getY()- y_point, 2));
+    }
+    
+    public int getDistance(Node n1, Node n2){
         // return the weight of the edge between these 2 nodes
         Edge e = getEdge(n1, n2);
         if (e != null){
@@ -102,6 +106,12 @@ public class Graph {
         }
     }
 
+    /**
+     * Recupere le edge entre deux nodes
+     * @param n1 - Premier node
+     * @param n2 - Deuxieme node
+     * @return Le edge s'il existe, null sinon
+     */
     public Edge getEdge(Node n1, Node n2) {
         // returns the edge between the nodes n1 and n2
         for (Edge e : edges){

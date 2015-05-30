@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package view;
 
 import java.awt.Color;
@@ -13,10 +9,6 @@ import model.graph.Edge;
 import model.graph.Graph;
 import model.graph.Node;
 
-/**
- *
- * @author Sébastien
- */
 public class MapPanel extends JPanel {
     //Rayon du noeud
     public final static int RADIUS = 10;
@@ -25,17 +17,18 @@ public class MapPanel extends JPanel {
     private Node selectedNode;
     
 
-    MapPanel() {
+    public MapPanel(Graph graph) {
         super();
-        graph = new Graph();
+//        graph = new Graph();
+        this.graph = graph;
     }
     
-    public void addNode(Node n) {
-        getGraph().addNode(n);
-    }
-    public void addEdge(Edge e) {
-        getGraph().addEdge(e);
-    }
+//    public void addNode(Node n) {
+//        getGraph().addNode(n);
+//    }
+//    public void addEdge(Edge e) {
+//        getGraph().addEdge(e);
+//    }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
@@ -46,8 +39,8 @@ public class MapPanel extends JPanel {
   } 
     
     public void showGraph(Graphics g) {
-        if(!getGraph().getNodes().isEmpty()){
-            for (Iterator it = getGraph().getNodes().iterator(); it.hasNext();) {            
+        if(!this.graph.getNodes().isEmpty()){
+            for (Iterator it = this.graph.getNodes().iterator(); it.hasNext();) {            
                 Node n = (Node) it.next();
                 System.out.println("Node : "+n);
                 if(n!=null){
@@ -58,8 +51,8 @@ public class MapPanel extends JPanel {
         
         drawSelectedNode(g);
         
-        if(!getGraph().getEdges().isEmpty()){
-            for (Iterator it = getGraph().getEdges().iterator(); it.hasNext();) {
+        if(!this.graph.getEdges().isEmpty()){
+            for (Iterator it = this.graph.getEdges().iterator(); it.hasNext();) {
                 Edge e = (Edge) it.next();
                 if(e!=null){
                     drawEdge(e, g);
@@ -67,7 +60,7 @@ public class MapPanel extends JPanel {
             }
         }
         
-        System.out.println(getGraph().getNodes().toString());
+        System.out.println(this.graph.getNodes().toString());
     }
 
     private void drawNode(Node n, Graphics g) {
@@ -103,19 +96,19 @@ public class MapPanel extends JPanel {
         g.drawLine(e.getA().getX().intValue(), e.getA().getY().intValue(), e.getB().getX().intValue(), e.getB().getY().intValue());
     }
 
-    /**
-     * @return the graph
-     */
-    public Graph getGraph() {
-        return graph;
-    }
-
-    /**
-     * @param graph the graph to set
-     */
-    public void setGraph(Graph graph) {
-        this.graph = graph;
-    }
+//    /**
+//     * @return the graph
+//     */
+//    public Graph getGraph() {
+//        return graph;
+//    }
+//
+//    /**
+//     * @param graph the graph to set
+//     */
+//    public void setGraph(Graph graph) {
+//        this.graph = graph;
+//    }
 
     /**
      * @return the selectedNode

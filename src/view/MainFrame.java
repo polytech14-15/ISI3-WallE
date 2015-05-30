@@ -121,7 +121,7 @@ public class MainFrame extends JFrame implements Observer {
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        setMap(new MapPanel());
+        setMap(new MapPanel(this.controller.getManager().getGraph()));
         getMap().setBackground(Color.white);
         getMap().setSize(new Dimension(600, 400));
         getMap().setPreferredSize(new Dimension(600, 400));

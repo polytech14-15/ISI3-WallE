@@ -26,11 +26,10 @@ public class Manager extends Observable implements Runnable {
     private IAlgo algo;
     private boolean canAskRobots;
     
-    public Manager(Graph graph, IAlgo algo) {
+    public Manager(Graph graph) {
         this.robots = new ArrayList<>();
         this.mapFires = new HashMap<>();
         this.graph = graph;
-        this.algo = algo;
         this.canAskRobots = true;
     }
     
@@ -232,7 +231,7 @@ public class Manager extends Observable implements Runnable {
                             // Recupere le 1er element de la map
                             entry = bestRobot.entrySet().iterator().next();
                             // Appelle fonction move du robot avec le graph en paramètre
-                            entry.getKey().move(this.prepareRouteForRobot(entry.getValue()));
+//                            entry.getKey().move(this.prepareRouteForRobot(entry.getValue()));
                             // Indique quel robot s'occupe du feu en question
                             this.mapFires.put(n, entry.getKey());
                         }
