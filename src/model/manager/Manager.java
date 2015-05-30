@@ -231,7 +231,7 @@ public class Manager extends Observable implements Runnable {
                 // Pour chaque feu
                 for (Node n : this.mapFires.keySet()){
                     // Si aucun robot ne s'occupe de ce feu
-                    if (this.mapFires.get(n) != null){
+                    if (this.mapFires.get(n) == null){
                          // Recupere le meilleur robot pour eteindre ce feu
                         bestRobot = this.getBestRobot(n);
                         // Si un robot est capable d'accepter sa mission
@@ -239,7 +239,7 @@ public class Manager extends Observable implements Runnable {
                             // Recupere le 1er element de la map
                             entry = bestRobot.entrySet().iterator().next();
                             // Appelle fonction move du robot avec le graph en paramètre
-//                            entry.getKey().move(this.prepareRouteForRobot(entry.getValue()));
+                            entry.getKey().move(this.prepareRouteForRobot(entry.getValue()));
                             // Indique quel robot s'occupe du feu en question
                             this.mapFires.put(n, entry.getKey());
                         }
