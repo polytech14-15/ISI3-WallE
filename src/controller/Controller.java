@@ -17,7 +17,7 @@ public class Controller extends MouseAdapter implements ActionListener {
     private Manager manager;
     
     public Controller(){
-        manager = new Manager(new Graph());
+        manager = new Manager();
         mainFrame = new MainFrame(this);        
         manager.addObserver(mainFrame);
     }
@@ -25,12 +25,21 @@ public class Controller extends MouseAdapter implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         
+        
         /*
-         * Quand on lance la simu
-         *  Creer les robots necessaire
-         *  Ne surtout pas oublier de setter un algo au manager!!!!!!!
+         * Quand on exporte xml
+         *      Mettre pause thread + exporter + reprendre thread
          */
         
+        /*
+         * Quand on importe xml
+         *      Arreter thread s'il y en a en cours + charger xml + creer nouveau manager(graph,robots,algo)
+         */
+        
+        /*
+         * Quand on lance la simu
+         *      Voir avec jerem la gestion de creation de robot
+         */
         
         
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

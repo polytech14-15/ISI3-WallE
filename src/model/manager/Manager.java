@@ -26,10 +26,18 @@ public class Manager extends Observable implements Runnable {
     private IAlgo algo;
     private boolean canAskRobots;
     
-    public Manager(Graph graph) {
+    public Manager() {
         this.robots = new ArrayList<>();
         this.mapFires = new HashMap<>();
+        this.graph = new Graph();
+        this.canAskRobots = true;
+    }
+    
+    public Manager (Graph graph, List<Robot> robots, IAlgo algo){
+        this.robots = robots;
+        this.mapFires = new HashMap<>();
         this.graph = graph;
+        this.algo = algo;
         this.canAskRobots = true;
     }
     
