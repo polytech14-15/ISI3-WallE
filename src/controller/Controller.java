@@ -24,6 +24,15 @@ public class Controller extends MouseAdapter implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        
+        /*
+         * Quand on lance la simu
+         *  Creer les robots necessaire
+         *  Ne surtout pas oublier de setter un algo au manager!!!!!!!
+         */
+        
+        
+        
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -38,13 +47,11 @@ public class Controller extends MouseAdapter implements ActionListener {
                 mainFrame.getMap().setSelectedNode(n);
             }else{    
                 Edge edge = new Edge(mainFrame.getMap().getSelectedNode(), n, "");
-//                mainFrame.getMap().addEdge(edge);
                 this.manager.getGraph().addEdge(edge);
                 mainFrame.getMap().setSelectedNode(null);
             }
         }else{
             Node n2 = new Node(new Integer(x_point).doubleValue(), new Integer(y_point).doubleValue(), mainFrame.getTypeRobot().getSelectedItem().toString());
-//            mainFrame.getMap().addNode(n2);
             this.manager.getGraph().addNode(n2);
             mainFrame.getMap().setSelectedNode(null);
         }
