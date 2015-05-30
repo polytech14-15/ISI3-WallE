@@ -19,17 +19,9 @@ public class MapPanel extends JPanel {
 
     public MapPanel(Graph graph) {
         super();
-//        graph = new Graph();
         this.graph = graph;
     }
     
-//    public void addNode(Node n) {
-//        getGraph().addNode(n);
-//    }
-//    public void addEdge(Edge e) {
-//        getGraph().addEdge(e);
-//    }
-
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Dimension dim = getSize();
@@ -95,20 +87,6 @@ public class MapPanel extends JPanel {
         g.setColor(c);
         g.drawLine(e.getA().getX().intValue(), e.getA().getY().intValue(), e.getB().getX().intValue(), e.getB().getY().intValue());
     }
-
-//    /**
-//     * @return the graph
-//     */
-//    public Graph getGraph() {
-//        return graph;
-//    }
-//
-//    /**
-//     * @param graph the graph to set
-//     */
-//    public void setGraph(Graph graph) {
-//        this.graph = graph;
-//    }
 
     /**
      * @return the selectedNode
