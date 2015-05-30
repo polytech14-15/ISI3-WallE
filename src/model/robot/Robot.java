@@ -11,12 +11,6 @@ public abstract class Robot {
     protected String state;
     public static final int SPEED = 12;
 
-    public void move(ArrayList<Node> n){
-        for(Node node : n){
-            currentNode = node;
-        }
-    }
-
     public String getName() {
         return name;
     }
@@ -52,6 +46,13 @@ public abstract class Robot {
     public void setState(String state) {
         this.state = state;
     }
+    
+    // TODO
+    public void move(ArrayList<Node> n){
+        for(Node node : n){
+            currentNode = node;
+        }
+    }
 
     /**
      * Decremente la valeur du feu selon la capacite du robot
@@ -68,9 +69,9 @@ public abstract class Robot {
     }
     
     /**
-     * 
-     * @param e
-     * @return 
+     * Verifie si le robot peut se deplacer sur le edge
+     * @param e - Edge
+     * @return true s'il peut, false sinon
      */
     public abstract boolean canMove(Edge e);
 }

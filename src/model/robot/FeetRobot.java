@@ -4,12 +4,11 @@ import model.graph.Edge;
 
 public class FeetRobot extends Robot {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean canMove(Edge e) {
-        if (e.isFlooded()) {
-            return false;
-        }
-        return true;
+        return !e.isFlooded();
     }
-
 }
