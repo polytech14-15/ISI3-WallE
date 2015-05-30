@@ -92,7 +92,7 @@ public class Graph {
         }
     }
     
-    public double distance(Node n1, Node n2){
+    public int distance(Node n1, Node n2){
         // return the weight of the edge between these 2 nodes
         Edge e = getEdge(n1, n2);
         if (e != null){

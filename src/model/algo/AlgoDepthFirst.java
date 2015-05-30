@@ -37,7 +37,7 @@ public class AlgoDepthFirst extends IAlgo {
     }
 
     @Override
-    public Map<Double, List<Node>> getSolution(Node obj) {
+    public Map<Integer, List<Node>> getSolution(Node obj) {
         // Build the solution by taking the objective node and going backwards to get to the starting node 
         ResearchNode n = null;
         for (ResearchNode rn : explored) {
@@ -47,8 +47,8 @@ public class AlgoDepthFirst extends IAlgo {
             }
         }
 
-        HashMap<Double, List<Node>> res = new HashMap<>();
-        double val = n.getValue();
+        HashMap<Integer, List<Node>> res = new HashMap<>();
+        int val = n.getValue();
         ArrayList<Node> sol = new ArrayList<>();
         sol.add(n.getAssociated());
         while ((n = n.getParent()) != null) {
@@ -86,8 +86,8 @@ public class AlgoDepthFirst extends IAlgo {
                     rn = new ResearchNode(n, parent, parent.getValue() + g.distance(n, parent.getAssociated()));
                 } else {
                     // else, it exists, we update its value to get the minimum
-                    double previousVal = rn.getValue();
-                    double currentVal = parent.getValue() + g.distance(n, parent.getAssociated());
+                    int previousVal = rn.getValue();
+                    int currentVal = parent.getValue() + g.distance(n, parent.getAssociated());
                     if (previousVal > currentVal) {
                         rn.setParent(parent);
                         rn.setValue(currentVal);
@@ -95,8 +95,8 @@ public class AlgoDepthFirst extends IAlgo {
                 }
             } else {
                 // the corresponding ResearchNode exists, we update its value to get the minimum
-                double previousVal = rn.getValue();
-                double currentVal = parent.getValue() + g.distance(n, parent.getAssociated());
+                int previousVal = rn.getValue();
+                int currentVal = parent.getValue() + g.distance(n, parent.getAssociated());
                 if (previousVal > currentVal) {
                     rn.setParent(parent);
                     rn.setValue(currentVal);

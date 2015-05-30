@@ -7,15 +7,15 @@ public class ResearchNode {
     
     private ResearchNode parent;
     private Node associated;
-    private double value;
+    private int value;
     
-    public ResearchNode(Node associated, ResearchNode parent, double value){
+    public ResearchNode(Node associated, ResearchNode parent, int value){
         this.associated = associated;
         this.parent = parent;
         this.value = value;
     }
     
-    public void setValue(double value){
+    public void setValue(int value){
         this.value = value;
     }
     
@@ -27,7 +27,7 @@ public class ResearchNode {
         return parent;
     }
 
-    public double getValue() {
+    public int getValue() {
         return value;
     }
     

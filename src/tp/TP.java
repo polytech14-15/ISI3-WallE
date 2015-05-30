@@ -34,7 +34,7 @@ public class TP {
         AlgoDepthFirst a = new AlgoDepthFirst();
         Robot r = new FeetRobot();
         r.setCurrentNode(n1);
-        Map<Double, List<Node>> sol = a.shortestPath(n3, graph, r);
+        Map<Integer, List<Node>> sol = a.shortestPath(n3, graph, r);
         System.out.println(sol.keySet().toArray()[0]);
         for (List<Node> l : sol.values()){
             for (Node n : l){
