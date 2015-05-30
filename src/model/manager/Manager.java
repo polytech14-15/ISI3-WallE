@@ -99,6 +99,10 @@ public class Manager extends Observable implements Runnable {
             // Si le noeud n'est plus un feu
             if (entry.getKey().getType().equals(TypeNode.NORMAL.toString())){
                 this.mapFires.remove(entry.getKey());
+                
+                
+                //TODO
+                // faire inondation aleatoire
             }
 	}
         

@@ -12,7 +12,8 @@ public class Edge {
         this.b = b;
         this.type = type;
         this.flooded = false;
-        this.value = Math.sqrt(Math.pow((b.getX() - a.getX()), 2) + Math.pow((b.getY() - a.getY()), 2));
+//        this.value = Math.sqrt(Math.pow((b.getX() - a.getX()), 2) + Math.pow((b.getY() - a.getY()), 2));
+        this.updateValue();
     }
 
     public Node getA() {
@@ -37,12 +38,14 @@ public class Edge {
 
     public void setA(Node a) {
         this.a = a;
-        this.value = Math.sqrt(Math.pow((a.getX() - a.getY()), 2) + Math.pow((b.getX() - b.getY()), 2));
+//        this.value = Math.sqrt(Math.pow((a.getX() - a.getY()), 2) + Math.pow((b.getX() - b.getY()), 2));
+        this.updateValue();
     }
 
     public void setB(Node b) {
         this.b = b;
-        this.value = Math.sqrt(Math.pow((a.getX() - a.getY()), 2) + Math.pow((b.getX() - b.getY()), 2));
+//        this.value = Math.sqrt(Math.pow((a.getX() - a.getY()), 2) + Math.pow((b.getX() - b.getY()), 2));
+        this.updateValue();
     }
 
     public void setType(String type) {
@@ -51,6 +54,13 @@ public class Edge {
 
     public void setFlooded(boolean flooded) {
         this.flooded = flooded;
+    }
+    
+    /**
+     * Met a jour la valeur de l'edge
+     */
+    private void updateValue(){
+        this.value = Math.sqrt(Math.pow((b.getX() - a.getX()), 2) + Math.pow((b.getY() - a.getY()), 2));
     }
 
     @Override
