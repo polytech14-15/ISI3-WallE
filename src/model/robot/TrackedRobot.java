@@ -2,7 +2,7 @@ package model.robot;
 
 import model.graph.Edge;
 
-public class CaterpillarRobot extends Robot {
+public class TrackedRobot extends Robot {
 
     @Override
     public boolean canMove(Edge e) {
