@@ -238,7 +238,7 @@ public class Manager extends Observable implements Runnable {
                         if (!bestRobot.isEmpty()){
                             // Recupere le 1er element de la map
                             entry = bestRobot.entrySet().iterator().next();
-                            // Appelle fonction move du robot avec le graph en paramètre
+                            // Appelle fonction move du robot avec le graph en parametre
                             entry.getKey().move(this.prepareRouteForRobot(entry.getValue()));
                             // Indique quel robot s'occupe du feu en question
                             this.mapFires.put(n, entry.getKey());

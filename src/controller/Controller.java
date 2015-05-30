@@ -28,7 +28,9 @@ public class Controller extends MouseAdapter implements ActionListener {
         
         /*
          * Quand on exporte xml
-         *      Mettre pause thread + exporter + reprendre thread
+         *      Mettre pause thread manager + mettre pause thread robot (si on peut) 
+         *      + exporter 
+         *      + reprendre thread robots + reprendre thread manager
          */
         
         /*

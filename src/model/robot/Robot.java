@@ -1,15 +1,15 @@
 package model.robot;
 
-import java.util.ArrayList;
 import model.graph.*;
 
 public abstract class Robot {
+    
+    public static final int SPEED = 12;
 
     protected String name;
     protected Node currentNode;
     protected int capacity;
-    protected String state;
-    public static final int SPEED = 12;
+    protected String state;           
 
     public String getName() {
         return name;
@@ -46,12 +46,9 @@ public abstract class Robot {
     public void setState(String state) {
         this.state = state;
     }
-    
-    // TODO
-    public void move(ArrayList<Node> n){
-        for(Node node : n){
-            currentNode = node;
-        }
+      
+    public void move(Graph graph){
+        new Thread(new RobotThread(this, graph)).start();
     }
 
     /**
