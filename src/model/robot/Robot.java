@@ -46,8 +46,13 @@ public abstract class Robot {
     public void setState(String state) {
         this.state = state;
     }
-      
+    
+    /**
+     * Initialise le thread qui sert a deplacer le robot
+     * @param graph - La route que doit emprunter le robot
+     */
     public void move(Graph graph){
+        this.state = RobotState.ONWAY.toString();
         new Thread(new RobotThread(this, graph)).start();
     }
 
