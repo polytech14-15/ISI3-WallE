@@ -1,6 +1,7 @@
 package model.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -104,14 +105,15 @@ public class Manager extends Observable implements Runnable {
         for (Map.Entry<Node, Robot> entry : this.mapFires.entrySet()) {
             // Si le robot qui s'occupait du feu est dispo, cela siginifie que le feu est soit eteint 
             // ou soit que le robot ne peut plus atteindre sa destination
-           
+            System.out.println(entry.getKey()+"--key" +"  " +entry.getValue()+"--value");
+            if (entry.getValue() != null) System.out.println("current node =>"+entry.getValue().getCurrentNode()+"    --  state"+entry.getValue().getState());
             if (entry.getValue() != null && entry.getValue().getState().equals(RobotState.AVAILABLE)){
                 this.mapFires.put(entry.getKey(), null);
             }
             // Si le noeud n'est plus un feu
             if (entry.getKey().getType().equals(TypeNode.NORMAL)){
                 this.mapFires.remove(entry.getKey());
-                
+                System.out.println("feu eteint");
                 
                 //TODO
                 // faire inondation aleatoire
@@ -121,7 +123,7 @@ public class Manager extends Observable implements Runnable {
         // Pour chaque noeud
         for (Node n : this.graph.getNodes()){
             // Si le noeud n'est pas contenu dans la mapFires
-            if (!this.mapFires.containsKey(n)){
+            if (n.getType().equals(TypeNode.INCENDIE) && !this.mapFires.containsKey(n)){
                 this.mapFires.put(n, null);
             }
         }
@@ -254,7 +256,7 @@ public class Manager extends Observable implements Runnable {
             }
             
             this.extinguishFires();
-            System.out.println("updatempfire--");
+
             this.updateMapFires();
             
             setChanged();
@@ -293,10 +295,10 @@ public class Manager extends Observable implements Runnable {
     }
     
     public void test(){
-       Node n1 = new Node(227.0, 105.0, TypeNode.NORMAL);
-        Node n2 = new Node(189.0, 184.0, TypeNode.NORMAL);
-        Node n3 = new Node(103.0, 278.0, TypeNode.INCENDIE);
-        Node n4 = new Node(233.0, 148.0, TypeNode.INCENDIE);
+       Node n1 = new Node(10.0, 10.0, TypeNode.NORMAL);
+        Node n2 = new Node(80.0, 10.0, TypeNode.NORMAL);
+        Node n3 = new Node(50.0, 200.0, TypeNode.INCENDIE);
+        Node n4 = new Node(150.0, 200.0, TypeNode.INCENDIE);
         graph.addNode(n1);
         graph.addNode(n2);
         graph.addNode(n3);
@@ -311,6 +313,13 @@ public class Manager extends Observable implements Runnable {
         this.robots.add(r);
         
         this.algo = new AlgoDepthFirst();
+        
+        
+        System.out.println("-----GRAPH init");
+        for (Node no : graph.getNodes()){
+            System.out.println(no);
+        }
+        System.out.println("---------");
         
         new Thread(this).start();
     }

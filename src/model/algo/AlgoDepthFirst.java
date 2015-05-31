@@ -3,6 +3,7 @@ package model.algo;
 import model.graph.*;
 import model.robot.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +56,9 @@ public class AlgoDepthFirst extends IAlgo {
             // we take the parent of the objective node and its parent before etc... untill we get to the start
             sol.add(n.getAssociated());
         }
+        
+        // Inverse la liste sol
+        Collections.reverse(sol);
         res.put(val, sol);
         return res;
     }

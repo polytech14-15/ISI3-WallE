@@ -34,7 +34,7 @@ public class MapPanel extends JPanel {
         if(!this.graph.getNodes().isEmpty()){
             for (Iterator it = this.graph.getNodes().iterator(); it.hasNext();) {            
                 Node n = (Node) it.next();
-                System.out.println("Node : "+n);
+//                System.out.println("Node : "+n);
                 if(n!=null){
                     drawNode(n, g);
                 }
@@ -52,7 +52,7 @@ public class MapPanel extends JPanel {
             }
         }
         
-        System.out.println(this.graph.getNodes().toString());
+//        System.out.println(this.graph.getNodes().toString());
     }
 
     private void drawNode(Node n, Graphics g) {

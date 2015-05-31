@@ -21,7 +21,6 @@ public class RobotThread implements Runnable {
      */
     @Override
     public void run() {
-        
         boolean reachDestination = this.checkReachDestination();
         boolean canStillMove = true;
         int i, travelTime;
@@ -79,5 +78,4 @@ public class RobotThread implements Runnable {
     private boolean checkReachDestination(){
         return this.robot.getCurrentNode().equals(this.graph.getNodes().get(this.graph.getNodes().size()-1));
     }
-    
 }

@@ -5,7 +5,7 @@ import model.graph.*;
 public abstract class Robot {
     
     public static final int CAPACITY = 2;
-    public static final int SPEED = 12;
+    public static final int SPEED = 15;
 
     protected String name;
     protected Node currentNode;
