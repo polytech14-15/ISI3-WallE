@@ -7,11 +7,14 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.algo.AlgoDepthFirst;
 import model.algo.IAlgo;
 import model.graph.Edge;
 import model.graph.Graph;
 import model.graph.Node;
+import model.graph.TypeEdge;
 import model.graph.TypeNode;
+import model.robot.FeetRobot;
 import model.robot.Robot;
 import model.robot.RobotState;
 
@@ -31,6 +34,7 @@ public class Manager extends Observable implements Runnable {
         this.mapFires = new HashMap<>();
         this.graph = new Graph();
         this.canAskRobots = true;
+        this.test();
     }
     
     public Manager (Graph graph, List<Robot> robots, IAlgo algo){
@@ -100,7 +104,8 @@ public class Manager extends Observable implements Runnable {
         for (Map.Entry<Node, Robot> entry : this.mapFires.entrySet()) {
             // Si le robot qui s'occupait du feu est dispo, cela siginifie que le feu est soit eteint 
             // ou soit que le robot ne peut plus atteindre sa destination
-            if (entry.getValue().getState().equals(RobotState.AVAILABLE)){
+           
+            if (entry.getValue() != null && entry.getValue().getState().equals(RobotState.AVAILABLE)){
                 this.mapFires.put(entry.getKey(), null);
             }
             // Si le noeud n'est plus un feu
@@ -249,7 +254,7 @@ public class Manager extends Observable implements Runnable {
             }
             
             this.extinguishFires();
-            
+            System.out.println("updatempfire--");
             this.updateMapFires();
             
             setChanged();
@@ -287,4 +292,26 @@ public class Manager extends Observable implements Runnable {
         }).start();
     }
     
+    public void test(){
+       Node n1 = new Node(227.0, 105.0, TypeNode.NORMAL);
+        Node n2 = new Node(189.0, 184.0, TypeNode.NORMAL);
+        Node n3 = new Node(103.0, 278.0, TypeNode.INCENDIE);
+        Node n4 = new Node(233.0, 148.0, TypeNode.INCENDIE);
+        graph.addNode(n1);
+        graph.addNode(n2);
+        graph.addNode(n3);
+        graph.addNode(n4);
+        graph.addEdge(new Edge(n1, n2, TypeEdge.ESCARPE));
+        graph.addEdge(new Edge(n2, n3, TypeEdge.PLAT));
+        graph.addEdge(new Edge(n1, n4, TypeEdge.ESCARPE));
+        graph.addEdge(new Edge(n4, n3, TypeEdge.ESCARPE));
+        
+        Robot r = new FeetRobot();
+        r.setCurrentNode(n1);
+        this.robots.add(r);
+        
+        this.algo = new AlgoDepthFirst();
+        
+        new Thread(this).start();
+    }
 }

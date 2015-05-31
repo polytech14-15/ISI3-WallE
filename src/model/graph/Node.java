@@ -15,12 +15,12 @@ public class Node {
     }
 
     public Node(Double x, Double y, TypeNode type) {
-        this.id = previousId;
+        this.id = Node.previousId;
         this.x = x;
         this.y = y;
         this.type = type;
         this.visited = false;
-        this.valueFire = 0;
+        this.valueFire = this.type.equals(TypeNode.INCENDIE) ? INIT_VALUE_FIRE : 0;
         Node.previousId++;
     }
 

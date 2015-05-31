@@ -4,6 +4,7 @@ import model.graph.*;
 
 public abstract class Robot {
     
+    public static final int CAPACITY = 2;
     public static final int SPEED = 12;
 
     protected String name;
@@ -11,6 +12,11 @@ public abstract class Robot {
     protected int capacity;
     protected RobotState state;           
 
+    public Robot(){
+        this.capacity = Robot.CAPACITY;
+        this.state = RobotState.AVAILABLE;
+    }
+    
     public String getName() {
         return name;
     }

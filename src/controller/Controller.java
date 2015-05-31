@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Set;
 import model.graph.Edge;
 import model.graph.Graph;
 import model.graph.Node;
@@ -44,8 +45,9 @@ public class Controller extends MouseAdapter implements ActionListener {
          * Quand on lance la simu
          *      Voir avec jerem la gestion de creation de robot
          *      Ne pas oublier de setter un algo dans le manager!!!!!!
+         *      Lancer Thread manager
          */
-        
+       
         
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

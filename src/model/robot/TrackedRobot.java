@@ -5,6 +5,10 @@ import model.graph.TypeEdge;
 
 public class TrackedRobot extends Robot {
 
+    public TrackedRobot(){
+        super();
+    }
+    
     /**
      * {@inheritDoc} 
      */
