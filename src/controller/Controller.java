@@ -26,7 +26,13 @@ public class Controller extends MouseAdapter implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+        /*
+         * Quand on ajoute un feu
+         *      recupere liste des noeud du graphe du manager
+         *      choisir aleatoirement parmis les noeuds normaux
+         *      noeud.initFire();
+         *      changer type du noeud
+         */
         
         /*
          * Quand on exporte xml
