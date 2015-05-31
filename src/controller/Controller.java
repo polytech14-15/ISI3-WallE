@@ -59,7 +59,8 @@ public class Controller extends MouseAdapter implements ActionListener {
             if(mainFrame.getMap().getSelectedNode() == null){
                 mainFrame.getMap().setSelectedNode(n);
             }else{    
-                Edge edge = new Edge(mainFrame.getMap().getSelectedNode(), n, "");
+                // TODO - Edit null to a typeEdge
+                Edge edge = new Edge(mainFrame.getMap().getSelectedNode(), n, null);
                 this.manager.getGraph().addEdge(edge);
                 mainFrame.getMap().setSelectedNode(null);
             }

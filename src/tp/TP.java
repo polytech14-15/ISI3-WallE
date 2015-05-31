@@ -7,6 +7,7 @@ import model.algo.AlgoDepthFirst;
 import model.graph.Edge;
 import model.graph.Graph;
 import model.graph.Node;
+import model.graph.TypeEdge;
 import model.robot.FeetRobot;
 import model.robot.Robot;
 
@@ -26,10 +27,10 @@ public class TP {
         graph.addNode(n2);
         graph.addNode(n3);
         graph.addNode(n4);
-        graph.addEdge(new Edge(n1, n2, "ESCARPE"));
-        graph.addEdge(new Edge(n2, n3, "PLAT"));
-        graph.addEdge(new Edge(n1, n4, "ESCARPE"));
-        graph.addEdge(new Edge(n4, n3, "ESCARPE"));
+        graph.addEdge(new Edge(n1, n2, TypeEdge.ESCARPE));
+        graph.addEdge(new Edge(n2, n3, TypeEdge.PLAT));
+        graph.addEdge(new Edge(n1, n4, TypeEdge.ESCARPE));
+        graph.addEdge(new Edge(n4, n3, TypeEdge.ESCARPE));
         
         AlgoDepthFirst a = new AlgoDepthFirst();
         Robot r = new FeetRobot();

@@ -3,11 +3,11 @@ package model.graph;
 public class Edge {
 
     private Node a, b;
-    private String type;
+    private TypeEdge type;
     private boolean flooded;
     private int value;
 
-    public Edge(Node a, Node b, String type) {
+    public Edge(Node a, Node b, TypeEdge type) {
         this.a = a;
         this.b = b;
         this.type = type;
@@ -23,7 +23,7 @@ public class Edge {
         return b;
     }
 
-    public String getType() {
+    public TypeEdge getType() {
         return type;
     }
 
@@ -45,7 +45,7 @@ public class Edge {
         this.updateValue();
     }
 
-    public void setType(String type) {
+    public void setType(TypeEdge type) {
         this.type = type;
     }
 
