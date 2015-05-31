@@ -12,7 +12,7 @@ import java.util.Stack;
 public class AlgoDepthFirst extends IAlgo {
 
     private Stack<ResearchNode> frontier;
-    private ArrayList<ResearchNode> explored;
+    private List<ResearchNode> explored;
 
     @Override
     public void initFrontier(Node start) {
@@ -71,7 +71,7 @@ public class AlgoDepthFirst extends IAlgo {
     @Override
     public void expand(ResearchNode parent, Graph g, Robot r) {
         // this function updates the frontier  and creates the ResearchNodes
-        ArrayList<Node> neighbours = g.getNeighbors(parent.getAssociated());
+        List<Node> neighbours = g.getNeighbors(parent.getAssociated());
         for (Node n : neighbours) {
             // for each neighbour we try to get the corresponding researchNode
 //            System.out.println("neighbour node : " + n.getId());

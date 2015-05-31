@@ -6,20 +6,23 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Graph {
 
-    private ArrayList<Node> nodes = new ArrayList<>();
-    private ArrayList<Edge> edges = new ArrayList<>();
+    private List<Node> nodes;
+    private List<Edge> edges;
 
     public Graph() {
+        this.nodes = new ArrayList<>();
+        this.edges = new ArrayList<>();
     }
 
-    public ArrayList<Node> getNodes() {
+    public List<Node> getNodes() {
         return nodes;
     }
 
-    public ArrayList<Edge> getEdges() {
+    public List<Edge> getEdges() {
         return edges;
     }
     
@@ -56,8 +59,8 @@ public class Graph {
      * @param a
      * @return 
      */
-    public ArrayList<Node> getNeighbors(Node a) {
-        ArrayList<Node> neighbors = new ArrayList<>();
+    public List<Node> getNeighbors(Node a) {
+        List<Node> neighbors = new ArrayList<>();
         for (Edge edge : getEdges()) {
             if (edge.getA() == a && !neighbors.contains(edge.getB())) {
                 neighbors.add(edge.getB());
@@ -92,10 +95,23 @@ public class Graph {
         }
     }
     
+    /**
+     * Recupere la distance entre un noeud et un point
+     * @param n - Noeud
+     * @param x_point - Point x
+     * @param y_point - Point y
+     * @return La distance entre deux points
+     */
     public int getDistance(Node n, int x_point, int y_point) {
         return (int) Math.sqrt(Math.pow(n.getX() - x_point, 2) + Math.pow(n.getY()- y_point, 2));
     }
     
+    /**
+     * Recupere la distance entre deux noeuds
+     * @param n1 - 1er noeud
+     * @param n2 - 2eme noeud
+     * @return La distance entre les deux noeuds
+     */
     public int getDistance(Node n1, Node n2){
         // return the weight of the edge between these 2 nodes
         Edge e = getEdge(n1, n2);
@@ -119,5 +135,7 @@ public class Graph {
         }
         return null;
     }
+    
+
 
 }
