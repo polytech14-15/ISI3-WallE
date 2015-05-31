@@ -110,16 +110,21 @@ public class Manager extends Observable implements Runnable {
 
         // Pour chaque entree de la mapFires
         for (Map.Entry<Node, Robot> entry : this.mapFires.entrySet()) {
-            // Si le robot qui s'occupait du feu est dispo, cela siginifie que le feu est soit eteint 
-            // ou soit que le robot ne peut plus atteindre sa destination
+            // TODO - delete me
             System.out.println(entry.getKey()+"--key" +"  " +entry.getValue()+"--value");
             if (entry.getValue() != null) System.out.println("Robot: node =>"+entry.getValue().getCurrentNode()+"    --  state"+entry.getValue().getState());
+            // fin delete me
+            
+            // Si le robot qui s'occupait du feu est dispo, cela siginifie que le feu est soit eteint 
+            // ou soit que le robot ne peut plus atteindre sa destination
             if (entry.getValue() != null && entry.getValue().getState().equals(RobotState.AVAILABLE)){
                 this.mapFires.put(entry.getKey(), null);
             }
             // Si le noeud n'est plus un feu
             if (entry.getKey().getType().equals(TypeNode.NORMAL)){
                 firesToRemove.add(entry.getKey());
+                
+                // TODO - delete me
                 System.out.println("Feu eteint");
                 
                 this.handleFlood(entry.getKey());
@@ -159,7 +164,6 @@ public class Manager extends Observable implements Runnable {
         for (Edge e : this.graph.getEdgesFromNode(n)){
             // Edge inonde si random plus petit que le pourcentage defini
             e.setFlooded(rand.nextDouble() < Manager.PERCENT_FLOOD);
-            System.out.println(e.isFlooded()+"---inondee");
         }
     }
     
