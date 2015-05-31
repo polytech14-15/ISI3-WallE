@@ -3,6 +3,7 @@ package model.manager;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
@@ -103,28 +104,35 @@ public class Manager extends Observable implements Runnable {
      * Met a jour la mapFires
      */
     private void updateMapFires(){
+        List<Node> firesToRemove = new ArrayList<>();
+
         // Pour chaque entree de la mapFires
         for (Map.Entry<Node, Robot> entry : this.mapFires.entrySet()) {
             // Si le robot qui s'occupait du feu est dispo, cela siginifie que le feu est soit eteint 
             // ou soit que le robot ne peut plus atteindre sa destination
             System.out.println(entry.getKey()+"--key" +"  " +entry.getValue()+"--value");
-            if (entry.getValue() != null) System.out.println("current node =>"+entry.getValue().getCurrentNode()+"    --  state"+entry.getValue().getState());
+            if (entry.getValue() != null) System.out.println("Robot: node =>"+entry.getValue().getCurrentNode()+"    --  state"+entry.getValue().getState());
             if (entry.getValue() != null && entry.getValue().getState().equals(RobotState.AVAILABLE)){
                 this.mapFires.put(entry.getKey(), null);
             }
             // Si le noeud n'est plus un feu
             if (entry.getKey().getType().equals(TypeNode.NORMAL)){
-                this.mapFires.remove(entry.getKey());
-                System.out.println("feu eteint");
+                firesToRemove.add(entry.getKey());
+                System.out.println("Feu eteint");
                 
                 //TODO
                 // faire inondation aleatoire
             }
 	}
         
-        // Pour chaque noeud
+        // Pour chaque feu a supprimer
+        for(Node n : firesToRemove){
+            this.mapFires.remove(n);
+        }
+        
+        // Pour chaque noeud du graph
         for (Node n : this.graph.getNodes()){
-            // Si le noeud n'est pas contenu dans la mapFires
+            // Si le noeud est en feu et n'est pas contenu dans la mapFires
             if (n.getType().equals(TypeNode.INCENDIE) && !this.mapFires.containsKey(n)){
                 this.mapFires.put(n, null);
             }
