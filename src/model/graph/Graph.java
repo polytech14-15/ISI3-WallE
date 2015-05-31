@@ -55,9 +55,9 @@ public class Graph {
     }
 
     /**
-     * Retourne la liste des noeuds voisins du noeud a
-     * @param a
-     * @return 
+     * Recupere la liste des noeuds voisins du noeud a
+     * @param a - Noeud
+     * @return Liste des noeuds voisins du noeud
      */
     public List<Node> getNeighbors(Node a) {
         List<Node> neighbors = new ArrayList<>();
@@ -136,6 +136,22 @@ public class Graph {
         return null;
     }
     
-
-
+    /**
+     * Recupere une liste de edge qui part d'un noeud
+     * @param n - Noeud
+     * @return Liste de edge qui part du noeud
+     */
+    public List<Edge> getEdgesFromNode(Node n){
+        List<Edge> edgesFromNode = new ArrayList<>();
+        Edge e;
+        // Pour tous les noeuds voisins
+        for (Node nNeighbors : this.getNeighbors(n)){
+            e = this.getEdge(n, nNeighbors);
+            // S'il existe un edge entre le noeud de base et son noeud voisin
+            if (e != null){
+                edgesFromNode.add(e);
+            }
+        }
+        return edgesFromNode;
+    }
 }
