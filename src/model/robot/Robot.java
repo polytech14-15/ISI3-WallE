@@ -9,7 +9,7 @@ public abstract class Robot {
     protected String name;
     protected Node currentNode;
     protected int capacity;
-    protected String state;           
+    protected RobotState state;           
 
     public String getName() {
         return name;
@@ -23,7 +23,7 @@ public abstract class Robot {
         return capacity;
     }
 
-    public String getState() {
+    public RobotState getState() {
         return state;
     }
 
@@ -43,7 +43,7 @@ public abstract class Robot {
         this.capacity = capacity;
     }
 
-    public void setState(String state) {
+    public void setState(RobotState state) {
         this.state = state;
     }
     
@@ -52,7 +52,7 @@ public abstract class Robot {
      * @param graph - La route que doit emprunter le robot
      */
     public void move(Graph graph){
-        this.state = RobotState.ONWAY.toString();
+        this.state = RobotState.ONWAY;
         new Thread(new RobotThread(this, graph)).start();
     }
 
@@ -65,7 +65,7 @@ public abstract class Robot {
         // Si le feu est eteint
         if (valueFire <= 0){
             this.currentNode.setType(TypeNode.NORMAL.toString());
-            this.setState(RobotState.AVAILABLE.toString());
+            this.setState(RobotState.AVAILABLE);
         }
         this.currentNode.setValueFire(valueFire);
     }

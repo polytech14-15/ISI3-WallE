@@ -100,7 +100,7 @@ public class Manager extends Observable implements Runnable {
         for (Map.Entry<Node, Robot> entry : this.mapFires.entrySet()) {
             // Si le robot qui s'occupait du feu est dispo, cela siginifie que le feu est soit eteint 
             // ou soit que le robot ne peut plus atteindre sa destination
-            if (entry.getValue().getState().equals(RobotState.AVAILABLE.toString())){
+            if (entry.getValue().getState().equals(RobotState.AVAILABLE)){
                 this.mapFires.put(entry.getKey(), null);
             }
             // Si le noeud n'est plus un feu
@@ -164,7 +164,7 @@ public class Manager extends Observable implements Runnable {
      * @return Liste de robots disponibles
      */
     private List<Robot> getRobotsAvailable(){
-        return this.getRobotsAccordingToState(RobotState.AVAILABLE.toString());
+        return this.getRobotsAccordingToState(RobotState.AVAILABLE);
     }
     
     /**
@@ -172,7 +172,7 @@ public class Manager extends Observable implements Runnable {
      * @return Liste de robots disponibles
      */
     private List<Robot> getRobotsBusy(){
-        return this.getRobotsAccordingToState(RobotState.BUSY.toString());
+        return this.getRobotsAccordingToState(RobotState.BUSY);
     }
     
     /**
@@ -180,7 +180,7 @@ public class Manager extends Observable implements Runnable {
      * @param state - Etat du robot
      * @return Liste de robots
      */
-    private List<Robot> getRobotsAccordingToState(String state){
+    private List<Robot> getRobotsAccordingToState(RobotState state){
         List<Robot> lRobots = new ArrayList<>();
         for (Robot r : this.robots){
             if (r.getState().equals(state)){

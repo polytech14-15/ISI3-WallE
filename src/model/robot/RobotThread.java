@@ -36,7 +36,7 @@ public class RobotThread implements Runnable {
                     travelTime--;
                     if (!this.robot.canMove(this.graph.getEdge(this.robot.getCurrentNode(), nNext))){
                         canStillMove = false;
-                        this.robot.setState(RobotState.AVAILABLE.toString());
+                        this.robot.setState(RobotState.AVAILABLE);
                     }
                 }
                 if (canStillMove){
@@ -46,7 +46,7 @@ public class RobotThread implements Runnable {
             reachDestination = this.checkReachDestination();
         }
         if (reachDestination){
-            this.robot.setState(RobotState.BUSY.toString());
+            this.robot.setState(RobotState.BUSY);
         }
     }
     
