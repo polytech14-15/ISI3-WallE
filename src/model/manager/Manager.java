@@ -35,6 +35,8 @@ public class Manager extends Observable implements Runnable {
         this.mapFires = new HashMap<>();
         this.graph = new Graph();
         this.canAskRobots = true;
+        
+        //TODO - delete me
         this.test();
     }
     
