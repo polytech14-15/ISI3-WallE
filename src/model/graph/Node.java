@@ -5,7 +5,7 @@ public class Node {
     private Integer id;
     private Double x;
     private Double y;
-    private String type;
+    private TypeNode type;
     private boolean visited;
     private Integer valueFire;
     private static Integer previousId = 1;
@@ -14,7 +14,7 @@ public class Node {
     public Node() {
     }
 
-    public Node(Double x, Double y, String type) {
+    public Node(Double x, Double y, TypeNode type) {
         this.id = previousId;
         this.x = x;
         this.y = y;
@@ -64,7 +64,7 @@ public class Node {
         return y;
     }
 
-    public String getType() {
+    public TypeNode getType() {
         return type;
     }
 
@@ -84,7 +84,7 @@ public class Node {
         this.y = y;
     }
 
-    public void setType(String type) {
+    public void setType(TypeNode type) {
         this.type = type;
     }
     

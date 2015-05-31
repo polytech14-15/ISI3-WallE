@@ -64,7 +64,7 @@ public abstract class Robot {
         valueFire -= this.capacity;
         // Si le feu est eteint
         if (valueFire <= 0){
-            this.currentNode.setType(TypeNode.NORMAL.toString());
+            this.currentNode.setType(TypeNode.NORMAL);
             this.setState(RobotState.AVAILABLE);
         }
         this.currentNode.setValueFire(valueFire);

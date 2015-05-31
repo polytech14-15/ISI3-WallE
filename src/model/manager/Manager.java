@@ -86,7 +86,7 @@ public class Manager extends Observable implements Runnable {
      */
     private void initMapFires(){
         for (Node n : this.graph.getNodes()){
-            if (n.getType().equals(TypeNode.INCENDIE.toString())){
+            if (n.getType().equals(TypeNode.INCENDIE)){
                 this.mapFires.put(n, null);
             }
         }
@@ -104,7 +104,7 @@ public class Manager extends Observable implements Runnable {
                 this.mapFires.put(entry.getKey(), null);
             }
             // Si le noeud n'est plus un feu
-            if (entry.getKey().getType().equals(TypeNode.NORMAL.toString())){
+            if (entry.getKey().getType().equals(TypeNode.NORMAL)){
                 this.mapFires.remove(entry.getKey());
                 
                 

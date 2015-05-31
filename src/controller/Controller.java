@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import model.graph.Edge;
 import model.graph.Graph;
 import model.graph.Node;
+import model.graph.TypeNode;
 import model.manager.Manager;
 import view.MainFrame;
 import view.MapPanel;
@@ -65,7 +66,7 @@ public class Controller extends MouseAdapter implements ActionListener {
                 mainFrame.getMap().setSelectedNode(null);
             }
         }else{
-            Node n2 = new Node(new Integer(x_point).doubleValue(), new Integer(y_point).doubleValue(), mainFrame.getTypeRobot().getSelectedItem().toString());
+            Node n2 = new Node(new Integer(x_point).doubleValue(), new Integer(y_point).doubleValue(), TypeNode.valueOf(mainFrame.getTypeRobot().getSelectedItem().toString()));
             this.manager.getGraph().addNode(n2);
             mainFrame.getMap().setSelectedNode(null);
         }

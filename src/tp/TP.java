@@ -8,6 +8,7 @@ import model.graph.Edge;
 import model.graph.Graph;
 import model.graph.Node;
 import model.graph.TypeEdge;
+import model.graph.TypeNode;
 import model.robot.FeetRobot;
 import model.robot.Robot;
 
@@ -19,10 +20,10 @@ public class TP {
 //        Node n2 = new Node(189.0, 184.0, "NORMAL");
 //        Node n3 = new Node(103.0, 278.0, "INCENDIE");
 //        Node n4 = new Node(233.0, 148.0, "NORMAL");
-        Node n1 = new Node(0.0, 0.0, "NORMAL");
-        Node n2 = new Node(10.0, 10.0, "NORMAL");
-        Node n3 = new Node(20.0, 20.0, "INCENDIE");
-        Node n4 = new Node(0.0, 20.0, "NORMAL");
+        Node n1 = new Node(0.0, 0.0, TypeNode.NORMAL);
+        Node n2 = new Node(10.0, 10.0, TypeNode.NORMAL);
+        Node n3 = new Node(20.0, 20.0, TypeNode.INCENDIE);
+        Node n4 = new Node(0.0, 20.0, TypeNode.NORMAL);
         graph.addNode(n1);
         graph.addNode(n2);
         graph.addNode(n3);
