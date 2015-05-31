@@ -4,7 +4,7 @@ import model.graph.*;
 
 public abstract class Robot {
     
-    public static final int CAPACITY = 2;
+    public static final int CAPACITY_MAX = 2;
     public static final int SPEED = 15;
 
     protected String name;
@@ -13,7 +13,7 @@ public abstract class Robot {
     protected RobotState state;           
 
     public Robot(){
-        this.capacity = Robot.CAPACITY;
+        this.capacity = Robot.CAPACITY_MAX;
         this.state = RobotState.AVAILABLE;
     }
     
@@ -31,10 +31,6 @@ public abstract class Robot {
 
     public RobotState getState() {
         return state;
-    }
-
-    public static int getSPEED() {
-        return SPEED;
     }
 
     public void setName(String name) {
