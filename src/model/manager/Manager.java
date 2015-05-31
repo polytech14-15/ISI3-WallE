@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.algo.AlgoDepthFirst;
@@ -23,7 +24,8 @@ import model.robot.RobotState;
 public class Manager extends Observable implements Runnable {
     
     public static final int TIME_STEP_SIMU = 1000; // 1sec
-    private static int WAIT_FOR_ASK = Manager.TIME_STEP_SIMU * 3; 
+    private static final int WAIT_FOR_ASK = Manager.TIME_STEP_SIMU * 3;
+    private static final double PERCENT_FLOOD = 0.05;
     
     private List<Robot> robots;
     private Map<Node, Robot> mapFires;
@@ -120,8 +122,7 @@ public class Manager extends Observable implements Runnable {
                 firesToRemove.add(entry.getKey());
                 System.out.println("Feu eteint");
                 
-                //TODO
-                // faire inondation aleatoire
+                this.handleFlood(entry.getKey());
             }
 	}
         
@@ -145,6 +146,20 @@ public class Manager extends Observable implements Runnable {
     private void extinguishFires(){
         for (Robot r : this.getRobotsBusy()){
             r.extinguishFire();
+        }
+    }
+    
+    /**
+     * Inonde un edge selon un certain pourcentage
+     * @param n - Noeud
+     */
+    private void handleFlood(Node n){
+        Random rand = new Random();
+        // Pour tous les edges partant du noeud
+        for (Edge e : this.graph.getEdgesFromNode(n)){
+            // Edge inonde si random plus petit que le pourcentage defini
+            e.setFlooded(rand.nextDouble() < Manager.PERCENT_FLOOD);
+            System.out.println(e.isFlooded()+"---inondee");
         }
     }
     
