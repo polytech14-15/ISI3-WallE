@@ -9,11 +9,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
+/**
+ * Parcous en Profondeur
+ *
+ * @author Quentin Degrange
+ */
 public class AlgoDepthFirst extends IAlgo {
 
     private Stack<ResearchNode> frontier;
     private List<ResearchNode> explored;
 
+    /**
+     * initialise la frontière (représentée par une Pile) et la liste des noeuds
+     * explorés
+     *
+     * @param start Le noeud de départ
+     */
     @Override
     public void initFrontier(Node start) {
         // initialisation of the frontier and the explored lists
@@ -24,22 +35,39 @@ public class AlgoDepthFirst extends IAlgo {
         frontier.push(rnStart);
     }
 
+    /**
+     *
+     * @return true si la frontiere est vide, false sinon
+     */
     @Override
     public boolean frontierIsEmpty() {
         return frontier.isEmpty();
     }
 
+    /**
+     * Recupère et supprime le prochain noeud de la frontière. On ajoute aussi
+     * le noeud à la liste des noeuds explorés.
+     *
+     * @return un noeud de recherche correspondant au prochain noeud à parcourir
+     */
     @Override
     public ResearchNode exploreNext() {
-        // get and remove the next Node from the frontier
         ResearchNode next = frontier.pop();
         explored.add(next);
         return next;
     }
 
+    /**
+     * Créé la solution à partir du noeud objectif. On trouve le noeud de
+     * recherche correspondant dans les noeuds explorés puis on remonte jusqu'au
+     * noeud de départ. On obtient ainsi le chemin en sens inverse.
+     *
+     * @param obj Le noeud objectif
+     * @return la solution : une Map avec en clé, la taille du chemin, et la
+     * liste des noeuds du chemin le plus
+     */
     @Override
     public Map<Integer, List<Node>> getSolution(Node obj) {
-        // Build the solution by taking the objective node and going backwards to get to the starting node 
         ResearchNode n = null;
         for (ResearchNode rn : explored) {
             if (rn.getAssociated().equals(obj)) {
@@ -47,8 +75,8 @@ public class AlgoDepthFirst extends IAlgo {
                 n = rn;
             }
         }
-        
-        if (n != null){
+
+        if (n != null) {
             HashMap<Integer, List<Node>> res = new HashMap<>();
             int val = n.getValue();
             ArrayList<Node> sol = new ArrayList<>();
@@ -60,7 +88,7 @@ public class AlgoDepthFirst extends IAlgo {
 
             // Inverse la liste sol
             Collections.reverse(sol);
-            
+
             res.put(val, sol);
             return res;
         } else {
@@ -68,14 +96,26 @@ public class AlgoDepthFirst extends IAlgo {
         }
     }
 
+    /**
+     * Ajoute le noeud n aux noeuds explorés
+     *
+     * @param rn Un noeud de recherche exploré
+     */
     @Override
     public void addToExplored(ResearchNode rn) {
         explored.add(rn);
     }
 
+    /**
+     * Cette fonction met à jour la frontière et créé les noeuds de recherche
+     * correspondants.
+     *
+     * @param parent Le noeud de recherche parent
+     * @param g Le Graph
+     * @param r Le Robot
+     */
     @Override
     public void expand(ResearchNode parent, Graph g, Robot r) {
-        // this function updates the frontier  and creates the ResearchNodes
         List<Node> neighbours = g.getNeighbors(parent.getAssociated());
         for (Node n : neighbours) {
             // for each neighbour we try to get the corresponding researchNode
@@ -109,7 +149,7 @@ public class AlgoDepthFirst extends IAlgo {
                     rn.setValue(currentVal);
                 }
             }
-            
+
             // And we update the frontier with this node
             if (!frontier.contains(rn) && !explored.contains(rn) && r.canMove(g.getEdge(parent.getAssociated(), n))) {
                 frontier.add(rn);
