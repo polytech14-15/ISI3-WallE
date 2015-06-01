@@ -57,7 +57,7 @@ public class Edge {
      * Met a jour la valeur de l'edge
      */
     private void updateValue(){
-        this.value = (int) Math.sqrt(Math.pow((b.getX() - a.getX()), 2) + Math.pow((b.getY() - a.getY()), 2));
+        this.value = (int) Math.sqrt(Math.pow((double)(b.getX() - a.getX()), 2) + Math.pow((double)(b.getY() - a.getY()), 2));
     }
 
     @Override
