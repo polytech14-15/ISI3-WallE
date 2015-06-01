@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 
-public class ViewCaterpillarRobot extends AbstractRobot{
+public class ViewTrackedRobot extends AbstractRobot{
 
     @Override
     public void draw(Graphics g) {
