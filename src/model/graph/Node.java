@@ -6,20 +6,15 @@ public class Node {
     private Double x;
     private Double y;
     private TypeNode type;
-    private boolean visited;
     private Integer valueFire;
     public static Integer previousId = 1;
     private static final Integer INIT_VALUE_FIRE = 15;
-
-    public Node() {
-    }
 
     public Node(Double x, Double y, TypeNode type) {
         this.id = Node.previousId;
         this.x = x;
         this.y = y;
         this.type = type;
-        this.visited = false;
         this.valueFire = this.type.equals(TypeNode.INCENDIE) ? INIT_VALUE_FIRE : 0;
         Node.previousId++;
     }
@@ -36,20 +31,6 @@ public class Node {
      */
     public void extinctFire() {
         this.valueFire = 0;
-    }
-
-    /**
-     * Visite le noeud
-     */
-    public void visit() {
-        visited = true;
-    }
-
-    /**
-     * Annule la visite du noeud
-     */
-    public void unvisit() {
-        visited = false;
     }
 
     public Integer getId() {
@@ -70,10 +51,6 @@ public class Node {
 
     public Integer getPreviousId() {
         return previousId;
-    }
-
-    public boolean isVisited() {
-        return visited;
     }
 
     public void setX(Double x) {
