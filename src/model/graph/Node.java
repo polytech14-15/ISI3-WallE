@@ -2,13 +2,14 @@ package model.graph;
 
 public class Node {
 
-    private Integer id;
+    public static Integer previousId = 1;
+    private static final Integer INIT_VALUE_FIRE = 15;
+    
+    private int id;
     private int x;
     private int y;
     private TypeNode type;
     private Integer valueFire;
-    public static Integer previousId = 1;
-    private static final Integer INIT_VALUE_FIRE = 15;
 
     public Node(int x, int y, TypeNode type) {
         this.id = Node.previousId;
