@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package view;
 
 import controller.Controller;
@@ -32,6 +37,10 @@ import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 
+/**
+ *
+ * @author Jérémy
+ */
 public class MainFrame extends JFrame implements Observer{
 
         public static final Dimension VGAP = new Dimension(1, 5);
