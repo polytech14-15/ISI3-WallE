@@ -3,16 +3,16 @@ package model.graph;
 public class Edge {
 
     private Node a, b;
-    private String type;
+    private TypeEdge type;
     private boolean flooded;
-    private double value;
+    private int value;
 
-    public Edge(Node a, Node b, String type) {
+    public Edge(Node a, Node b, TypeEdge type) {
         this.a = a;
         this.b = b;
         this.type = type;
         this.flooded = false;
-        this.value = Math.sqrt(Math.pow((b.getX() - a.getX()), 2) + Math.pow((b.getY() - a.getY()), 2));
+        this.updateValue();
     }
 
     public Node getA() {
@@ -23,7 +23,7 @@ public class Edge {
         return b;
     }
 
-    public String getType() {
+    public TypeEdge getType() {
         return type;
     }
 
@@ -31,26 +31,33 @@ public class Edge {
         return flooded;
     }
 
-    public double getValue() {
+    public int getValue() {
         return value;
     }
 
     public void setA(Node a) {
         this.a = a;
-        this.value = Math.sqrt(Math.pow((a.getX() - a.getY()), 2) + Math.pow((b.getX() - b.getY()), 2));
+        this.updateValue();
     }
 
     public void setB(Node b) {
         this.b = b;
-        this.value = Math.sqrt(Math.pow((a.getX() - a.getY()), 2) + Math.pow((b.getX() - b.getY()), 2));
+        this.updateValue();
     }
 
-    public void setType(String type) {
+    public void setType(TypeEdge type) {
         this.type = type;
     }
 
     public void setFlooded(boolean flooded) {
         this.flooded = flooded;
+    }
+    
+    /**
+     * Met a jour la valeur de l'edge
+     */
+    private void updateValue(){
+        this.value = (int) Math.sqrt(Math.pow((b.getX() - a.getX()), 2) + Math.pow((b.getY() - a.getY()), 2));
     }
 
     @Override

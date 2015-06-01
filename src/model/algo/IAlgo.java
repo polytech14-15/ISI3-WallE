@@ -7,7 +7,7 @@ import model.robot.*;
 
 public abstract class IAlgo {
     
-public Map<Double, List<Node>> shortestPath(Node objective, Graph g, Robot r){
+public Map<Integer, List<Node>> shortestPath(Node objective, Graph g, Robot r){
     initFrontier(r.getCurrentNode());
     do {
         // we go through each node untill the frontier is empty (it means we visited every node
@@ -23,7 +23,7 @@ public Map<Double, List<Node>> shortestPath(Node objective, Graph g, Robot r){
 public abstract void initFrontier(Node start);
 public abstract boolean frontierIsEmpty();
 public abstract ResearchNode exploreNext();
-public abstract Map<Double, List<Node>> getSolution(Node n);
+public abstract Map<Integer, List<Node>> getSolution(Node n);
 public abstract void addToExplored(ResearchNode n);
 public abstract void expand(ResearchNode n, Graph g, Robot r);
 

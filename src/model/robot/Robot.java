@@ -1,22 +1,22 @@
 package model.robot;
 
-import java.util.ArrayList;
 import model.graph.*;
 
 public abstract class Robot {
+    
+    public static final int CAPACITY_MAX = 2;
+    public static final int SPEED = 15;
 
     protected String name;
     protected Node currentNode;
     protected int capacity;
-    protected String state;
-    public static final int SPEED = 12;
+    protected RobotState state;           
 
-    public void move(ArrayList<Node> n){
-        for(Node node : n){
-            currentNode = node;
-        }
+    public Robot(){
+        this.capacity = Robot.CAPACITY_MAX;
+        this.state = RobotState.AVAILABLE;
     }
-
+    
     public String getName() {
         return name;
     }
@@ -29,12 +29,8 @@ public abstract class Robot {
         return capacity;
     }
 
-    public String getState() {
+    public RobotState getState() {
         return state;
-    }
-
-    public static int getSPEED() {
-        return SPEED;
     }
 
     public void setName(String name) {
@@ -49,8 +45,17 @@ public abstract class Robot {
         this.capacity = capacity;
     }
 
-    public void setState(String state) {
+    public void setState(RobotState state) {
         this.state = state;
+    }
+    
+    /**
+     * Initialise le thread qui sert a deplacer le robot
+     * @param graph - La route que doit emprunter le robot
+     */
+    public void move(Graph graph){
+        this.state = RobotState.ONWAY;
+        new Thread(new RobotThread(this, graph)).start();
     }
 
     /**
@@ -61,16 +66,16 @@ public abstract class Robot {
         valueFire -= this.capacity;
         // Si le feu est eteint
         if (valueFire <= 0){
-            this.currentNode.setType(TypeNode.NORMAL.toString());
-            this.setState(RobotState.AVAILABLE.toString());
+            this.currentNode.setType(TypeNode.NORMAL);
+            this.setState(RobotState.AVAILABLE);
         }
         this.currentNode.setValueFire(valueFire);
     }
     
     /**
-     * 
-     * @param e
-     * @return 
+     * Verifie si le robot peut se deplacer sur le edge
+     * @param e - Edge
+     * @return true s'il peut, false sinon
      */
     public abstract boolean canMove(Edge e);
 }

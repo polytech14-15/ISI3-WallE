@@ -3,6 +3,7 @@ package model.algo;
 import model.graph.*;
 import model.robot.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +12,7 @@ import java.util.Stack;
 public class AlgoDepthFirst extends IAlgo {
 
     private Stack<ResearchNode> frontier;
-    private ArrayList<ResearchNode> explored;
+    private List<ResearchNode> explored;
 
     @Override
     public void initFrontier(Node start) {
@@ -37,7 +38,7 @@ public class AlgoDepthFirst extends IAlgo {
     }
 
     @Override
-    public Map<Double, List<Node>> getSolution(Node obj) {
+    public Map<Integer, List<Node>> getSolution(Node obj) {
         // Build the solution by taking the objective node and going backwards to get to the starting node 
         ResearchNode n = null;
         for (ResearchNode rn : explored) {
@@ -47,14 +48,17 @@ public class AlgoDepthFirst extends IAlgo {
             }
         }
 
-        HashMap<Double, List<Node>> res = new HashMap<>();
-        double val = n.getValue();
+        HashMap<Integer, List<Node>> res = new HashMap<>();
+        int val = n.getValue();
         ArrayList<Node> sol = new ArrayList<>();
         sol.add(n.getAssociated());
         while ((n = n.getParent()) != null) {
             // we take the parent of the objective node and its parent before etc... untill we get to the start
             sol.add(n.getAssociated());
         }
+        
+        // Inverse la liste sol
+        Collections.reverse(sol);
         res.put(val, sol);
         return res;
     }
@@ -67,7 +71,7 @@ public class AlgoDepthFirst extends IAlgo {
     @Override
     public void expand(ResearchNode parent, Graph g, Robot r) {
         // this function updates the frontier  and creates the ResearchNodes
-        ArrayList<Node> neighbours = g.getNeighbors(parent.getAssociated());
+        List<Node> neighbours = g.getNeighbors(parent.getAssociated());
         for (Node n : neighbours) {
             // for each neighbour we try to get the corresponding researchNode
 //            System.out.println("neighbour node : " + n.getId());
@@ -83,11 +87,11 @@ public class AlgoDepthFirst extends IAlgo {
                 if (rn == null) {
                     // if we're here, it means the corresponding ResearchNode doesn't exist yet.
                     // So we create it
-                    rn = new ResearchNode(n, parent, parent.getValue() + g.distance(n, parent.getAssociated()));
+                    rn = new ResearchNode(n, parent, parent.getValue() + g.getDistance(n, parent.getAssociated()));
                 } else {
                     // else, it exists, we update its value to get the minimum
-                    double previousVal = rn.getValue();
-                    double currentVal = parent.getValue() + g.distance(n, parent.getAssociated());
+                    int previousVal = rn.getValue();
+                    int currentVal = parent.getValue() + g.getDistance(n, parent.getAssociated());
                     if (previousVal > currentVal) {
                         rn.setParent(parent);
                         rn.setValue(currentVal);
@@ -95,8 +99,8 @@ public class AlgoDepthFirst extends IAlgo {
                 }
             } else {
                 // the corresponding ResearchNode exists, we update its value to get the minimum
-                double previousVal = rn.getValue();
-                double currentVal = parent.getValue() + g.distance(n, parent.getAssociated());
+                int previousVal = rn.getValue();
+                int currentVal = parent.getValue() + g.getDistance(n, parent.getAssociated());
                 if (previousVal > currentVal) {
                     rn.setParent(parent);
                     rn.setValue(currentVal);

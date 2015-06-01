@@ -6,20 +6,23 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Graph {
 
-    private ArrayList<Node> nodes = new ArrayList<>();
-    private ArrayList<Edge> edges = new ArrayList<>();
+    private List<Node> nodes;
+    private List<Edge> edges;
 
     public Graph() {
+        this.nodes = new ArrayList<>();
+        this.edges = new ArrayList<>();
     }
 
-    public ArrayList<Node> getNodes() {
+    public List<Node> getNodes() {
         return nodes;
     }
 
-    public ArrayList<Edge> getEdges() {
+    public List<Edge> getEdges() {
         return edges;
     }
     
@@ -52,12 +55,12 @@ public class Graph {
     }
 
     /**
-     * Retourne la liste des noeuds voisins du noeud a
-     * @param a
-     * @return 
+     * Recupere la liste des noeuds voisins du noeud a
+     * @param a - Noeud
+     * @return Liste des noeuds voisins du noeud
      */
-    public ArrayList<Node> getNeighbors(Node a) {
-        ArrayList<Node> neighbors = new ArrayList<>();
+    public List<Node> getNeighbors(Node a) {
+        List<Node> neighbors = new ArrayList<>();
         for (Edge edge : getEdges()) {
             if (edge.getA() == a && !neighbors.contains(edge.getB())) {
                 neighbors.add(edge.getB());
@@ -92,7 +95,24 @@ public class Graph {
         }
     }
     
-    public double distance(Node n1, Node n2){
+    /**
+     * Recupere la distance entre un noeud et un point
+     * @param n - Noeud
+     * @param x_point - Point x
+     * @param y_point - Point y
+     * @return La distance entre deux points
+     */
+    public int getDistance(Node n, int x_point, int y_point) {
+        return (int) Math.sqrt(Math.pow(n.getX() - x_point, 2) + Math.pow(n.getY()- y_point, 2));
+    }
+    
+    /**
+     * Recupere la distance entre deux noeuds
+     * @param n1 - 1er noeud
+     * @param n2 - 2eme noeud
+     * @return La distance entre les deux noeuds
+     */
+    public int getDistance(Node n1, Node n2){
         // return the weight of the edge between these 2 nodes
         Edge e = getEdge(n1, n2);
         if (e != null){
@@ -102,6 +122,12 @@ public class Graph {
         }
     }
 
+    /**
+     * Recupere le edge entre deux nodes
+     * @param n1 - Premier node
+     * @param n2 - Deuxieme node
+     * @return Le edge s'il existe, null sinon
+     */
     public Edge getEdge(Node n1, Node n2) {
         // returns the edge between the nodes n1 and n2
         for (Edge e : edges){
@@ -109,5 +135,23 @@ public class Graph {
         }
         return null;
     }
-
+    
+    /**
+     * Recupere une liste de edge qui part d'un noeud
+     * @param n - Noeud
+     * @return Liste de edge qui part du noeud
+     */
+    public List<Edge> getEdgesFromNode(Node n){
+        List<Edge> edgesFromNode = new ArrayList<>();
+        Edge e;
+        // Pour tous les noeuds voisins
+        for (Node nNeighbors : this.getNeighbors(n)){
+            e = this.getEdge(n, nNeighbors);
+            // S'il existe un edge entre le noeud de base et son noeud voisin
+            if (e != null){
+                edgesFromNode.add(e);
+            }
+        }
+        return edgesFromNode;
+    }
 }

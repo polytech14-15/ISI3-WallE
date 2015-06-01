@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 import model.graph.Edge;
 import model.graph.Node;
 import model.manager.Manager;
@@ -14,10 +16,12 @@ public class Controller extends MouseAdapter implements ActionListener {
 
     private MainFrame mainFrame;
     private Manager manager;
+    private List<Object> actions;
 
     public Controller() {
         manager = new Manager();
         mainFrame = new MainFrame(this);
+        actions = new ArrayList<>();
 //        manager.addObserver(mainFrame);
     }
 
@@ -52,12 +56,12 @@ public class Controller extends MouseAdapter implements ActionListener {
                 getMainFrame().getMap().setSelectedNode(n);
             } else {
                 Edge edge = new Edge(getMainFrame().getMap().getSelectedNode(), n, getMainFrame().getTypeEdge().getSelectedItem().toString());
-                getMainFrame().getMap().addEdge(edge);
+                actions.add(edge);
                 getMainFrame().getMap().setSelectedNode(null);
             }
         } else {
             Node n2 = new Node(new Integer(x_point).doubleValue(), new Integer(y_point).doubleValue(), getMainFrame().getTypeNode().getSelectedItem().toString());
-            getMainFrame().getMap().addNode(n2);
+            actions.add(n);
             getMainFrame().getMap().setSelectedNode(null);
         }
         getMainFrame().getMap().repaint();

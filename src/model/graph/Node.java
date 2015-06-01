@@ -5,7 +5,7 @@ public class Node {
     private Integer id;
     private Double x;
     private Double y;
-    private String type;
+    private TypeNode type;
     private boolean visited;
     private Integer valueFire;
     public static Integer previousId = 1;
@@ -14,13 +14,13 @@ public class Node {
     public Node() {
     }
 
-    public Node(Double x, Double y, String type) {
-        this.id = previousId;
+    public Node(Double x, Double y, TypeNode type) {
+        this.id = Node.previousId;
         this.x = x;
         this.y = y;
         this.type = type;
         this.visited = false;
-        this.valueFire = 0;
+        this.valueFire = this.type.equals(TypeNode.INCENDIE) ? INIT_VALUE_FIRE : 0;
         Node.previousId++;
     }
 
@@ -64,7 +64,7 @@ public class Node {
         return y;
     }
 
-    public String getType() {
+    public TypeNode getType() {
         return type;
     }
 
@@ -84,7 +84,7 @@ public class Node {
         this.y = y;
     }
 
-    public void setType(String type) {
+    public void setType(TypeNode type) {
         this.type = type;
     }
     
@@ -94,10 +94,6 @@ public class Node {
 
     public void setValueFire(Integer valueFire) {
         this.valueFire = valueFire;
-    }
-
-    public double getDistance(int x_point, int y_point) {
-        return Math.sqrt(Math.pow(x - x_point, 2) + Math.pow(y - y_point, 2));
     }
 
     @Override
