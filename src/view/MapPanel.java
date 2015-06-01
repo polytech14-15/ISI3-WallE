@@ -22,8 +22,12 @@ public class MapPanel extends JPanel {
     private Node selectedNode;
     private List<AbstractRobot> robots;
 
-    MapPanel() {
+    public MapPanel(Graph graph) {
         super();
+        this.graph = graph;
+    }
+    
+    public void paintComponent(Graphics g){
         robots = new ArrayList<AbstractRobot>();
     }
 
@@ -38,28 +42,28 @@ public class MapPanel extends JPanel {
     }
 
     public void showGraph(Graphics g) {
-        if (!getGraph().getNodes().isEmpty()) {
-            for (Iterator it = getGraph().getNodes().iterator(); it.hasNext();) {
+        if(!this.graph.getNodes().isEmpty()){
+            for (Iterator it = this.graph.getNodes().iterator(); it.hasNext();) {            
                 Node n = (Node) it.next();
-                System.out.println("Node : " + n);
-                if (n != null) {
+//                System.out.println("Node : "+n);
+                if(n!=null){
                     drawNode(n, g);
                 }
             }
         }
 
         drawSelectedNode(g);
-
-        if (!getGraph().getEdges().isEmpty()) {
-            for (Iterator it = getGraph().getEdges().iterator(); it.hasNext();) {
+        
+        if(!this.graph.getEdges().isEmpty()){
+            for (Iterator it = this.graph.getEdges().iterator(); it.hasNext();) {
                 Edge e = (Edge) it.next();
                 if (e != null) {
                     drawEdge(e, g);
                 }
             }
         }
-
-        System.out.println(getGraph().getNodes().toString());
+        
+//        System.out.println(this.graph.getNodes().toString());
     }
 
     private void drawNode(Node n, Graphics g) {
@@ -93,20 +97,6 @@ public class MapPanel extends JPanel {
         Color c = Color.BLACK;
         g.setColor(c);
         g.drawLine(e.getA().getX().intValue(), e.getA().getY().intValue(), e.getB().getX().intValue(), e.getB().getY().intValue());
-    }
-
-    /**
-     * @return the graph
-     */
-    public Graph getGraph() {
-        return graph;
-    }
-
-    /**
-     * @param graph the graph to set
-     */
-    public void setGraph(Graph graph) {
-        this.graph = graph;
     }
 
     /**

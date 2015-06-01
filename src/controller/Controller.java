@@ -4,16 +4,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 import model.graph.Edge;
+import model.graph.Graph;
 import model.graph.Node;
+import model.graph.TypeNode;
 import model.manager.Manager;
 import view.MainFrame;
 import view.MapPanel;
 
 public class Controller extends MouseAdapter implements ActionListener {
-
+    
     private MainFrame mainFrame;
     private Manager manager;
     private List<Object> actions;
@@ -27,6 +28,36 @@ public class Controller extends MouseAdapter implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        /*
+         * Quand on ajoute un feu
+         *      recupere liste des noeud du graphe du manager
+         *      choisir aleatoirement parmis les noeuds normaux
+         *      noeud.initFire();
+         *      changer type du noeud
+         */
+        
+        /*
+         * Quand on exporte xml
+         *      Mettre pause thread manager + mettre pause thread robot (si on peut) 
+         *      + exporter 
+         *      + reprendre thread robots + reprendre thread manager
+         */
+        
+        /*
+         * Quand on importe xml
+         *      Arreter thread s'il y en a en cours + charger xml + creer nouveau manager(graph,robots,algo)
+         *      + maj manager dans mainFrame + maj graph dans mapPanel + ( maj observer ?)
+         */
+        
+        /*
+         * Quand on lance la simu
+         *      Voir avec jerem la gestion de creation de robot
+         *      Ne pas oublier de setter un algo dans le manager!!!!!!
+         *      Lancer Thread manager
+         */
+       
+        
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         String c = e.getActionCommand();
         // actions des boutons du haut
         switch (c) {
@@ -73,9 +104,9 @@ public class Controller extends MouseAdapter implements ActionListener {
      * @param y_point
      * @return
      */
-    public Node clickIsInANode(int x_point, int y_point) {
-        for (Node n : getMainFrame().getMap().getGraph().getNodes()) {
-            if (n.getDistance(x_point, y_point) <= MapPanel.RADIUS) {
+    public Node clickIsInANode(int x_point, int y_point){
+        for(Node n : this.manager.getGraph().getNodes()){
+            if(this.manager.getGraph().getDistance(n, x_point, y_point) <= MapPanel.RADIUS){
                 return n;
             }
         }

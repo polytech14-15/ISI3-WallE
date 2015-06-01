@@ -169,7 +169,7 @@ public class MainFrame extends JFrame implements Observer{
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        setMap(new MapPanel());
+        setMap(new MapPanel(this.controller.getManager().getGraph()));
         getMap().setBackground(Color.white);
         getMap().setSize(new Dimension(600, 400));
         getMap().setPreferredSize(new Dimension(600, 400));
@@ -182,6 +182,21 @@ public class MainFrame extends JFrame implements Observer{
     }
 
 
+        menuItem.setActionCommand(command);
+        menuItem.addActionListener(controller);
+        if (key > 0) {
+            if (key != KeyEvent.VK_DELETE) {
+                menuItem.setAccelerator(KeyStroke.getKeyStroke(key, Event.CTRL_MASK, false));
+            } else {
+                menuItem.setAccelerator(KeyStroke.getKeyStroke(key, 0, false));
+            }
+        }
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     /**
      * @return the map
