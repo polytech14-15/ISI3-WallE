@@ -16,7 +16,7 @@ import view.MainFrame;
 import view.MapPanel;
 
 public class Controller extends MouseAdapter implements ActionListener {
-    
+
     private MainFrame mainFrame;
     private Manager manager;
     private List<Object> actions;
@@ -37,28 +37,24 @@ public class Controller extends MouseAdapter implements ActionListener {
          *      noeud.initFire();
          *      changer type du noeud
          */
-        
+
         /*
          * Quand on exporte xml
          *      Mettre pause thread manager + mettre pause thread robot (si on peut) 
          *      + exporter 
          *      + reprendre thread robots + reprendre thread manager
          */
-        
         /*
          * Quand on importe xml
          *      Arreter thread s'il y en a en cours + charger xml + creer nouveau manager(graph,robots,algo)
          *      + maj manager dans mainFrame + maj graph dans mapPanel + ( maj observer ?)
          */
-        
         /*
          * Quand on lance la simu
          *      Voir avec jerem la gestion de creation de robot
          *      Ne pas oublier de setter un algo dans le manager!!!!!!
          *      Lancer Thread manager
          */
-       
-        
         String c = e.getActionCommand();
         // actions des boutons du haut
         switch (c) {
@@ -87,9 +83,7 @@ public class Controller extends MouseAdapter implements ActionListener {
             if (getMainFrame().getMap().getSelectedNode() == null) {
                 getMainFrame().getMap().setSelectedNode(n);
             } else {
-                Edge edge = new Edge(getMainFrame().getMap().getSelectedNode(), n, TypeEdge.valueOf(getMainFrame().getTypeEdge().getSelectedItem().toString()));
-                getActions().add(edge);
-                this.manager.getGraph().addEdge(edge);
+                addEdge(getMainFrame().getMap().getSelectedNode(), n, TypeEdge.valueOf(getMainFrame().getTypeEdge().getSelectedItem().toString()));
                 getMainFrame().getMap().setSelectedNode(null);
             }
         } else {
@@ -107,9 +101,9 @@ public class Controller extends MouseAdapter implements ActionListener {
      * @param y_point
      * @return
      */
-    public Node clickIsInANode(int x_point, int y_point){
-        for(Node n : this.manager.getGraph().getNodes()){
-            if(this.manager.getGraph().getDistance(n, x_point, y_point) <= MapPanel.RADIUS){
+    public Node clickIsInANode(int x_point, int y_point) {
+        for (Node n : this.manager.getGraph().getNodes()) {
+            if (this.manager.getGraph().getDistance(n, x_point, y_point) <= MapPanel.RADIUS) {
                 return n;
             }
         }
@@ -144,7 +138,7 @@ public class Controller extends MouseAdapter implements ActionListener {
         getMainFrame().getMap().repaint();
     }
 
-    private void startSimulation() {   
+    private void startSimulation() {
         //TODO
     }
 
@@ -190,5 +184,28 @@ public class Controller extends MouseAdapter implements ActionListener {
         this.actions = actions;
     }
 
+    /**
+     * Fonction qui ajoute une arrête au graph du manager. Si l'arrête existe
+     * déjà ou a pour extrémités le même noeuds, on ne l'ajoute pas
+     */
+    private void addEdge(Node a, Node b, TypeEdge type) {
+        //Test si le noeud d'entré est le même que le noeud fils
+        if (!a.equals(b)) {
+            int i = 0;
+            boolean find = false;
+            //test si l'arrête du graph existe déjà
+            while (!find && i < manager.getGraph().getEdges().size()) {
+                if (manager.getGraph().getEdges().get(i).getA().equals(a) && manager.getGraph().getEdges().get(i).getB().equals(b)) {
+                    find = true;
+                }
+                i++;
+            }
+            if (!find) {
+                Edge edge = new Edge(a, b, type);
+                getActions().add(edge);
+                this.manager.getGraph().addEdge(edge);
+            }
+        }
+    }
 
 }

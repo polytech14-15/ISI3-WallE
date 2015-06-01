@@ -69,7 +69,7 @@ public class MapPanel extends JPanel {
         drawCircle(g, n.getX(), n.getY(), RADIUS);
         c = Color.WHITE;
         g.setColor(c);
-        g.drawString(n.getId().toString(), n.getX() - RADIUS / 2, n.getY() + RADIUS / 2);
+        g.drawString(String.valueOf(n.getId()), n.getX() - RADIUS / 2, n.getY() + RADIUS / 2);
     }
 
     private void drawSelectedNode(Graphics g) {
@@ -79,7 +79,7 @@ public class MapPanel extends JPanel {
             drawCircle(g, selectedNode.getX(), selectedNode.getY(), RADIUS);
             c = Color.WHITE;
             g.setColor(c);
-            g.drawString(selectedNode.getId().toString(), selectedNode.getX() - RADIUS / 2, selectedNode.getY() + RADIUS / 2);
+            g.drawString(String.valueOf(selectedNode.getId()), selectedNode.getX() - RADIUS / 2, selectedNode.getY() + RADIUS / 2);
         }
     }
 
