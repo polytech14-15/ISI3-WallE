@@ -89,7 +89,7 @@ public class Controller extends MouseAdapter implements ActionListener {
                 //TODO
                 Robot r;
                 Random rand = new Random();
-                int randomNum = rand.nextInt(manager.getGraph().getNodes().size() + 1);
+                int randomNum = rand.nextInt(manager.getGraph().getNodes().size());
                 switch (mainFrame.getGroupTypeRobot().getSelection().getActionCommand()) {
                     case "FeetRobot":
                         System.out.println("J'ajoute feet !");
