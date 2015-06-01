@@ -25,12 +25,9 @@ public class MapPanel extends JPanel {
     public MapPanel(Graph graph) {
         super();
         this.graph = graph;
-    }
-    
-    public void paintComponent(Graphics g){
         robots = new ArrayList<AbstractRobot>();
     }
-
+    
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 

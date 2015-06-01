@@ -88,11 +88,13 @@ public class Controller extends MouseAdapter implements ActionListener {
             } else {
                 Edge edge = new Edge(getMainFrame().getMap().getSelectedNode(), n, getMainFrame().getTypeEdge().getSelectedItem().toString());
                 actions.add(edge);
+                this.manager.getGraph().addEdge(edge);
                 getMainFrame().getMap().setSelectedNode(null);
             }
         } else {
             Node n2 = new Node(new Integer(x_point).doubleValue(), new Integer(y_point).doubleValue(), getMainFrame().getTypeNode().getSelectedItem().toString());
-            actions.add(n);
+            actions.add(n2);
+            this.manager.getGraph().addNode(n2);
             getMainFrame().getMap().setSelectedNode(null);
         }
         getMainFrame().getMap().repaint();
