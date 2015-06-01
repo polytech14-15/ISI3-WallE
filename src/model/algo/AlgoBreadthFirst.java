@@ -7,11 +7,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Stack;
 
-public class AlgoDepthFirst extends IAlgo {
+public class AlgoBreadthFirst extends IAlgo {
 
-    private Stack<ResearchNode> frontier;
+    private List<ResearchNode> frontier;
     private List<ResearchNode> explored;
 
     @Override
@@ -20,8 +19,8 @@ public class AlgoDepthFirst extends IAlgo {
         ResearchNode rnStart = new ResearchNode(start, null, 0);
         this.explored = new ArrayList<>();
 
-        this.frontier = new Stack<>();
-        frontier.push(rnStart);
+        this.frontier = new ArrayList<>();
+        frontier.add(rnStart);
     }
 
     @Override
@@ -32,8 +31,9 @@ public class AlgoDepthFirst extends IAlgo {
     @Override
     public ResearchNode exploreNext() {
         // get and remove the next Node from the frontier
-        ResearchNode next = frontier.pop();
+        ResearchNode next = frontier.get(0);
         explored.add(next);
+        frontier.remove(0);
         return next;
     }
 
