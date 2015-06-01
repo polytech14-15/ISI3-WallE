@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view;
 
 import controller.Controller;
@@ -37,38 +32,73 @@ import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 
-/**
- *
- * @author Jérémy
- */
-public class MainFrame extends JFrame implements Observer {
-    
-    public static final Dimension VGAP = new Dimension(1, 5);
+public class MainFrame extends JFrame implements Observer{
+
+        public static final Dimension VGAP = new Dimension(1, 5);
     public static final Dimension HGAP = new Dimension(5, 1);
-    
+
     private MapPanel map;
-    private Controller controller;
     private JComboBox typeRobot;
-    
-        public void quitter() {
+    private JComboBox typeEdge;
+    private JComboBox typeNode;
+    private Controller controller;
+
+    public void quitter() {
         System.exit(0);
     }
 
     public MainFrame(Controller controller) {
-        super("WallE");
         this.controller = controller;
         this.logoInit();
         this.setVisible(true);
-        
-        addWindowListener(new WindowAdapter() {
+
+        this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent arg0) {
                 super.windowClosing(arg0);
-                System.exit(0);
             }
         });
     }
-    
+
+
+    public void addMenuItem(JMenu m, String label, String command, int key) {
+        JMenuItem menuItem;
+        menuItem = new JMenuItem(label);
+        m.add(menuItem);
+
+        menuItem.setActionCommand(command);
+        menuItem.addActionListener(controller);
+        if (key > 0) {
+            if (key != KeyEvent.VK_DELETE) {
+                menuItem.setAccelerator(KeyStroke.getKeyStroke(key, Event.CTRL_MASK, false));
+            } else {
+                menuItem.setAccelerator(KeyStroke.getKeyStroke(key, 0, false));
+            }
+        }
+    }
+
+    //utilitaires pour installer des boutons et des menus
+    public void addButton(JComponent p, String name, String tooltiptext, String imageName) {
+        JButton b;
+        if ((imageName == null) || (imageName.equals(""))) {
+            b = (JButton) p.add(new JButton(name));
+        } else {
+            java.net.URL u = this.getClass().getResource(imageName);
+            if (u != null) {
+                ImageIcon im = new ImageIcon(u);
+                b = (JButton) p.add(new JButton(im));
+            } else {
+                b = (JButton) p.add(new JButton(name));
+            }
+            b.setActionCommand(name);
+        }
+        b.setToolTipText(tooltiptext);
+        b.setBorder(BorderFactory.createRaisedBevelBorder());
+        b.setMargin(new Insets(0, 0, 0, 0));
+        b.addActionListener(controller);
+    }
+
+
     public void logoInit() {
         getContentPane().setLayout(new BorderLayout(10, 10));
 
@@ -79,28 +109,37 @@ public class MainFrame extends JFrame implements Observer {
 
         getContentPane().add(buttonPanel, BorderLayout.EAST);
 
-        addButton(toolBar, "Ajouter", "Ajouter", null);
+        addButton(toolBar, "Export", "Export", null);
+        addButton(toolBar, "Back", "Back", null);
+        addButton(toolBar, "Play", "Play", null);
+//
+//        toolBar.add(Box.createRigidArea(HGAP));
 
-        toolBar.add(Box.createRigidArea(HGAP));
-
-        String[] typeRobots = {"a", "b", "c"};
-
+//        String[] typeRobots = {"a", "b", "c"};
         // Create the combo box
+//        toolBar.add(Box.createRigidArea(HGAP));
+//        JLabel typeRobot = new JLabel("   Type : ");
+//        toolBar.add(typeRobot);
+//        setTypeRobot(new JComboBox(typeRobots));
+//        toolBar.add(getTypeRobot());
         toolBar.add(Box.createRigidArea(HGAP));
-        JLabel colorLabel = new JLabel("   Type : ");
-        toolBar.add(colorLabel);
-        setTypeRobot(new JComboBox(typeRobots));
-        toolBar.add(getTypeRobot());
 
-        getTypeRobot().addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                JComboBox cb = (JComboBox) e.getSource();
-                int n = cb.getSelectedIndex();
-                //courante.setColor(n);
-            }
-        });
-        
-      
+        // Ajoute le type des arrêtes
+        String[] typeEdge = {"a", "b", "c"};
+        toolBar.add(Box.createRigidArea(HGAP));
+        JLabel typeEdgeLabel = new JLabel("   Type arrêtes : ");
+        toolBar.add(typeEdgeLabel);
+        setTypeEdge(new JComboBox(typeEdge));
+        toolBar.add(getTypeEdge());
+
+        // Ajoute le type des noeuds
+        String[] typeNode = {"1", "2", "3"};
+        toolBar.add(Box.createRigidArea(HGAP));
+        JLabel typeNodeLabel = new JLabel("   Type noeuds : ");
+        toolBar.add(typeNodeLabel);
+        setTypeNode(new JComboBox(typeNode));
+        toolBar.add(getTypeNode());
+
         // Menus
         JMenuBar menubar = new JMenuBar();
         setJMenuBar(menubar);    // on installe le menu bar
@@ -132,48 +171,8 @@ public class MainFrame extends JFrame implements Observer {
         pack();
         setVisible(true);
     }
-    
-    //utilitaires pour installer des boutons et des menus
-    public void addButton(JComponent p, String name, String tooltiptext, String imageName) {
-        JButton b;
-        if ((imageName == null) || (imageName.equals(""))) {
-            b = (JButton) p.add(new JButton(name));
-        } else {
-            java.net.URL u = this.getClass().getResource(imageName);
-            if (u != null) {
-                ImageIcon im = new ImageIcon(u);
-                b = (JButton) p.add(new JButton(im));
-            } else {
-                b = (JButton) p.add(new JButton(name));
-            }
-            b.setActionCommand(name);
-        }
-        b.setToolTipText(tooltiptext);
-        b.setBorder(BorderFactory.createRaisedBevelBorder());
-        b.setMargin(new Insets(0, 0, 0, 0));
-        b.addActionListener(controller);
-    }
 
-    public void addMenuItem(JMenu m, String label, String command, int key) {
-        JMenuItem menuItem;
-        menuItem = new JMenuItem(label);
-        m.add(menuItem);
 
-        menuItem.setActionCommand(command);
-        menuItem.addActionListener(controller);
-        if (key > 0) {
-            if (key != KeyEvent.VK_DELETE) {
-                menuItem.setAccelerator(KeyStroke.getKeyStroke(key, Event.CTRL_MASK, false));
-            } else {
-                menuItem.setAccelerator(KeyStroke.getKeyStroke(key, 0, false));
-            }
-        }
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     /**
      * @return the map
@@ -202,5 +201,38 @@ public class MainFrame extends JFrame implements Observer {
     public void setTypeRobot(JComboBox typeRobot) {
         this.typeRobot = typeRobot;
     }
-    
+
+    /**
+     * @return the typeEdge
+     */
+    public JComboBox getTypeEdge() {
+        return typeEdge;
+    }
+
+    /**
+     * @param typeEdge the typeEdge to set
+     */
+    public void setTypeEdge(JComboBox typeEdge) {
+        this.typeEdge = typeEdge;
+    }
+
+    /**
+     * @return the typeNode
+     */
+    public JComboBox getTypeNode() {
+        return typeNode;
+    }
+
+    /**
+     * @param typeNode the typeNode to set
+     */
+    public void setTypeNode(JComboBox typeNode) {
+        this.typeNode = typeNode;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

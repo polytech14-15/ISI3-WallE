@@ -8,7 +8,7 @@ public class Node {
     private String type;
     private boolean visited;
     private Integer valueFire;
-    private static Integer previousId = 1;
+    public static Integer previousId = 1;
     private static final Integer INIT_VALUE_FIRE = 15;
 
     public Node() {
