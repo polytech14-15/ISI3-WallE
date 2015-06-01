@@ -36,14 +36,15 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
+import model.graph.TypeEdge;
 
 /**
  *
  * @author Jérémy
  */
-public class MainFrame extends JFrame implements Observer{
+public class MainFrame extends JFrame implements Observer {
 
-        public static final Dimension VGAP = new Dimension(1, 5);
+    public static final Dimension VGAP = new Dimension(1, 5);
     public static final Dimension HGAP = new Dimension(5, 1);
 
     private MapPanel map;
@@ -68,7 +69,6 @@ public class MainFrame extends JFrame implements Observer{
             }
         });
     }
-
 
     public void addMenuItem(JMenu m, String label, String command, int key) {
         JMenuItem menuItem;
@@ -107,7 +107,6 @@ public class MainFrame extends JFrame implements Observer{
         b.addActionListener(controller);
     }
 
-
     public void logoInit() {
         getContentPane().setLayout(new BorderLayout(10, 10));
 
@@ -134,38 +133,21 @@ public class MainFrame extends JFrame implements Observer{
         toolBar.add(Box.createRigidArea(HGAP));
 
         // Ajoute le type des arrêtes
-        String[] typeEdge = {"a", "b", "c"};
-        toolBar.add(Box.createRigidArea(HGAP));
+        String[] typeEdge = {"PLAT", "ESCARPE"};
         JLabel typeEdgeLabel = new JLabel("   Type arrêtes : ");
         toolBar.add(typeEdgeLabel);
         setTypeEdge(new JComboBox(typeEdge));
         toolBar.add(getTypeEdge());
 
         // Ajoute le type des noeuds
-        String[] typeNode = {"1", "2", "3"};
+        String[] typeNode = {"NORMAL", "INCENDIE"};
         toolBar.add(Box.createRigidArea(HGAP));
         JLabel typeNodeLabel = new JLabel("   Type noeuds : ");
         toolBar.add(typeNodeLabel);
         setTypeNode(new JComboBox(typeNode));
         toolBar.add(getTypeNode());
 
-        // Menus
-        JMenuBar menubar = new JMenuBar();
-        setJMenuBar(menubar);    // on installe le menu bar
-        JMenu menuFile = new JMenu("File"); // on installe le premier menu
-        menubar.add(menuFile);
-
-        addMenuItem(menuFile, "Effacer", "Effacer", KeyEvent.VK_N);
-        addMenuItem(menuFile, "Quitter", "Quitter", KeyEvent.VK_Q);
-
-        JMenu menuCommandes = new JMenu("Commandes"); // on installe le premier menu
-        menubar.add(menuCommandes);
-        addMenuItem(menuCommandes, "Avancer", "Avancer", -1);
-
-        JMenu menuHelp = new JMenu("Aide"); // on installe le premier menu
-        menubar.add(menuHelp);
-        addMenuItem(menuHelp, "Aide", "Help", -1);
-        addMenuItem(menuHelp, "A propos", "About", -1);
+        
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -179,18 +161,6 @@ public class MainFrame extends JFrame implements Observer{
 
         pack();
         setVisible(true);
-    }
-
-
-        menuItem.setActionCommand(command);
-        menuItem.addActionListener(controller);
-        if (key > 0) {
-            if (key != KeyEvent.VK_DELETE) {
-                menuItem.setAccelerator(KeyStroke.getKeyStroke(key, Event.CTRL_MASK, false));
-            } else {
-                menuItem.setAccelerator(KeyStroke.getKeyStroke(key, 0, false));
-            }
-        }
     }
 
     @Override
@@ -252,11 +222,6 @@ public class MainFrame extends JFrame implements Observer{
      */
     public void setTypeNode(JComboBox typeNode) {
         this.typeNode = typeNode;
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

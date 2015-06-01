@@ -4,10 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
 import model.graph.Edge;
 import model.graph.Graph;
 import model.graph.Node;
+import model.graph.TypeEdge;
 import model.graph.TypeNode;
 import model.manager.Manager;
 import view.MainFrame;
@@ -23,7 +25,7 @@ public class Controller extends MouseAdapter implements ActionListener {
         manager = new Manager();
         mainFrame = new MainFrame(this);
         actions = new ArrayList<>();
-//        manager.addObserver(mainFrame);
+        manager.addObserver(mainFrame);
     }
 
     @Override
@@ -57,7 +59,6 @@ public class Controller extends MouseAdapter implements ActionListener {
          */
        
         
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         String c = e.getActionCommand();
         // actions des boutons du haut
         switch (c) {
@@ -86,14 +87,14 @@ public class Controller extends MouseAdapter implements ActionListener {
             if (getMainFrame().getMap().getSelectedNode() == null) {
                 getMainFrame().getMap().setSelectedNode(n);
             } else {
-                Edge edge = new Edge(getMainFrame().getMap().getSelectedNode(), n, getMainFrame().getTypeEdge().getSelectedItem().toString());
-                actions.add(edge);
+                Edge edge = new Edge(getMainFrame().getMap().getSelectedNode(), n, TypeEdge.valueOf(getMainFrame().getTypeEdge().getSelectedItem().toString()));
+                getActions().add(edge);
                 this.manager.getGraph().addEdge(edge);
                 getMainFrame().getMap().setSelectedNode(null);
             }
         } else {
-            Node n2 = new Node(new Integer(x_point).doubleValue(), new Integer(y_point).doubleValue(), getMainFrame().getTypeNode().getSelectedItem().toString());
-            actions.add(n2);
+            Node n2 = new Node(new Integer(x_point).doubleValue(), new Integer(y_point).doubleValue(), TypeNode.valueOf(getMainFrame().getTypeNode().getSelectedItem().toString()));
+            getActions().add(n2);
             this.manager.getGraph().addNode(n2);
             getMainFrame().getMap().setSelectedNode(null);
         }
@@ -116,37 +117,35 @@ public class Controller extends MouseAdapter implements ActionListener {
     }
 
     private void saveGraph() {
-        getMainFrame().getMap().getGraph().printXML();
+        manager.getGraph().printXML();
     }
 
     private void backAction() {
         Node n;
         Edge e;
         Object c;
-        if (getMainFrame().getMap().getActions() != null && !mainFrame.getMap().getActions().isEmpty()) {
-            c = getMainFrame().getMap().getActions().get(getMainFrame().getMap().getActions().size() - 1);
+        if (getActions() != null && !getActions().isEmpty()) {
+            c = getActions().get(getActions().size() - 1);
             if (c instanceof Edge) {
                 e = (Edge) c;
-                if (getMainFrame().getMap().getGraph().getEdges().contains(e)) {
-                    getMainFrame().getMap().getGraph().getEdges().remove(e);
-                    getMainFrame().getMap().getActions().remove(getMainFrame().getMap().getActions().size() - 1);
+                if (manager.getGraph().getEdges().contains(e)) {
+                    manager.getGraph().getEdges().remove(e);
+                    getActions().remove(getActions().size() - 1);
                 }
             } else if (c instanceof Node) {
                 n = (Node) c;
-                if (getMainFrame().getMap().getGraph().getNodes().contains(n)) {
-                    getMainFrame().getMap().getGraph().getNodes().remove(n);
-                    getMainFrame().getMap().getActions().remove(getMainFrame().getMap().getActions().size() - 1);
+                if (manager.getGraph().getNodes().contains(n)) {
+                    manager.getGraph().getNodes().remove(n);
+                    getActions().remove(getActions().size() - 1);
                     Node.previousId--;
                 }
             }
         }
-        System.out.println("liste : " + getMainFrame().getMap().getActions().toString());
         getMainFrame().getMap().repaint();
     }
 
     private void startSimulation() {   
         //TODO
-        manager.setGraph(mainFrame.getMap().getGraph());
     }
 
     /**
@@ -175,6 +174,20 @@ public class Controller extends MouseAdapter implements ActionListener {
      */
     public void setManager(Manager manager) {
         this.manager = manager;
+    }
+
+    /**
+     * @return the actions
+     */
+    public List<Object> getActions() {
+        return actions;
+    }
+
+    /**
+     * @param actions the actions to set
+     */
+    public void setActions(List<Object> actions) {
+        this.actions = actions;
     }
 
 

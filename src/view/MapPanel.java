@@ -110,19 +110,6 @@ public class MapPanel extends JPanel {
         this.selectedNode = selectedNode;
     }
 
-    /**
-     * @return the actions
-     */
-    public List<Object> getActions() {
-        return actions;
-    }
-
-    /**
-     * @param actions the actions to set
-     */
-    public void setActions(List<Object> actions) {
-        this.actions = actions;
-    }
 
     public void addRobot(AbstractRobot robot) {
         if (getRobots() != null) {
@@ -132,7 +119,7 @@ public class MapPanel extends JPanel {
 
     private void showRobots(Graphics g) {
         for (AbstractRobot robot : getRobots()) {
-            if (super.getGraph().getNodes().contains(robot.getRobot().getCurrentNode())) {
+            if (this.graph.getNodes().contains(robot.getRobot().getCurrentNode())) {
                 robot.draw(g);
             }
         }
