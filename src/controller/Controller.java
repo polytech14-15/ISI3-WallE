@@ -6,26 +6,36 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Random;
 import model.graph.Edge;
-import model.graph.Graph;
 import model.graph.Node;
 import model.graph.TypeEdge;
 import model.graph.TypeNode;
 import model.manager.Manager;
+import model.robot.FeetRobot;
+import model.robot.OffRoadRobot;
+import model.robot.Robot;
+import model.robot.TrackedRobot;
 import view.MainFrame;
+import view.MainFrame1;
 import view.MapPanel;
+import view.robot.ViewFeetRobot;
+import view.robot.ViewOffRoadRobot;
+import view.robot.ViewTrackedRobot;
 
 public class Controller extends MouseAdapter implements ActionListener {
 
     private MainFrame mainFrame;
     private Manager manager;
     private List<Object> actions;
+    private boolean onSimulation;
 
     public Controller() {
         manager = new Manager();
         mainFrame = new MainFrame(this);
         actions = new ArrayList<>();
         manager.addObserver(mainFrame);
+        onSimulation = false;
     }
 
     @Override
@@ -68,6 +78,51 @@ public class Controller extends MouseAdapter implements ActionListener {
 
             case "Play":
                 startSimulation();
+                break;
+            case "Stop":
+                //TODO
+                mainFrame.getPanel1().setVisible(true);
+                mainFrame.repaint();
+                break;
+
+            case "Add":
+                //TODO
+                Robot r;
+                Random rand = new Random();
+                int randomNum = rand.nextInt(manager.getGraph().getNodes().size() + 1);
+                switch (mainFrame.getGroupTypeRobot().getSelection().getActionCommand()) {
+                    case "FeetRobot":
+                        System.out.println("J'ajoute feet !");
+                        r = new FeetRobot();
+                        r.setCurrentNode(manager.getGraph().getNodes().get(randomNum));
+                        r.setName(mainFrame.getTextName().getText());
+                        mainFrame.getMap().addRobot(new ViewFeetRobot(r));
+                        manager.addRobot(r);
+                        break;
+                    case "OffRoadRobot":
+                        System.out.println("J'ajoute offroad !");
+
+                        r = new OffRoadRobot();
+                        r.setCurrentNode(manager.getGraph().getNodes().get(randomNum));
+                        r.setName(mainFrame.getTextName().getText());
+                        mainFrame.getMap().addRobot(new ViewOffRoadRobot(r));
+                        manager.addRobot(r);
+                        break;
+                    case "TrackedRobot":
+                        System.out.println("J'ajoute tracked !");
+
+                        r = new TrackedRobot();
+                        r.setCurrentNode(manager.getGraph().getNodes().get(randomNum));
+                        r.setName(mainFrame.getTextName().getText());
+                        mainFrame.getMap().addRobot(new ViewTrackedRobot(r));
+                        manager.addRobot(r);
+                        break;
+                    case "Fire":
+                        System.out.println("J'ajoute feu !");
+                        manager.getGraph().getNodes().get(randomNum).setValueFire(Node.INIT_VALUE_FIRE);
+                        break;
+                }
+                mainFrame.paintAll();
                 break;
 
         }
@@ -140,6 +195,11 @@ public class Controller extends MouseAdapter implements ActionListener {
 
     private void startSimulation() {
         //TODO
+        setOnSimulation(true);
+        mainFrame.getPanel1().setVisible(false);
+        mainFrame.getPanel2().setVisible(true);
+        mainFrame.validate();
+        mainFrame.paintAll();
     }
 
     /**
@@ -206,6 +266,21 @@ public class Controller extends MouseAdapter implements ActionListener {
                 this.manager.getGraph().addEdge(edge);
             }
         }
+    }
+
+    /**
+     * @return the onSimulation
+     */
+    public boolean isOnSimulation() {
+        return onSimulation;
+    }
+
+    /**
+     * @param onSimulation the onSimulation to set
+     */
+    public void setOnSimulation(boolean onSimulation) {
+        mainFrame.repaint();
+        this.onSimulation = onSimulation;
     }
 
 }

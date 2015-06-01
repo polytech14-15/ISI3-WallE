@@ -2,20 +2,25 @@ package view.robot;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import model.robot.Robot;
 
 
 public class ViewTrackedRobot extends AbstractRobot{
 
+    public ViewTrackedRobot(Robot r) {
+        super(r);
+    }
+
     @Override
     public void draw(Graphics g) {
         g.setColor(Color.red);
-        g.drawOval(super.getRobot().getCurrentNode().getX(), super.getRobot().getCurrentNode().getY(), 10, 10);
+        g.fillOval(super.getRobot().getCurrentNode().getX(), super.getRobot().getCurrentNode().getY(), 20, 20);
         g.setColor(Color.blue);
-        g.drawOval(super.getRobot().getCurrentNode().getX(), super.getRobot().getCurrentNode().getY(), 8, 8);
+        g.fillOval(super.getRobot().getCurrentNode().getX(), super.getRobot().getCurrentNode().getY(), 15, 15);
         g.setColor(Color.yellow);
-        g.drawOval(super.getRobot().getCurrentNode().getX(), super.getRobot().getCurrentNode().getY(), 6, 6);
+        g.fillOval(super.getRobot().getCurrentNode().getX(), super.getRobot().getCurrentNode().getY(), 6, 6);
         g.setColor(Color.pink);
-        g.drawOval(super.getRobot().getCurrentNode().getX(), super.getRobot().getCurrentNode().getY(), 4, 4);
+        g.fillOval(super.getRobot().getCurrentNode().getX(), super.getRobot().getCurrentNode().getY(), 4, 4);
     }
     
 }

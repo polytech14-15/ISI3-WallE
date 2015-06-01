@@ -3,7 +3,7 @@ package model.graph;
 public class Node {
 
     public static Integer previousId = 1;
-    private static final Integer INIT_VALUE_FIRE = 15;
+    public static final Integer INIT_VALUE_FIRE = 15;
     
     private int id;
     private int x;

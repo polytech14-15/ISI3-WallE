@@ -6,166 +6,301 @@
 package view;
 
 import controller.Controller;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Event;
-import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import static javax.swing.JFrame.EXIT_ON_CLOSE;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.JToolBar;
-import javax.swing.KeyStroke;
-import model.graph.TypeEdge;
 
 /**
  *
  * @author Jérémy
  */
-public class MainFrame extends JFrame implements Observer {
-
-    public static final Dimension VGAP = new Dimension(1, 5);
-    public static final Dimension HGAP = new Dimension(5, 1);
-
-    private MapPanel map;
-    private JComboBox typeRobot;
-    private JComboBox typeEdge;
-    private JComboBox typeNode;
+public class MainFrame extends javax.swing.JFrame implements Observer {
+    
     private Controller controller;
+    private MapPanel map;
 
-    public void quitter() {
-        System.exit(0);
-    }
-
+    /**
+     * Creates new form Frame
+     *
+     * @param controller
+     */
     public MainFrame(Controller controller) {
+        applyTheme();
+        
         this.controller = controller;
-        this.logoInit();
-        this.setVisible(true);
-
+        this.map = new MapPanel(this.getController().getManager().getGraph());
+        initComponents();
+        this.map.setPreferredSize(new Dimension(scrollMap.getSize()));
+        scrollMap.setViewportView(this.map);
+        scrollMap.setBackground(Color.white);
+        
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent arg0) {
                 super.windowClosing(arg0);
             }
         });
-    }
-
-    public void addMenuItem(JMenu m, String label, String command, int key) {
-        JMenuItem menuItem;
-        menuItem = new JMenuItem(label);
-        m.add(menuItem);
-
-        menuItem.setActionCommand(command);
-        menuItem.addActionListener(controller);
-        if (key > 0) {
-            if (key != KeyEvent.VK_DELETE) {
-                menuItem.setAccelerator(KeyStroke.getKeyStroke(key, Event.CTRL_MASK, false));
-            } else {
-                menuItem.setAccelerator(KeyStroke.getKeyStroke(key, 0, false));
-            }
-        }
-    }
-
-    //utilitaires pour installer des boutons et des menus
-    public void addButton(JComponent p, String name, String tooltiptext, String imageName) {
-        JButton b;
-        if ((imageName == null) || (imageName.equals(""))) {
-            b = (JButton) p.add(new JButton(name));
-        } else {
-            java.net.URL u = this.getClass().getResource(imageName);
-            if (u != null) {
-                ImageIcon im = new ImageIcon(u);
-                b = (JButton) p.add(new JButton(im));
-            } else {
-                b = (JButton) p.add(new JButton(name));
-            }
-            b.setActionCommand(name);
-        }
-        b.setToolTipText(tooltiptext);
-        b.setBorder(BorderFactory.createRaisedBevelBorder());
-        b.setMargin(new Insets(0, 0, 0, 0));
-        b.addActionListener(controller);
-    }
-
-    public void logoInit() {
-        getContentPane().setLayout(new BorderLayout(10, 10));
-
-        // Boutons
-        JToolBar toolBar = new JToolBar();
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.add(toolBar);
-
-        getContentPane().add(buttonPanel, BorderLayout.EAST);
-
-        addButton(toolBar, "Export", "Export", null);
-        addButton(toolBar, "Back", "Back", null);
-        addButton(toolBar, "Play", "Play", null);
-//
-//        toolBar.add(Box.createRigidArea(HGAP));
-
-//        String[] typeRobots = {"a", "b", "c"};
-        // Create the combo box
-//        toolBar.add(Box.createRigidArea(HGAP));
-//        JLabel typeRobot = new JLabel("   Type : ");
-//        toolBar.add(typeRobot);
-//        setTypeRobot(new JComboBox(typeRobots));
-//        toolBar.add(getTypeRobot());
-        toolBar.add(Box.createRigidArea(HGAP));
-
-        // Ajoute le type des arrêtes
-        String[] typeEdge = {"PLAT", "ESCARPE"};
-        JLabel typeEdgeLabel = new JLabel("   Type arrêtes : ");
-        toolBar.add(typeEdgeLabel);
-        setTypeEdge(new JComboBox(typeEdge));
-        toolBar.add(getTypeEdge());
-
-        // Ajoute le type des noeuds
-        String[] typeNode = {"NORMAL", "INCENDIE"};
-        toolBar.add(Box.createRigidArea(HGAP));
-        JLabel typeNodeLabel = new JLabel("   Type noeuds : ");
-        toolBar.add(typeNodeLabel);
-        setTypeNode(new JComboBox(typeNode));
-        toolBar.add(getTypeNode());
-
         
-
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        
+        completJCombo();
+        
+        this.setVisible(true);
+        btnBack.addActionListener(this.controller);
+        btnExport.addActionListener(this.controller);
+        btnPlay.addActionListener(this.controller);
+        btnAddElement.addActionListener(this.controller);
+        getMap().addMouseListener(this.controller);
+        
+        radioBtnFeet.setActionCommand(radioBtnFeet.getText());
+        radioBtnOffRoad.setActionCommand(radioBtnOffRoad.getText());
+        radioBtnTrackedRobot.setActionCommand(radioBtnTrackedRobot.getText());
+        radioBtnFire.setActionCommand(radioBtnFire.getText());
+        groupTypeRobot.add(radioBtnFeet);
+        groupTypeRobot.add(radioBtnOffRoad);
+        groupTypeRobot.add(radioBtnTrackedRobot);
+        groupTypeRobot.add(radioBtnFire);
+        radioBtnFeet.setSelected(true);
+    }
 
-        setMap(new MapPanel(this.controller.getManager().getGraph()));
-        getMap().setBackground(Color.white);
-        getMap().setSize(new Dimension(600, 400));
-        getMap().setPreferredSize(new Dimension(600, 400));
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
 
-        getContentPane().add(getMap(), "Center");
-        getMap().addMouseListener(controller);
+        groupTypeRobot = new javax.swing.ButtonGroup();
+        panel1 = new java.awt.Panel();
+        typeEdge = new javax.swing.JComboBox();
+        typeNode = new javax.swing.JComboBox();
+        labelTypeEdge = new javax.swing.JLabel();
+        labelTypeNode = new javax.swing.JLabel();
+        btnExport = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
+        btnPlay = new javax.swing.JButton();
+        panel2 = new java.awt.Panel();
+        btnStop = new javax.swing.JButton();
+        radioBtnOffRoad = new javax.swing.JRadioButton();
+        radioBtnFeet = new javax.swing.JRadioButton();
+        radioBtnTrackedRobot = new javax.swing.JRadioButton();
+        labelTypeRobot = new javax.swing.JLabel();
+        radioBtnFire = new javax.swing.JRadioButton();
+        btnAddElement = new javax.swing.JButton();
+        labelName = new javax.swing.JLabel();
+        textName = new javax.swing.JTextField();
+        scrollMap = new javax.swing.JScrollPane();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        typeNode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                typeNodeActionPerformed(evt);
+            }
+        });
+
+        labelTypeEdge.setText("Type edge : ");
+
+        labelTypeNode.setText("Type node : ");
+
+        btnExport.setText("Export");
+        btnExport.setActionCommand("Export");
+
+        btnBack.setText("Back");
+        btnBack.setActionCommand("Back");
+
+        btnPlay.setText("Play");
+
+        javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
+        panel1.setLayout(panel1Layout);
+        panel1Layout.setHorizontalGroup(
+            panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel1Layout.createSequentialGroup()
+                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnExport)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnBack))
+                    .addGroup(panel1Layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelTypeEdge)
+                            .addComponent(labelTypeNode))))
+                .addGap(18, 18, 18)
+                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(typeNode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(typeEdge, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPlay))
+                .addContainerGap(32, Short.MAX_VALUE))
+        );
+        panel1Layout.setVerticalGroup(
+            panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel1Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnExport)
+                    .addComponent(btnBack)
+                    .addComponent(btnPlay))
+                .addGap(39, 39, 39)
+                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(typeEdge, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelTypeEdge))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(typeNode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelTypeNode))
+                .addGap(55, 55, 55))
+        );
+
+        btnStop.setText("Stop");
+        btnStop.setActionCommand("Stop");
+
+        radioBtnOffRoad.setText("OffRoadRobot");
+
+        radioBtnFeet.setText("FeetRobot");
+
+        radioBtnTrackedRobot.setText("TrackedRobot");
+
+        labelTypeRobot.setText("Type robot : ");
+
+        radioBtnFire.setText("Fire");
+
+        btnAddElement.setText("Add");
+        btnAddElement.setActionCommand("Add");
+
+        labelName.setText("Name :");
+
+        javax.swing.GroupLayout panel2Layout = new javax.swing.GroupLayout(panel2);
+        panel2.setLayout(panel2Layout);
+        panel2Layout.setHorizontalGroup(
+            panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel2Layout.createSequentialGroup()
+                .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnStop))
+                    .addGroup(panel2Layout.createSequentialGroup()
+                        .addGap(73, 73, 73)
+                        .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(radioBtnFeet)
+                            .addComponent(radioBtnOffRoad)
+                            .addComponent(radioBtnTrackedRobot)
+                            .addComponent(radioBtnFire)
+                            .addGroup(panel2Layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addComponent(btnAddElement))
+                            .addComponent(labelTypeRobot)))
+                    .addGroup(panel2Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(labelName)
+                        .addGap(18, 18, 18)
+                        .addComponent(textName, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panel2Layout.setVerticalGroup(
+            panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel2Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(btnStop)
+                .addGap(18, 18, 18)
+                .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelName)
+                    .addComponent(textName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addComponent(labelTypeRobot)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(radioBtnOffRoad)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(radioBtnFeet)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(radioBtnTrackedRobot)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(radioBtnFire)
+                .addGap(18, 18, 18)
+                .addComponent(btnAddElement)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(scrollMap, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(panel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(scrollMap)
+        );
 
         pack();
-        setVisible(true);
-    }
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void typeNodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeNodeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_typeNodeActionPerformed
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddElement;
+    private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnExport;
+    private javax.swing.JButton btnPlay;
+    private javax.swing.JButton btnStop;
+    private javax.swing.ButtonGroup groupTypeRobot;
+    private javax.swing.JLabel labelName;
+    private javax.swing.JLabel labelTypeEdge;
+    private javax.swing.JLabel labelTypeNode;
+    private javax.swing.JLabel labelTypeRobot;
+    private java.awt.Panel panel1;
+    private java.awt.Panel panel2;
+    private javax.swing.JRadioButton radioBtnFeet;
+    private javax.swing.JRadioButton radioBtnFire;
+    private javax.swing.JRadioButton radioBtnOffRoad;
+    private javax.swing.JRadioButton radioBtnTrackedRobot;
+    private javax.swing.JScrollPane scrollMap;
+    private javax.swing.JTextField textName;
+    private javax.swing.JComboBox typeEdge;
+    private javax.swing.JComboBox typeNode;
+    // End of variables declaration//GEN-END:variables
 
     @Override
     public void update(Observable o, Object arg) {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+    }
+    
+    public void paintAll() {
+        panel1.repaint();
+        panel2.repaint();
+        map.repaint();                
+    }
+
+    /**
+     * @return the controller
+     */
+    public Controller getController() {
+        return controller;
+    }
+
+    /**
+     * @param controller the controller to set
+     */
+    public void setController(Controller controller) {
+        this.controller = controller;
     }
 
     /**
@@ -183,45 +318,108 @@ public class MainFrame extends JFrame implements Observer {
     }
 
     /**
-     * @return the typeRobot
-     */
-    public JComboBox getTypeRobot() {
-        return typeRobot;
-    }
-
-    /**
-     * @param typeRobot the typeRobot to set
-     */
-    public void setTypeRobot(JComboBox typeRobot) {
-        this.typeRobot = typeRobot;
-    }
-
-    /**
      * @return the typeEdge
      */
-    public JComboBox getTypeEdge() {
+    public javax.swing.JComboBox getTypeEdge() {
         return typeEdge;
     }
 
     /**
      * @param typeEdge the typeEdge to set
      */
-    public void setTypeEdge(JComboBox typeEdge) {
+    public void setTypeEdge(javax.swing.JComboBox typeEdge) {
         this.typeEdge = typeEdge;
     }
 
     /**
      * @return the typeNode
      */
-    public JComboBox getTypeNode() {
+    public javax.swing.JComboBox getTypeNode() {
         return typeNode;
     }
 
     /**
      * @param typeNode the typeNode to set
      */
-    public void setTypeNode(JComboBox typeNode) {
+    public void setTypeNode(javax.swing.JComboBox typeNode) {
         this.typeNode = typeNode;
     }
+    
+    private void applyTheme() {
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void completJCombo() {
+        String[] typeNodeString = {"NORMAL", "INCENDIE"};
+        typeNode.addItem("NORMAL");
+        typeNode.addItem("INCENDIE");
+        String[] typeEdgeString = {"PLAT", "ESCARPE"};
+        typeEdge.addItem("PLAT");
+        typeEdge.addItem("ESCARPE");
+    }
 
+    /**
+     * @return the panel1
+     */
+    public java.awt.Panel getPanel1() {
+        return panel1;
+    }
+
+    /**
+     * @param panel1 the panel1 to set
+     */
+    public void setPanel1(java.awt.Panel panel1) {
+        this.panel1 = panel1;
+    }
+
+    /**
+     * @return the panel2
+     */
+    public java.awt.Panel getPanel2() {
+        return this.panel2;
+    }
+
+    /**
+     * @param panel2 the panel2 to set
+     */
+    public void setPanel2(java.awt.Panel panel2) {
+        this.panel2 = panel2;
+    }
+
+    /**
+     * @return the groupTypeRobot
+     */
+    public javax.swing.ButtonGroup getGroupTypeRobot() {
+        return groupTypeRobot;
+    }
+
+    /**
+     * @param groupTypeRobot the groupTypeRobot to set
+     */
+    public void setGroupTypeRobot(javax.swing.ButtonGroup groupTypeRobot) {
+        this.groupTypeRobot = groupTypeRobot;
+    }
+
+    /**
+     * @return the textName
+     */
+    public javax.swing.JTextField getTextName() {
+        return textName;
+    }
+
+    /**
+     * @param textName the textName to set
+     */
+    public void setTextName(javax.swing.JTextField textName) {
+        this.textName = textName;
+    }
 }

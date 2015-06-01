@@ -7,6 +7,10 @@ import model.robot.Robot;
 public abstract class AbstractRobot {
     private Robot robot;
     
+    public AbstractRobot (Robot r){
+        this.robot = r;
+    }
+    
     public abstract void draw(Graphics g);
 
     /**

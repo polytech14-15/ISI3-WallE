@@ -1,7 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <osm>
- <node id="1" x="300.0" y="103.0" type="3" />
- <node id="2" x="373.0" y="201.0" type="3" />
- <node id="3" x="152.0" y="221.0" type="3" />
- <edge nd1="3" nd2="2" type="b" />
+ <node id="1" x="10" y="10" type="NORMAL" />
+ <node id="2" x="80" y="10" type="NORMAL" />
+ <node id="3" x="50" y="200" type="NORMAL" />
+ <node id="4" x="150" y="200" type="INCENDIE" />
+ <node id="5" x="340" y="282" type="NORMAL" />
+ <node id="6" x="241" y="349" type="NORMAL" />
+ <node id="7" x="339" y="396" type="NORMAL" />
+ <node id="8" x="408" y="317" type="NORMAL" />
+ <node id="9" x="655" y="248" type="NORMAL" />
+ <node id="10" x="906" y="562" type="NORMAL" />
+ <node id="11" x="1247" y="549" type="NORMAL" />
+ <node id="12" x="1488" y="436" type="NORMAL" />
+ <node id="13" x="1563" y="721" type="NORMAL" />
+ <node id="14" x="1458" y="787" type="NORMAL" />
+ <node id="15" x="1086" y="849" type="NORMAL" />
+ <node id="16" x="811" y="856" type="NORMAL" />
+ <node id="17" x="427" y="810" type="NORMAL" />
+ <node id="18" x="312" y="787" type="NORMAL" />
+ <node id="19" x="527" y="573" type="NORMAL" />
+ <node id="20" x="674" y="529" type="NORMAL" />
+ <edge nd1="1" nd2="2" type="ESCARPE" />
+ <edge nd1="2" nd2="3" type="PLAT" />
+ <edge nd1="1" nd2="4" type="ESCARPE" />
+ <edge nd1="4" nd2="3" type="ESCARPE" />
+ <edge nd1="8" nd2="7" type="PLAT" />
+ <edge nd1="7" nd2="5" type="PLAT" />
+ <edge nd1="5" nd2="6" type="PLAT" />
+ <edge nd1="10" nd2="20" type="PLAT" />
+ <edge nd1="20" nd2="19" type="PLAT" />
 </osm>
