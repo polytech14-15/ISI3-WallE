@@ -48,12 +48,6 @@ public class Graph {
         getEdges().add(e);
     }
 
-    public void unvisitAllNodes() {
-        for (Node node : getNodes()) {
-            node.unvisit();
-        }
-    }
-
     /**
      * Recupere la liste des noeuds voisins du noeud a
      * @param a - Noeud

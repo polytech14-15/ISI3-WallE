@@ -25,9 +25,10 @@ public class MapPanel extends JPanel {
     public MapPanel(Graph graph) {
         super();
         this.graph = graph;
-        robots = new ArrayList<AbstractRobot>();
+        robots = new ArrayList<>();
     }
     
+    @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
@@ -52,8 +53,7 @@ public class MapPanel extends JPanel {
         drawSelectedNode(g);
         
         if(!this.graph.getEdges().isEmpty()){
-            for (Iterator it = this.graph.getEdges().iterator(); it.hasNext();) {
-                Edge e = (Edge) it.next();
+            for (Edge e : this.graph.getEdges()) {
                 if (e != null) {
                     drawEdge(e, g);
                 }
@@ -66,20 +66,20 @@ public class MapPanel extends JPanel {
     private void drawNode(Node n, Graphics g) {
         Color c = Color.BLACK;
         g.setColor(c);
-        drawCircle(g, n.getX().intValue(), n.getY().intValue(), RADIUS);
+        drawCircle(g, n.getX(), n.getY(), RADIUS);
         c = Color.WHITE;
         g.setColor(c);
-        g.drawString(n.getId().toString(), n.getX().intValue() - RADIUS / 2, n.getY().intValue() + RADIUS / 2);
+        g.drawString(Integer.toString(n.getId()), n.getX() - RADIUS / 2, n.getY() + RADIUS / 2);
     }
 
     private void drawSelectedNode(Graphics g) {
         if (selectedNode != null) {
             Color c = Color.RED;
             g.setColor(c);
-            drawCircle(g, selectedNode.getX().intValue(), selectedNode.getY().intValue(), RADIUS);
+            drawCircle(g, selectedNode.getX(), selectedNode.getY(), RADIUS);
             c = Color.WHITE;
             g.setColor(c);
-            g.drawString(selectedNode.getId().toString(), selectedNode.getX().intValue() - RADIUS / 2, selectedNode.getY().intValue() + RADIUS / 2);
+            g.drawString(Integer.toString(selectedNode.getId()), selectedNode.getX() - RADIUS / 2, selectedNode.getY() + RADIUS / 2);
         }
     }
 
@@ -93,7 +93,7 @@ public class MapPanel extends JPanel {
     private void drawEdge(Edge e, Graphics g) {
         Color c = Color.BLACK;
         g.setColor(c);
-        g.drawLine(e.getA().getX().intValue(), e.getA().getY().intValue(), e.getB().getX().intValue(), e.getB().getY().intValue());
+        g.drawLine(e.getA().getX(), e.getA().getY(), e.getB().getX(), e.getB().getY());
     }
 
     /**

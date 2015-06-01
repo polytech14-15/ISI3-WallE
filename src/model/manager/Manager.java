@@ -324,10 +324,10 @@ public class Manager extends Observable implements Runnable {
     }
     
     public void test(){
-       Node n1 = new Node(10.0, 10.0, TypeNode.NORMAL);
-        Node n2 = new Node(80.0, 10.0, TypeNode.NORMAL);
-        Node n3 = new Node(50.0, 200.0, TypeNode.INCENDIE);
-        Node n4 = new Node(150.0, 200.0, TypeNode.INCENDIE);
+       Node n1 = new Node(10, 10, TypeNode.NORMAL);
+        Node n2 = new Node(80, 10, TypeNode.NORMAL);
+        Node n3 = new Node(50, 200, TypeNode.INCENDIE);
+        Node n4 = new Node(150, 200, TypeNode.INCENDIE);
         graph.addNode(n1);
         graph.addNode(n2);
         graph.addNode(n3);
