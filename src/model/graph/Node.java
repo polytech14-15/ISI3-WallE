@@ -3,14 +3,14 @@ package model.graph;
 public class Node {
 
     private Integer id;
-    private Double x;
-    private Double y;
+    private int x;
+    private int y;
     private TypeNode type;
     private Integer valueFire;
     public static Integer previousId = 1;
     private static final Integer INIT_VALUE_FIRE = 15;
 
-    public Node(Double x, Double y, TypeNode type) {
+    public Node(int x, int y, TypeNode type) {
         this.id = Node.previousId;
         this.x = x;
         this.y = y;
@@ -19,29 +19,15 @@ public class Node {
         Node.previousId++;
     }
 
-    /**
-     * Allume le feu
-     */
-    public void initFire() {
-        this.valueFire = INIT_VALUE_FIRE;
-    }
-
-    /**
-     * Eteind le feu
-     */
-    public void extinctFire() {
-        this.valueFire = 0;
-    }
-
     public Integer getId() {
         return id;
     }
 
-    public Double getX() {
+    public int getX() {
         return x;
     }
 
-    public Double getY() {
+    public int getY() {
         return y;
     }
 
@@ -53,11 +39,11 @@ public class Node {
         return previousId;
     }
 
-    public void setX(Double x) {
+    public void setX(int x) {
         this.x = x;
     }
 
-    public void setY(Double y) {
+    public void setY(int y) {
         this.y = y;
     }
 
@@ -73,6 +59,20 @@ public class Node {
         this.valueFire = valueFire;
     }
 
+    /**
+     * Allume le feu
+     */
+    public void initFire() {
+        this.valueFire = INIT_VALUE_FIRE;
+    }
+
+    /**
+     * Eteind le feu
+     */
+    public void extinctFire() {
+        this.valueFire = 0;
+    }
+    
     @Override
     public String toString() {
         String info = "<node id=\"" + this.id + "\" x=\"" + this.x + "\" y=\"" + this.y + "\" type=\"" + this.type + "\" />";

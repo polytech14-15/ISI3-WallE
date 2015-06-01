@@ -93,7 +93,7 @@ public class Controller extends MouseAdapter implements ActionListener {
                 getMainFrame().getMap().setSelectedNode(null);
             }
         } else {
-            Node n2 = new Node(new Integer(x_point).doubleValue(), new Integer(y_point).doubleValue(), TypeNode.valueOf(getMainFrame().getTypeNode().getSelectedItem().toString()));
+            Node n2 = new Node(new Integer(x_point), new Integer(y_point), TypeNode.valueOf(getMainFrame().getTypeNode().getSelectedItem().toString()));
             getActions().add(n2);
             this.manager.getGraph().addNode(n2);
             getMainFrame().getMap().setSelectedNode(null);
