@@ -1,5 +1,6 @@
 package model.manager;
 
+import controller.Controller;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -40,7 +41,7 @@ public class Manager extends Observable implements Runnable {
         this.canAskRobots = true;
         
         //TODO - delete me
-        this.test();
+//        this.test();
     }
     
     public Manager (Graph graph, List<Robot> robots, IAlgo algo){
@@ -257,8 +258,8 @@ public class Manager extends Observable implements Runnable {
         
         // Initialise la mapFires
         this.initMapFires();
-        
-        while(true){
+        System.out.println("Je passe");
+        while(Controller.onSimulation){
             
             // Si le manager peut requeter les robots
             if (this.canAskRobots){

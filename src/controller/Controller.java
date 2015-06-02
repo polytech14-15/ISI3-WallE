@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Random;
+import model.algo.AlgoBreadthFirst;
 import model.graph.Edge;
 import model.graph.Node;
 import model.graph.TypeEdge;
@@ -16,6 +17,7 @@ import model.robot.FeetRobot;
 import model.robot.OffRoadRobot;
 import model.robot.Robot;
 import model.robot.TrackedRobot;
+import util.XmlUtilities;
 import view.MainFrame;
 import view.MainFrame1;
 import view.MapPanel;
@@ -24,11 +26,10 @@ import view.robot.ViewOffRoadRobot;
 import view.robot.ViewTrackedRobot;
 
 public class Controller extends MouseAdapter implements ActionListener {
-
+public static boolean onSimulation = false;
     private MainFrame mainFrame;
     private Manager manager;
     private List<Object> actions;
-    private boolean onSimulation;
 
     public Controller() {
         manager = new Manager();
@@ -81,6 +82,7 @@ public class Controller extends MouseAdapter implements ActionListener {
                 break;
             case "Stop":
                 //TODO
+                this.onSimulation = false;
                 mainFrame.getPanel1().setVisible(true);
                 mainFrame.repaint();
                 break;
@@ -119,7 +121,7 @@ public class Controller extends MouseAdapter implements ActionListener {
                         break;
                     case "Fire":
                         System.out.println("J'ajoute feu !");
-                        manager.getGraph().getNodes().get(randomNum).setValueFire(Node.INIT_VALUE_FIRE);
+                        manager.getGraph().getNodes().get(randomNum).initFire();
                         break;
                 }
                 mainFrame.paintAll();
@@ -166,7 +168,8 @@ public class Controller extends MouseAdapter implements ActionListener {
     }
 
     private void saveGraph() {
-        manager.getGraph().printXML();
+        //manager.getGraph().printXML();
+        XmlUtilities.writeXmlFile(this.manager.getGraph());
     }
 
     private void backAction() {
@@ -195,11 +198,12 @@ public class Controller extends MouseAdapter implements ActionListener {
 
     private void startSimulation() {
         //TODO
-        setOnSimulation(true);
+        System.out.println("Je lance la simu");
+        this.onSimulation = true;
         mainFrame.getPanel1().setVisible(false);
         mainFrame.getPanel2().setVisible(true);
-        mainFrame.validate();
-        mainFrame.paintAll();
+        this.manager.setAlgo(new AlgoBreadthFirst());
+        new Thread(this.manager).start();
     }
 
     /**
@@ -266,21 +270,6 @@ public class Controller extends MouseAdapter implements ActionListener {
                 this.manager.getGraph().addEdge(edge);
             }
         }
-    }
-
-    /**
-     * @return the onSimulation
-     */
-    public boolean isOnSimulation() {
-        return onSimulation;
-    }
-
-    /**
-     * @param onSimulation the onSimulation to set
-     */
-    public void setOnSimulation(boolean onSimulation) {
-        mainFrame.repaint();
-        this.onSimulation = onSimulation;
     }
 
 }

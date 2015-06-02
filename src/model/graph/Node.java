@@ -64,6 +64,7 @@ public class Node {
      * Allume le feu
      */
     public void initFire() {
+        this.type = TypeNode.INCENDIE;
         this.valueFire = INIT_VALUE_FIRE;
     }
 

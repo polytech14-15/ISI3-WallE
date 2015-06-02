@@ -18,7 +18,7 @@ import java.util.Observer;
  * @author Jérémy
  */
 public class MainFrame extends javax.swing.JFrame implements Observer {
-    
+
     private Controller controller;
     private MapPanel map;
 
@@ -29,32 +29,32 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
      */
     public MainFrame(Controller controller) {
         applyTheme();
-        
+
         this.controller = controller;
         this.map = new MapPanel(this.getController().getManager().getGraph());
         initComponents();
         this.map.setPreferredSize(new Dimension(scrollMap.getSize()));
         scrollMap.setViewportView(this.map);
         scrollMap.setBackground(Color.white);
-        
+
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent arg0) {
                 super.windowClosing(arg0);
             }
         });
-        
+
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        
+
         completJCombo();
-        
+
         this.setVisible(true);
         btnBack.addActionListener(this.controller);
         btnExport.addActionListener(this.controller);
         btnPlay.addActionListener(this.controller);
         btnAddElement.addActionListener(this.controller);
         getMap().addMouseListener(this.controller);
-        
+
         radioBtnFeet.setActionCommand(radioBtnFeet.getText());
         radioBtnOffRoad.setActionCommand(radioBtnOffRoad.getText());
         radioBtnTrackedRobot.setActionCommand(radioBtnTrackedRobot.getText());
@@ -64,6 +64,8 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
         groupTypeRobot.add(radioBtnTrackedRobot);
         groupTypeRobot.add(radioBtnFire);
         radioBtnFeet.setSelected(true);
+
+//        this.setResizable(false);
     }
 
     /**
@@ -280,13 +282,14 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
+                map.repaint();
 
     }
-    
+
     public void paintAll() {
         panel1.repaint();
         panel2.repaint();
-        map.repaint();                
+        map.repaint();
     }
 
     /**
@@ -344,7 +347,7 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
     public void setTypeNode(javax.swing.JComboBox typeNode) {
         this.typeNode = typeNode;
     }
-    
+
     private void applyTheme() {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -357,7 +360,7 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
             java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
     }
-    
+
     private void completJCombo() {
         String[] typeNodeString = {"NORMAL", "INCENDIE"};
         typeNode.addItem("NORMAL");
