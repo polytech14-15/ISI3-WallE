@@ -1,12 +1,17 @@
 package model.robot;
 
 import model.graph.Edge;
+import model.graph.Node;
 import model.graph.TypeEdge;
 
 public class TrackedRobot extends Robot {
 
     public TrackedRobot(){
         super();
+    }
+    
+    public TrackedRobot(Node n){
+        super(n);
     }
     
     /**

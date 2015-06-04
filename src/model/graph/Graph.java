@@ -148,4 +148,9 @@ public class Graph {
         }
         return edgesFromNode;
     }
+    
+    public void reset(){
+        this.nodes = new ArrayList<>();
+        this.edges = new ArrayList<>();
+    }
 }

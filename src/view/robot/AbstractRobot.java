@@ -3,17 +3,17 @@ package view.robot;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import javax.swing.JComponent;
 import model.robot.Robot;
 import view.MapPanel;
 
-public abstract class AbstractRobot {
+public abstract class AbstractRobot extends JComponent{
 
     private Robot robot;
 
     public AbstractRobot(Robot r) {
         this.robot = r;
     }
-
     public abstract void draw(Graphics g);
 
     /**

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import model.algo.AlgoBreadthFirst;
 import model.graph.Edge;
+import model.graph.Graph;
 import model.graph.Node;
 import model.graph.TypeEdge;
 import model.graph.TypeNode;
@@ -18,6 +19,7 @@ import model.robot.OffRoadRobot;
 import model.robot.Robot;
 import model.robot.TrackedRobot;
 import util.XmlUtilities;
+import view.InstructionsFrame;
 import view.MainFrame;
 import view.MapPanel;
 import view.robot.ViewFeetRobot;
@@ -36,7 +38,7 @@ public class Controller extends MouseAdapter implements ActionListener {
         mainFrame = new MainFrame(this);
         actions = new ArrayList<>();
         manager.addObserver(mainFrame);
-        onSimulation = false;
+        this.onSimulation = false;
     }
 
     @Override
@@ -72,25 +74,25 @@ public class Controller extends MouseAdapter implements ActionListener {
             case "Export":
                 saveGraph();
                 break;
-
             case "Back":
                 backAction();
                 break;
-
             case "Play":
                 startSimulation();
                 break;
             case "Stop":
                 //TODO
-                this.onSimulation = false;
-                mainFrame.getPanel1().setVisible(true);
-                mainFrame.repaint();
+                stopSimulation();
                 break;
-
-            case "Add":                
+            case "Add":
                 addRandomRobot();
                 break;
-
+            case "Reset":
+                resetSimu();
+                break;
+            case "Instructions":
+                new InstructionsFrame();
+                break;
         }
     }
 
@@ -168,11 +170,10 @@ public class Controller extends MouseAdapter implements ActionListener {
     }
 
     private void startSimulation() {
-        //TODO
-        System.out.println("Je lance la simu");
         this.onSimulation = true;
         mainFrame.getPanel1().setVisible(false);
         mainFrame.getPanel2().setVisible(true);
+        mainFrame.paintAll();
         this.manager.setAlgo(new AlgoBreadthFirst());
         new Thread(this.manager).start();
     }
@@ -253,10 +254,11 @@ public class Controller extends MouseAdapter implements ActionListener {
         Node n = manager.getGraph().getNodes().get(randomNum);
         addRobot(n);
     }
-    
+
     /**
      * Ajoute un robot ou un incendie sur le noeud
-     * @param n 
+     *
+     * @param n
      */
     private void addRobot(Node n) {
         Robot r;
@@ -283,10 +285,37 @@ public class Controller extends MouseAdapter implements ActionListener {
                 manager.addRobot(r);
                 break;
             case "Fire":
-                n.initFire();
+                int intensityI = -1;
+                String intensity = mainFrame.getTextIntensity().getText();
+                try {
+                    intensityI = Integer.parseInt(intensity);
+                } catch (NumberFormatException e) {
+                    intensityI = -1;
+                }
+                System.out.println(intensity);
+                if ((intensityI < 1) || (intensityI > 20)) {
+                    n.initFire();
+                } else {
+                    n.setType(TypeNode.INCENDIE);
+                    n.setValueFire(intensityI);
+                }
                 break;
         }
         mainFrame.paintAll();
+    }
+
+    private void stopSimulation() {
+        this.onSimulation = false;
+        mainFrame.getPanel1().setVisible(true);
+        mainFrame.getPanel2().setVisible(false);
+        mainFrame.paintAll();
+    }
+
+    private void resetSimu() {
+        stopSimulation();
+        this.manager.reset();
+        Node.previousId = 1;
+        mainFrame.repaint();
     }
 
 }

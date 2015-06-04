@@ -52,6 +52,13 @@ public class Manager extends Observable implements Runnable {
         this.canAskRobots = true;
     }
     
+    public void reset(){
+        this.robots = new ArrayList<>();
+        this.mapFires = new HashMap<>();
+        this.graph.reset();
+        this.canAskRobots = true;
+    }
+    
     public List<Robot> getRobots() {
         return this.robots;
     }

@@ -26,10 +26,16 @@ public class MapPanel extends JPanel {
     //Rayon du noeud
     public final static int RADIUS = 10;
 
-    private Graph graph;
-    private Node selectedNode;
+    protected Graph graph;
+    protected Node selectedNode;
     private List<AbstractRobot> robots;
     private ImageIcon image;
+
+    public MapPanel() {
+        super();
+        this.graph = new Graph();
+        robots = new ArrayList<>();
+    }
 
     public MapPanel(Graph graph) {
         super();
@@ -39,7 +45,7 @@ public class MapPanel extends JPanel {
         this.setPreferredSize(new Dimension(image.getIconWidth(), image.getIconHeight()));
         this.setSize(new Dimension(image.getIconWidth(), image.getIconHeight()));
     }
-    
+
     private void loadImage() {
         this.image = new ImageIcon("src/resources/mapsixieme.jpg");
     }
@@ -50,7 +56,9 @@ public class MapPanel extends JPanel {
 //        Dimension dim = getSize();
 //        g.setColor(Color.white);
 //        g.fillRect(0, 0, dim.width, dim.height);
-        image.paintIcon(this, g, 0, 0);
+        if (image != null) {
+            image.paintIcon(this, g, 0, 0);
+        }
         showGraph(g);
         showRobots(g);
     }
@@ -165,7 +173,7 @@ public class MapPanel extends JPanel {
         }
     }
 
-    private void showRobots(Graphics g) {
+    protected void showRobots(Graphics g) {
         for (AbstractRobot robot : getRobots()) {
             if (this.graph.getNodes().contains(robot.getRobot().getCurrentNode())) {
                 robot.draw(g);

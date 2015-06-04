@@ -17,6 +17,12 @@ public abstract class Robot {
         this.state = RobotState.AVAILABLE;
     }
     
+    public Robot(Node n){
+        this.capacity = Robot.CAPACITY_MAX;
+        this.state = RobotState.AVAILABLE;
+        this.currentNode = n;
+    }
+    
     public String getName() {
         return name;
     }

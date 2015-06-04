@@ -52,7 +52,10 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
         btnExport.addActionListener(this.controller);
         btnPlay.addActionListener(this.controller);
         btnAddElement.addActionListener(this.controller);
+        btnStop.addActionListener(this.controller);
+        btnReset.addActionListener(this.controller);
         getMap().addMouseListener(this.controller);
+        menuInstruction.addActionListener(this.controller);
 
         //Ajoute la bouton radio pour choisir le type de robot
         completRobotType();
@@ -81,6 +84,7 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
         btnExport = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
         btnPlay = new javax.swing.JButton();
+        btnReset = new javax.swing.JButton();
         panel2 = new java.awt.Panel();
         btnStop = new javax.swing.JButton();
         radioBtnOffRoad = new javax.swing.JRadioButton();
@@ -91,15 +95,15 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
         btnAddElement = new javax.swing.JButton();
         labelName = new javax.swing.JLabel();
         textName = new javax.swing.JTextField();
+        labelIntensity = new javax.swing.JLabel();
+        textIntensity = new javax.swing.JTextField();
         scrollMap = new javax.swing.JScrollPane();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        menuHelp = new javax.swing.JMenu();
+        menuInstruction = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        typeNode.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                typeNodeActionPerformed(evt);
-            }
-        });
 
         labelTypeEdge.setText("Type edge : ");
 
@@ -110,6 +114,9 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
         btnBack.setText("Back");
 
         btnPlay.setText("Play");
+
+        btnReset.setActionCommand("Reset");
+        btnReset.setLabel("Reset");
 
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
         panel1.setLayout(panel1Layout);
@@ -133,9 +140,15 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
                                 .addComponent(labelTypeEdge)
                                 .addGap(18, 18, 18)
                                 .addComponent(typeEdge, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(18, 18, 18)
-                .addComponent(btnPlay)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(btnPlay)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnReset)
+                        .addContainerGap())))
         );
         panel1Layout.setVerticalGroup(
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,7 +165,8 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
                 .addGap(18, 18, 18)
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelTypeNode)
-                    .addComponent(typeNode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(typeNode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnReset))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
 
@@ -172,34 +186,43 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
 
         labelName.setText("Name :");
 
+        labelIntensity.setText("Intensity (de 1 à 20) :");
+
         javax.swing.GroupLayout panel2Layout = new javax.swing.GroupLayout(panel2);
         panel2.setLayout(panel2Layout);
         panel2Layout.setHorizontalGroup(
             panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel2Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(labelName)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(textName, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panel2Layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(radioBtnOffRoad)
-                            .addComponent(radioBtnFire)
-                            .addComponent(labelTypeRobot)
                             .addGroup(panel2Layout.createSequentialGroup()
-                                .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(radioBtnFeet)
-                                    .addComponent(radioBtnTrackedRobot))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnStop)))))
-                .addGap(25, 25, 25))
-            .addGroup(panel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnAddElement)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(labelName)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(textName, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(panel2Layout.createSequentialGroup()
+                                    .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(radioBtnFeet)
+                                        .addComponent(radioBtnTrackedRobot))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnStop))
+                                .addGroup(panel2Layout.createSequentialGroup()
+                                    .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(radioBtnOffRoad)
+                                        .addComponent(labelTypeRobot)
+                                        .addGroup(panel2Layout.createSequentialGroup()
+                                            .addComponent(radioBtnFire)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(labelIntensity)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(textIntensity, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(20, 20, 20))
+                    .addGroup(panel2Layout.createSequentialGroup()
+                        .addComponent(btnAddElement)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         panel2Layout.setVerticalGroup(
             panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -222,11 +245,27 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
                         .addGap(11, 11, 11)
                         .addComponent(btnStop)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(radioBtnFire)
+                .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(radioBtnFire)
+                    .addComponent(labelIntensity)
+                    .addComponent(textIntensity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnAddElement)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jMenu1.setText("File");
+        jMenuBar1.add(jMenu1);
+
+        menuHelp.setText("Help");
+
+        menuInstruction.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, 0));
+        menuInstruction.setText("Instructions");
+        menuHelp.add(menuInstruction);
+
+        jMenuBar1.add(menuHelp);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -234,7 +273,7 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(scrollMap, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 121, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 197, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(panel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -247,15 +286,11 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
                 .addComponent(panel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addComponent(scrollMap, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 38, Short.MAX_VALUE))
+                .addGap(0, 17, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void typeNodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeNodeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_typeNodeActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -263,12 +298,18 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnExport;
     private javax.swing.JButton btnPlay;
+    private javax.swing.JButton btnReset;
     private javax.swing.JButton btnStop;
     private javax.swing.ButtonGroup groupTypeRobot;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JLabel labelIntensity;
     private javax.swing.JLabel labelName;
     private javax.swing.JLabel labelTypeEdge;
     private javax.swing.JLabel labelTypeNode;
     private javax.swing.JLabel labelTypeRobot;
+    private javax.swing.JMenu menuHelp;
+    private javax.swing.JMenuItem menuInstruction;
     private java.awt.Panel panel1;
     private java.awt.Panel panel2;
     private javax.swing.JRadioButton radioBtnFeet;
@@ -276,6 +317,7 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
     private javax.swing.JRadioButton radioBtnOffRoad;
     private javax.swing.JRadioButton radioBtnTrackedRobot;
     private javax.swing.JScrollPane scrollMap;
+    private javax.swing.JTextField textIntensity;
     private javax.swing.JTextField textName;
     private javax.swing.JComboBox typeEdge;
     private javax.swing.JComboBox typeNode;
@@ -284,7 +326,6 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         map.repaint();
-
     }
 
     public void paintAll() {
@@ -440,5 +481,19 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
         groupTypeRobot.add(radioBtnTrackedRobot);
         groupTypeRobot.add(radioBtnFire);
         radioBtnFeet.setSelected(true);
+    }
+
+    /**
+     * @return the textIntensity
+     */
+    public javax.swing.JTextField getTextIntensity() {
+        return textIntensity;
+    }
+
+    /**
+     * @param textIntensity the textIntensity to set
+     */
+    public void setTextIntensity(javax.swing.JTextField textIntensity) {
+        this.textIntensity = textIntensity;
     }
 }
