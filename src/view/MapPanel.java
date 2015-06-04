@@ -1,15 +1,19 @@
 package view;
 
 import java.awt.BasicStroke;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Panel;
 import java.awt.Stroke;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import model.graph.Edge;
 import model.graph.Graph;
@@ -25,20 +29,28 @@ public class MapPanel extends JPanel {
     private Graph graph;
     private Node selectedNode;
     private List<AbstractRobot> robots;
+    private ImageIcon image;
 
     public MapPanel(Graph graph) {
         super();
         this.graph = graph;
-        this.setBackground(Color.white);
         robots = new ArrayList<>();
+        loadImage();
+        this.setPreferredSize(new Dimension(image.getIconWidth(), image.getIconHeight()));
+        this.setSize(new Dimension(image.getIconWidth(), image.getIconHeight()));
+    }
+    
+    private void loadImage() {
+        this.image = new ImageIcon("src/resources/mapsixieme.jpg");
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Dimension dim = getSize();
-        g.setColor(Color.white);
-        g.fillRect(0, 0, dim.width, dim.height);
+//        Dimension dim = getSize();
+//        g.setColor(Color.white);
+//        g.fillRect(0, 0, dim.width, dim.height);
+        image.paintIcon(this, g, 0, 0);
         showGraph(g);
         showRobots(g);
     }
@@ -100,7 +112,7 @@ public class MapPanel extends JPanel {
         //creates a copy of the Graphics instance
         Graphics2D g2d = (Graphics2D) g.create();
 
-        Stroke dashed = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
+        Stroke dashed = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
         g2d.setStroke(dashed);
         g2d.drawLine(x1, y1, x2, y2);
 
@@ -124,13 +136,13 @@ public class MapPanel extends JPanel {
             c = Color.BLACK;
         }
         g.setColor(c);
-        
-        if(e.getType() == TypeEdge.PLAT){
+
+        if (e.getType() == TypeEdge.PLAT) {
             g.drawLine(e.getA().getX(), e.getA().getY(), e.getB().getX(), e.getB().getY());
-        }else{
+        } else {
             drawDashedLine(g, e.getA().getX(), e.getA().getY(), e.getB().getX(), e.getB().getY());
         }
-        
+
     }
 
     /**

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view;
 
 import controller.Controller;
@@ -12,9 +7,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.JViewport;
 
 /**
- *
+ * Fenêtre principale contenant la map pour afficher la simulation et les boutons neccessaire pour ajouter des robots, des arrêtes et des noeuds.
  * @author Jérémy
  */
 public class MainFrame extends javax.swing.JFrame implements Observer {
@@ -33,9 +29,9 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
         this.controller = controller;
         this.map = new MapPanel(this.getController().getManager().getGraph());
         initComponents();
-        this.map.setPreferredSize(new Dimension(scrollMap.getSize()));
+//        this.scrollMap.setSize(this.map.getPreferredSize());
+//        this.scrollMap.setPreferredSize(this.map.getPreferredSize());
         scrollMap.setViewportView(this.map);
-        scrollMap.setBackground(Color.white);
 
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -46,26 +42,25 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+        //Ajoute le listes pour le type des arrêtes et des noeuds
         completJCombo();
 
         this.setVisible(true);
+        
+        //Ajoute les actionneurs
         btnBack.addActionListener(this.controller);
         btnExport.addActionListener(this.controller);
         btnPlay.addActionListener(this.controller);
         btnAddElement.addActionListener(this.controller);
         getMap().addMouseListener(this.controller);
 
-        radioBtnFeet.setActionCommand(radioBtnFeet.getText());
-        radioBtnOffRoad.setActionCommand(radioBtnOffRoad.getText());
-        radioBtnTrackedRobot.setActionCommand(radioBtnTrackedRobot.getText());
-        radioBtnFire.setActionCommand(radioBtnFire.getText());
-        groupTypeRobot.add(radioBtnFeet);
-        groupTypeRobot.add(radioBtnOffRoad);
-        groupTypeRobot.add(radioBtnTrackedRobot);
-        groupTypeRobot.add(radioBtnFire);
-        radioBtnFeet.setSelected(true);
+        //Ajoute la bouton radio pour choisir le type de robot
+        completRobotType();
 
-//        this.setResizable(false);
+        //Rend la fenêtre non redimensionnable
+        this.setResizable(false);
+        //Centre la fenêtre
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -111,10 +106,8 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
         labelTypeNode.setText("Type node : ");
 
         btnExport.setText("Export");
-        btnExport.setActionCommand("Export");
 
         btnBack.setText("Back");
-        btnBack.setActionCommand("Back");
 
         btnPlay.setText("Play");
 
@@ -132,13 +125,16 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
                     .addGroup(panel1Layout.createSequentialGroup()
                         .addGap(40, 40, 40)
                         .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelTypeEdge)
-                            .addComponent(labelTypeNode))))
+                            .addGroup(panel1Layout.createSequentialGroup()
+                                .addComponent(labelTypeNode)
+                                .addGap(18, 18, 18)
+                                .addComponent(typeNode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panel1Layout.createSequentialGroup()
+                                .addComponent(labelTypeEdge)
+                                .addGap(18, 18, 18)
+                                .addComponent(typeEdge, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(18, 18, 18)
-                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(typeNode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(typeEdge, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPlay))
+                .addComponent(btnPlay)
                 .addContainerGap(32, Short.MAX_VALUE))
         );
         panel1Layout.setVerticalGroup(
@@ -149,19 +145,18 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
                     .addComponent(btnExport)
                     .addComponent(btnBack)
                     .addComponent(btnPlay))
-                .addGap(39, 39, 39)
+                .addGap(18, 18, 18)
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(typeEdge, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelTypeEdge))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                    .addComponent(labelTypeEdge)
+                    .addComponent(typeEdge, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(typeNode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelTypeNode))
-                .addGap(55, 55, 55))
+                    .addComponent(labelTypeNode)
+                    .addComponent(typeNode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         btnStop.setText("Stop");
-        btnStop.setActionCommand("Stop");
 
         radioBtnOffRoad.setText("OffRoadRobot");
 
@@ -174,7 +169,6 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
         radioBtnFire.setText("Fire");
 
         btnAddElement.setText("Add");
-        btnAddElement.setActionCommand("Add");
 
         labelName.setText("Name :");
 
@@ -186,47 +180,52 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
                 .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(btnStop))
-                    .addGroup(panel2Layout.createSequentialGroup()
-                        .addGap(73, 73, 73)
-                        .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(radioBtnFeet)
-                            .addComponent(radioBtnOffRoad)
-                            .addComponent(radioBtnTrackedRobot)
-                            .addComponent(radioBtnFire)
-                            .addGroup(panel2Layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addComponent(btnAddElement))
-                            .addComponent(labelTypeRobot)))
-                    .addGroup(panel2Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
                         .addComponent(labelName)
-                        .addGap(18, 18, 18)
-                        .addComponent(textName, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(textName, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(radioBtnOffRoad)
+                            .addComponent(radioBtnFire)
+                            .addComponent(labelTypeRobot)
+                            .addGroup(panel2Layout.createSequentialGroup()
+                                .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(radioBtnFeet)
+                                    .addComponent(radioBtnTrackedRobot))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnStop)))))
+                .addGap(25, 25, 25))
+            .addGroup(panel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnAddElement)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel2Layout.setVerticalGroup(
             panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(btnStop)
-                .addGap(18, 18, 18)
+                .addContainerGap()
                 .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelName)
                     .addComponent(textName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelTypeRobot)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(radioBtnOffRoad)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(radioBtnFeet)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(radioBtnTrackedRobot)
+                .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(radioBtnFeet)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(radioBtnTrackedRobot))
+                    .addGroup(panel2Layout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addComponent(btnStop)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(radioBtnFire)
                 .addGap(18, 18, 18)
                 .addComponent(btnAddElement)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -234,8 +233,8 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(scrollMap, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scrollMap, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 121, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(panel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -246,7 +245,9 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
                 .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(scrollMap)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(scrollMap, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 38, Short.MAX_VALUE))
         );
 
         pack();
@@ -282,7 +283,7 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-                map.repaint();
+        map.repaint();
 
     }
 
@@ -361,6 +362,9 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
         }
     }
 
+    /**
+     * Ajoute les listes pour le type des arrêtes et des noeuds
+     */
     private void completJCombo() {
         String[] typeNodeString = {"NORMAL", "INCENDIE"};
         typeNode.addItem("NORMAL");
@@ -424,5 +428,17 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
      */
     public void setTextName(javax.swing.JTextField textName) {
         this.textName = textName;
+    }
+
+    private void completRobotType() {
+        radioBtnFeet.setActionCommand(radioBtnFeet.getText());
+        radioBtnOffRoad.setActionCommand(radioBtnOffRoad.getText());
+        radioBtnTrackedRobot.setActionCommand(radioBtnTrackedRobot.getText());
+        radioBtnFire.setActionCommand(radioBtnFire.getText());
+        groupTypeRobot.add(radioBtnFeet);
+        groupTypeRobot.add(radioBtnOffRoad);
+        groupTypeRobot.add(radioBtnTrackedRobot);
+        groupTypeRobot.add(radioBtnFire);
+        radioBtnFeet.setSelected(true);
     }
 }

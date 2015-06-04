@@ -26,7 +26,8 @@ import view.robot.ViewOffRoadRobot;
 import view.robot.ViewTrackedRobot;
 
 public class Controller extends MouseAdapter implements ActionListener {
-public static boolean onSimulation = false;
+
+    public static boolean onSimulation = false;
     private MainFrame mainFrame;
     private Manager manager;
     private List<Object> actions;
@@ -87,44 +88,8 @@ public static boolean onSimulation = false;
                 mainFrame.repaint();
                 break;
 
-            case "Add":
-                //TODO
-                Robot r;
-                Random rand = new Random();
-                int randomNum = rand.nextInt(manager.getGraph().getNodes().size());
-                switch (mainFrame.getGroupTypeRobot().getSelection().getActionCommand()) {
-                    case "FeetRobot":
-                        System.out.println("J'ajoute feet !");
-                        r = new FeetRobot();
-                        r.setCurrentNode(manager.getGraph().getNodes().get(randomNum));
-                        r.setName(mainFrame.getTextName().getText());
-                        mainFrame.getMap().addRobot(new ViewFeetRobot(r));
-                        manager.addRobot(r);
-                        break;
-                    case "OffRoadRobot":
-                        System.out.println("J'ajoute offroad !");
-
-                        r = new OffRoadRobot();
-                        r.setCurrentNode(manager.getGraph().getNodes().get(randomNum));
-                        r.setName(mainFrame.getTextName().getText());
-                        mainFrame.getMap().addRobot(new ViewOffRoadRobot(r));
-                        manager.addRobot(r);
-                        break;
-                    case "TrackedRobot":
-                        System.out.println("J'ajoute tracked !");
-
-                        r = new TrackedRobot();
-                        r.setCurrentNode(manager.getGraph().getNodes().get(randomNum));
-                        r.setName(mainFrame.getTextName().getText());
-                        mainFrame.getMap().addRobot(new ViewTrackedRobot(r));
-                        manager.addRobot(r);
-                        break;
-                    case "Fire":
-                        System.out.println("J'ajoute feu !");
-                        manager.getGraph().getNodes().get(randomNum).initFire();
-                        break;
-                }
-                mainFrame.paintAll();
+            case "Add":                
+                addRandomRobot();
                 break;
 
         }
@@ -135,24 +100,31 @@ public static boolean onSimulation = false;
         int x_point = e.getX();
         int y_point = e.getY();
         Node n = clickIsInANode(x_point, y_point);
-
-        if (n != null) {
-            if (getMainFrame().getMap().getSelectedNode() == null) {
-                getMainFrame().getMap().setSelectedNode(n);
+        if (!onSimulation) {
+            if (n != null) {
+                if (getMainFrame().getMap().getSelectedNode() == null) {
+                    getMainFrame().getMap().setSelectedNode(n);
+                } else {
+                    addEdge(getMainFrame().getMap().getSelectedNode(), n, TypeEdge.valueOf(getMainFrame().getTypeEdge().getSelectedItem().toString()));
+                    getMainFrame().getMap().setSelectedNode(null);
+                }
             } else {
-                addEdge(getMainFrame().getMap().getSelectedNode(), n, TypeEdge.valueOf(getMainFrame().getTypeEdge().getSelectedItem().toString()));
+                Node n2 = new Node(new Integer(x_point), new Integer(y_point), TypeNode.valueOf(getMainFrame().getTypeNode().getSelectedItem().toString()));
+                getActions().add(n2);
+                this.manager.getGraph().addNode(n2);
                 getMainFrame().getMap().setSelectedNode(null);
             }
+            getMainFrame().getMap().repaint();
         } else {
-            Node n2 = new Node(new Integer(x_point), new Integer(y_point), TypeNode.valueOf(getMainFrame().getTypeNode().getSelectedItem().toString()));
-            getActions().add(n2);
-            this.manager.getGraph().addNode(n2);
-            getMainFrame().getMap().setSelectedNode(null);
+            if (n != null) {
+                addRobot(n);
+            }
         }
-        getMainFrame().getMap().repaint();
     }
 
     /**
+     * Retourne le noeud correspondant au coordonnées du click de la souris.
+     * Retourne null s'il n'y a pas de noeud correspondant à ses coordonnées.
      *
      * @param x_point
      * @param y_point
@@ -270,6 +242,52 @@ public static boolean onSimulation = false;
                 this.manager.getGraph().addEdge(edge);
             }
         }
+    }
+
+    /**
+     * Ajoute un robot ou un feu aléatoirement sur un noeud
+     */
+    private void addRandomRobot() {
+        Robot r;
+        Random rand = new Random();
+        int randomNum = rand.nextInt(manager.getGraph().getNodes().size());
+        Node n = manager.getGraph().getNodes().get(randomNum);
+        addRobot(n);
+    }
+    
+    /**
+     * Ajoute un robot ou un incendie sur le noeud
+     * @param n 
+     */
+    private void addRobot(Node n) {
+        Robot r;
+        switch (mainFrame.getGroupTypeRobot().getSelection().getActionCommand()) {
+            case "FeetRobot":
+                r = new FeetRobot();
+                r.setCurrentNode(n);
+                r.setName(mainFrame.getTextName().getText());
+                mainFrame.getMap().addRobot(new ViewFeetRobot(r));
+                manager.addRobot(r);
+                break;
+            case "OffRoadRobot":
+                r = new OffRoadRobot();
+                r.setCurrentNode(n);
+                r.setName(mainFrame.getTextName().getText());
+                mainFrame.getMap().addRobot(new ViewOffRoadRobot(r));
+                manager.addRobot(r);
+                break;
+            case "TrackedRobot":
+                r = new TrackedRobot();
+                r.setCurrentNode(n);
+                r.setName(mainFrame.getTextName().getText());
+                mainFrame.getMap().addRobot(new ViewTrackedRobot(r));
+                manager.addRobot(r);
+                break;
+            case "Fire":
+                n.initFire();
+                break;
+        }
+        mainFrame.paintAll();
     }
 
 }

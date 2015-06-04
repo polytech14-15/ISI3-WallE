@@ -12,14 +12,7 @@ public class ViewOffRoadRobot extends AbstractRobot {
 
     @Override
     public void draw(Graphics g) {
-        g.setColor(Color.red);
-        g.fillOval(super.getRobot().getCurrentNode().getX(), super.getRobot().getCurrentNode().getY(), 10, 10);
-        g.setColor(Color.blue);
-        g.fillOval(super.getRobot().getCurrentNode().getX(), super.getRobot().getCurrentNode().getY(), 8, 8);
-        g.setColor(Color.yellow);
-        g.fillOval(super.getRobot().getCurrentNode().getX(), super.getRobot().getCurrentNode().getY(), 6, 6);
-        g.setColor(Color.pink);
-        g.fillOval(super.getRobot().getCurrentNode().getX(), super.getRobot().getCurrentNode().getY(), 4, 4);
+        super.drawRectangle(g, Color.WHITE);
     }
 
 }

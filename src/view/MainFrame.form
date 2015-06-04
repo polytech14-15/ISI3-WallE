@@ -28,8 +28,8 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <Component id="scrollMap" pref="578" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <Component id="scrollMap" min="-2" pref="478" max="-2" attributes="0"/>
+              <EmptySpace pref="121" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="panel2" max="32767" attributes="0"/>
                   <Component id="panel1" max="32767" attributes="0"/>
@@ -44,7 +44,10 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="panel2" max="32767" attributes="0"/>
           </Group>
-          <Component id="scrollMap" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <Component id="scrollMap" min="-2" pref="387" max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="38" max="32767" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -65,17 +68,21 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="labelTypeEdge" min="-2" max="-2" attributes="0"/>
-                              <Component id="labelTypeNode" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="labelTypeNode" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="typeNode" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="labelTypeEdge" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="typeEdge" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="typeNode" min="-2" max="-2" attributes="0"/>
-                      <Component id="typeEdge" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnPlay" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="btnPlay" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="32" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -89,17 +96,17 @@
                       <Component id="btnBack" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnPlay" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="typeEdge" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="labelTypeEdge" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="typeEdge" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="61" max="32767" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="typeNode" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="labelTypeNode" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="typeNode" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+                  <EmptySpace pref="23" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -135,13 +142,11 @@
         <Component class="javax.swing.JButton" name="btnExport">
           <Properties>
             <Property name="text" type="java.lang.String" value="Export"/>
-            <Property name="actionCommand" type="java.lang.String" value="Export"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnBack">
           <Properties>
             <Property name="text" type="java.lang.String" value="Back"/>
-            <Property name="actionCommand" type="java.lang.String" value="Back"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnPlay">
@@ -160,29 +165,32 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="btnStop" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelName" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="textName" min="-2" pref="98" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="radioBtnFeet" min="-2" max="-2" attributes="0"/>
                               <Component id="radioBtnOffRoad" min="-2" max="-2" attributes="0"/>
-                              <Component id="radioBtnTrackedRobot" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="radioBtnFire" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                                  <Component id="btnAddElement" min="-2" max="-2" attributes="0"/>
-                              </Group>
                               <Component id="labelTypeRobot" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="radioBtnFeet" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="radioBtnTrackedRobot" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="btnStop" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                          <Component id="labelName" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="textName" min="-2" pref="130" max="-2" attributes="0"/>
-                      </Group>
                   </Group>
+                  <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="btnAddElement" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -190,26 +198,32 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                  <Component id="btnStop" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="labelName" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="textName" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="11" max="32767" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="labelTypeRobot" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="radioBtnOffRoad" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="radioBtnFeet" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="radioBtnTrackedRobot" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="radioBtnFeet" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="radioBtnTrackedRobot" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                          <Component id="btnStop" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="radioBtnFire" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btnAddElement" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -218,7 +232,6 @@
         <Component class="javax.swing.JButton" name="btnStop">
           <Properties>
             <Property name="text" type="java.lang.String" value="Stop"/>
-            <Property name="actionCommand" type="java.lang.String" value="Stop"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JRadioButton" name="radioBtnOffRoad">
@@ -249,7 +262,6 @@
         <Component class="javax.swing.JButton" name="btnAddElement">
           <Properties>
             <Property name="text" type="java.lang.String" value="Add"/>
-            <Property name="actionCommand" type="java.lang.String" value="Add"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="labelName">
