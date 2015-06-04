@@ -19,7 +19,6 @@ import model.robot.Robot;
 import model.robot.TrackedRobot;
 import util.XmlUtilities;
 import view.MainFrame;
-import view.MainFrame1;
 import view.MapPanel;
 import view.robot.ViewFeetRobot;
 import view.robot.ViewOffRoadRobot;
