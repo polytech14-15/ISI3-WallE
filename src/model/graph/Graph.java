@@ -22,23 +22,31 @@ public class Graph {
     }
 
     /**
-     * @param nodes the nodes to set
+     * @param nodes
      */
     public void setNodes(ArrayList<Node> nodes) {
         this.nodes = nodes;
     }
 
     /**
-     * @param edges the edges to set
+     * @param edges
      */
     public void setEdges(ArrayList<Edge> edges) {
         this.edges = edges;
     }
 
+    /**
+     * Ajoute un noeud au graph
+     * @param a 
+     */
     public void addNode(Node a) {
         getNodes().add(a);
     }
 
+    /**
+     * Ajoute un arc au graph
+     * @param e 
+     */
     public void addEdge(Edge e) {
         getEdges().add(e);
     }
@@ -138,6 +146,9 @@ public class Graph {
         return edgesFromNode;
     }
 
+    /**
+     * Reinitialise les listes de noeuds et d'arcs
+     */
     public void reset() {
         this.nodes = new ArrayList<>();
         this.edges = new ArrayList<>();
