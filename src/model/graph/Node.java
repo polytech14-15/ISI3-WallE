@@ -81,6 +81,11 @@ public class Node {
         return info;
     }
 
+    /**
+     * Verifie si deux nodes sont identiques
+     * @param n - noeud a comparer
+     * @return true si pareille, false sinon
+     */
     public boolean equals(Node n) {
         return this.id == n.getId();
     }
