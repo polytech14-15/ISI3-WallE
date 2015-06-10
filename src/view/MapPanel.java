@@ -1,18 +1,14 @@
 package view;
 
 import java.awt.BasicStroke;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Panel;
 import java.awt.Stroke;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import model.graph.Edge;
@@ -46,6 +42,10 @@ public class MapPanel extends JPanel {
         this.setSize(new Dimension(image.getIconWidth(), image.getIconHeight()));
     }
 
+    public void setGraph(Graph graph){
+        this.graph = graph;
+    }
+    
     private void loadImage() {
         this.image = new ImageIcon("src/resources/mapsixieme.jpg");
     }
@@ -67,7 +67,6 @@ public class MapPanel extends JPanel {
         if (!this.graph.getNodes().isEmpty()) {
             for (Iterator it = this.graph.getNodes().iterator(); it.hasNext();) {
                 Node n = (Node) it.next();
-//                System.out.println("Node : "+n);
                 if (n != null) {
                     drawNode(n, g);
                 }

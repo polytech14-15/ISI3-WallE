@@ -74,6 +74,9 @@ public class Controller extends MouseAdapter implements ActionListener {
             case "Export":
                 saveGraph();
                 break;
+            case "Import":
+                importGraph();
+                break;
             case "Back":
                 backAction();
                 break;
@@ -141,8 +144,17 @@ public class Controller extends MouseAdapter implements ActionListener {
     }
 
     private void saveGraph() {
-        //manager.getGraph().printXML();
         XmlUtilities.writeXmlFile(this.manager.getGraph());
+    }
+
+    private void importGraph() {
+        Graph graphXml = XmlUtilities.readXmlFile();
+        if (graphXml != null) {
+            this.resetSimu();
+            this.manager.setGraph(graphXml);
+            getMainFrame().getMap().setGraph(this.manager.getGraph());
+            getMainFrame().getMap().repaint();
+        }
     }
 
     private void backAction() {
@@ -315,6 +327,8 @@ public class Controller extends MouseAdapter implements ActionListener {
         stopSimulation();
         this.manager.reset();
         Node.previousId = 1;
+        this.getActions().clear();
+        this.mainFrame.getMap().getRobots().clear();
         mainFrame.repaint();
     }
 
