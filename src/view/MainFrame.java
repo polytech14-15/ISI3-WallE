@@ -106,6 +106,7 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
         menuInstruction = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("WallE");
 
         labelTypeEdge.setText("Type edge : ");
 
