@@ -11,7 +11,7 @@ import model.robot.*;
  * @author Quentin Degrange
  */
 public abstract class IAlgo {
-
+    
     /**
      * Cette fonction permet de calculer de façon générique le chemin le plus
      * court à partir de la position actuelle du Robot jusqu'au noeud objective
