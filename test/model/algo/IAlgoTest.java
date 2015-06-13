@@ -52,30 +52,31 @@ public abstract class IAlgoTest {
         this.gEscarpe.addNode(n4);this.gEscarpe.addNode(n5);this.gEscarpe.addNode(n6);
         this.gEscarpe.addEdge(e4);this.gEscarpe.addEdge(e5);this.gEscarpe.addEdge(e6);
 
-        r = new TrackedRobot(n1);
+        r = new TrackedRobot();
     }
 
     @Test
-    public void testShortestPath() {
+    public void testShortestPathPlat() {
         System.out.println("test Shortest Path");
+        
+        r.setCurrentNode(n1);
         Map<Integer, List<Node>> res = algo.shortestPath(n3, gPlat, r);
         
         Assert.assertTrue(res.containsKey(141)); // distance de n1 à n3
         Assert.assertEquals(n1, res.get(141).get(0));
         Assert.assertEquals(n3, res.get(141).get(1));
-        
-        // test du canMove
+    }
+    
+    @Test
+    public void testShortestPathCanMove() {
+        System.out.println("test Shortest Path");
+
         r.setCurrentNode(n4);
-        res = algo.shortestPath(n6, gEscarpe, r);
+        Map<Integer, List<Node>> res = algo.shortestPath(n6, gEscarpe, r);
         
         Assert.assertTrue(res.containsKey(200)); // distance de n4 à n5 + distance de n5 à n6
         Assert.assertEquals(n4, res.get(200).get(0));
         Assert.assertEquals(n5, res.get(200).get(1));
         Assert.assertEquals(n6, res.get(200).get(2));
     }
-
-//    @Test
-//    public void testExpand() {
-//        System.out.println("test expand");
-//    }
 }
