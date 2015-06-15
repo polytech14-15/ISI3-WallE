@@ -202,9 +202,7 @@ public class Controller extends MouseAdapter implements ActionListener {
                 break;
         }
         this.onSimulation = true;
-        mainFrame.getPanel1().setVisible(false);
-        mainFrame.getPanel2().setVisible(true);
-        mainFrame.paintAll();
+        mainFrame.activateSimulation();
         this.manager.setAlgo(algo);
         new Thread(this.manager).start();
     }
@@ -340,8 +338,7 @@ public class Controller extends MouseAdapter implements ActionListener {
      */
     private void stopSimulation() {
         this.onSimulation = false;
-        mainFrame.getPanel1().setVisible(true);
-        mainFrame.getPanel2().setVisible(false);
+        mainFrame.desactivateSimulation();
         mainFrame.paintAll();
     }
 
