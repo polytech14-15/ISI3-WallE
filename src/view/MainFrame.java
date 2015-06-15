@@ -8,6 +8,8 @@ import java.awt.event.WindowEvent;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JViewport;
+import model.graph.TypeEdge;
+import model.graph.TypeNode;
 
 /**
  * Fenêtre principale contenant la map pour afficher la simulation et les boutons neccessaires pour ajouter des robots, des arrêtes et des noeuds.
@@ -436,12 +438,14 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
      * Ajoute les listes pour le type des arrêtes et des noeuds
      */
     private void completJCombo() {
-        String[] typeNodeString = {"NORMAL", "INCENDIE"};
-        typeNode.addItem("NORMAL");
-        typeNode.addItem("INCENDIE");
-        String[] typeEdgeString = {"PLAT", "ESCARPE"};
-        typeEdge.addItem("PLAT");
-        typeEdge.addItem("ESCARPE");
+        for(TypeNode tN : TypeNode.values()){
+            typeNode.addItem(tN);
+        }
+        
+        for(TypeEdge tE : TypeEdge.values()){
+            typeEdge.addItem(tE);
+        }
+
         String[] typeAlgo = {"BREADTHFIRST", "DEPTHFIRST"};
         getComboAlgo().addItem("BREADTHFIRST");
         getComboAlgo().addItem("DEPTHFIRST");
