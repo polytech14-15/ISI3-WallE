@@ -16,4 +16,4 @@ Après avoir créé un graph, on peut ajouter des robots de plusieurs types diff
 Il est possible d’arrêter la simulation en cliquant sur “Stop”.
 Pour réinitialiser le graph, il suffit de cliquer sur “Reset”.
 
-En cas d’un besoin d’aide, un menu d’aide et également présent.
+En cas de besoin d’aide, un menu d’aide est également présent.
