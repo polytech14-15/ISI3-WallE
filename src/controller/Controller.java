@@ -43,31 +43,7 @@ public class Controller extends MouseAdapter implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        /*
-         * Quand on ajoute un feu
-         *      recupere liste des noeud du graphe du manager
-         *      choisir aleatoirement parmis les noeuds normaux
-         *      noeud.initFire();
-         *      changer type du noeud
-         */
-
-        /*
-         * Quand on exporte xml
-         *      Mettre pause thread manager + mettre pause thread robot (si on peut) 
-         *      + exporter 
-         *      + reprendre thread robots + reprendre thread manager
-         */
-        /*
-         * Quand on importe xml
-         *      Arreter thread s'il y en a en cours + charger xml + creer nouveau manager(graph,robots,algo)
-         *      + maj manager dans mainFrame + maj graph dans mapPanel + ( maj observer ?)
-         */
-        /*
-         * Quand on lance la simu
-         *      Voir avec jerem la gestion de creation de robot
-         *      Ne pas oublier de setter un algo dans le manager!!!!!!
-         *      Lancer Thread manager
-         */
+      
         String c = e.getActionCommand();
         // actions des boutons du haut
         switch (c) {
