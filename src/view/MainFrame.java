@@ -68,6 +68,8 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
         this.setResizable(false);
         //Centre la fenêtre
         this.setLocationRelativeTo(null);
+        
+        desactivateSimulation();
     }
 
     /**
@@ -548,5 +550,31 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
      */
     public void setComboAlgo(javax.swing.JComboBox comboAlgo) {
         this.comboAlgo = comboAlgo;
+    }
+    
+    /**
+     * Active les boutons nécéssaires à la simulation et désactive les autres.
+     */
+    public void activateSimulation(){
+        btnAddElement.setEnabled(true);
+        btnBack.setEnabled(false);
+        btnExport.setEnabled(false);
+        btnImport.setEnabled(false);
+        btnPlay.setEnabled(false);
+        btnReset.setEnabled(true);
+        btnStop.setEnabled(true);                
+    }
+    
+    /**
+     * Désactive les boutons nécéssaires à la simulation et active les autres.
+     */
+    public void desactivateSimulation(){
+        btnAddElement.setEnabled(true);
+        btnBack.setEnabled(true);
+        btnExport.setEnabled(true);
+        btnImport.setEnabled(true);
+        btnPlay.setEnabled(true);
+        btnReset.setEnabled(true);
+        btnStop.setEnabled(false);                
     }
 }
