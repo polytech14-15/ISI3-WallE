@@ -28,6 +28,8 @@ public class InstructionsPanel extends MapPanel {
 
     public InstructionsPanel() {
         super();
+        int previousId = Node.previousId;
+        Node.previousId = 1;
         this.setPreferredSize(new Dimension(350, 350));
 
         Node normalNode = new Node(20, 20, TypeNode.NORMAL);
@@ -74,6 +76,8 @@ public class InstructionsPanel extends MapPanel {
         super.addRobot(r3);
 
         super.selectedNode = new Node(20, 340, TypeNode.NORMAL);
+        
+        Node.previousId = previousId;
 
     }
 

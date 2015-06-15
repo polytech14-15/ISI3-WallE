@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Random;
 import model.algo.AlgoBreadthFirst;
+import model.algo.AlgoDepthFirst;
+import model.algo.IAlgo;
 import model.graph.Edge;
 import model.graph.Graph;
 import model.graph.Node;
@@ -158,11 +160,23 @@ public class Controller extends MouseAdapter implements ActionListener {
     }
 
     private void startSimulation() {
+        IAlgo algo;
+        switch(this.mainFrame.getComboAlgo().getSelectedItem().toString()){
+            case "BREADTHFIRST" :
+                algo = new AlgoBreadthFirst();
+                break;
+            case "DEPTHFIRST":
+                algo = new AlgoDepthFirst();
+                break;
+            default :
+                algo = new AlgoBreadthFirst();
+                break;
+        }
         this.onSimulation = true;
         mainFrame.getPanel1().setVisible(false);
         mainFrame.getPanel2().setVisible(true);
         mainFrame.paintAll();
-        this.manager.setAlgo(new AlgoBreadthFirst());
+        this.manager.setAlgo(algo);
         new Thread(this.manager).start();
     }
 
