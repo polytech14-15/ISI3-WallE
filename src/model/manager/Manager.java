@@ -115,13 +115,7 @@ public class Manager extends Observable implements Runnable {
 
         // Pour chaque entree de la mapFires
         for (Map.Entry<Node, Robot> entry : this.mapFires.entrySet()) {
-            // TODO - delete me
-            System.out.println(entry.getKey() + "--key" + "  " + entry.getValue() + "--value");
-            if (entry.getValue() != null) {
-                System.out.println("Robot: node =>" + entry.getValue().getCurrentNode() + "    --  state" + entry.getValue().getState());
-            }
-            // fin delete me
-
+            
             // Si le robot qui s'occupait du feu est dispo, cela siginifie que le feu est soit eteint 
             // ou soit que le robot ne peut plus atteindre sa destination
             if (entry.getValue() != null && entry.getValue().getState().equals(RobotState.AVAILABLE)) {
@@ -270,7 +264,7 @@ public class Manager extends Observable implements Runnable {
 
         // Initialise la mapFires
         this.initMapFires();
-        System.out.println("Je passe");
+        
         while (Controller.onSimulation) {
 
             // Si le manager peut requeter les robots
