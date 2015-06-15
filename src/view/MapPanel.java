@@ -53,7 +53,7 @@ public class MapPanel extends JPanel {
     }
     
     private void loadImage() {
-        this.image = new ImageIcon("src/resources/mapsixieme.jpg");
+        this.image = new ImageIcon(MapPanel.class.getResource("/resources/mapsixieme.jpg"));
     }
 
     @Override
