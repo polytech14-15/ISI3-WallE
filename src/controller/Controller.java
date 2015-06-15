@@ -28,8 +28,15 @@ import view.robot.ViewFeetRobot;
 import view.robot.ViewOffRoadRobot;
 import view.robot.ViewTrackedRobot;
 
+/**
+ * Cette classe est le controlleur du projet. C'est elle qui va gérer les actions de l'utilisateur et controller l'évolution du programme. 
+ * On y retrouve la fenêtre principale d'éxecution, le manager et la liste des actions effectuées. 
+ * Un boolean onSimulation permet connaitre l'état de la simulation.
+ * @author De Sousa Jérémy
+ */
 public class Controller extends MouseAdapter implements ActionListener {
 
+    
     public static boolean onSimulation = false;
     private MainFrame mainFrame;
     private Manager manager;
@@ -43,6 +50,10 @@ public class Controller extends MouseAdapter implements ActionListener {
         this.onSimulation = false;
     }
 
+    /**
+     * Fonction qui gère les actions de l'utilisateur, notamment les cliques sur les boutons de la fenêtre principale.
+     * @param e : ActionEvent
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
       
@@ -58,11 +69,11 @@ public class Controller extends MouseAdapter implements ActionListener {
             case "Back":
                 backAction();
                 break;
+       
             case "Play":
                 startSimulation();
                 break;
             case "Stop":
-                //TODO
                 stopSimulation();
                 break;
             case "Add":
@@ -77,6 +88,12 @@ public class Controller extends MouseAdapter implements ActionListener {
         }
     }
 
+    /**
+     * Fonction qui gère les cliques de l'utilisateur sur la map de simulation. Selectionne le noeud si l'utilisateur clique sur un noeud
+     *  ou créer un nouveau noeud sinon. Si un noeud est déjà selectionné, le clique sur un autre noeud créer une arrête sinon la fonction créer un nouveau noeud.
+     * Si la simulation est lancée, le clique sur les noeuds entraîne la création du robot désiré sur ce noeud.
+     * @param e : Mouse Event
+     */
     @Override
     public void mousePressed(MouseEvent e) {
         int x_point = e.getX();
@@ -110,7 +127,7 @@ public class Controller extends MouseAdapter implements ActionListener {
      *
      * @param x_point
      * @param y_point
-     * @return
+     * @return le noeud selectionné ou null
      */
     public Node clickIsInANode(int x_point, int y_point) {
         for (Node n : this.manager.getGraph().getNodes()) {
@@ -121,10 +138,16 @@ public class Controller extends MouseAdapter implements ActionListener {
         return null;
     }
 
+    /**
+     * Appel la fenêtre de dialogue pour enregistrer le graph dessiné au format XML.
+     */
     private void saveGraph() {
         XmlUtilities.writeXmlFile(this.manager.getGraph());
     }
 
+    /**
+     * Ouvre la fenêtre de dialogue pour importer un graph au format XML.Retourne une erreur si le fichier n'est pas valide.
+     */
     private void importGraph() {
         Graph graphXml = XmlUtilities.readXmlFile();
         if (graphXml != null) {
@@ -135,6 +158,9 @@ public class Controller extends MouseAdapter implements ActionListener {
         }
     }
 
+    /**
+     * Annule la dernière action réalisée par l'utilisateur lors de la création du graph (ajout d'un noeud ou d'une arrête). 
+     */
     private void backAction() {
         Node n;
         Edge e;
@@ -159,6 +185,9 @@ public class Controller extends MouseAdapter implements ActionListener {
         getMainFrame().getMap().repaint();
     }
 
+    /**
+     * Lance la simulation : instancie l'algorithme choisi et lance le thread du manager pour déplacer les robots.
+     */
     private void startSimulation() {
         IAlgo algo;
         switch(this.mainFrame.getComboAlgo().getSelectedItem().toString()){
@@ -224,7 +253,7 @@ public class Controller extends MouseAdapter implements ActionListener {
 
     /**
      * Fonction qui ajoute une arrête au graph du manager. Si l'arrête existe
-     * déjà ou a pour extrémités le même noeuds, on ne l'ajoute pas
+     * déjà ou a pour extrémités le même noeuds, on ne l'ajoute pas.
      */
     private void addEdge(Node a, Node b, TypeEdge type) {
         //Test si le noeud d'entré est le même que le noeud fils
@@ -247,7 +276,7 @@ public class Controller extends MouseAdapter implements ActionListener {
     }
 
     /**
-     * Ajoute un robot ou un feu aléatoirement sur un noeud
+     * Ajoute un robot ou un feu aléatoirement sur un noeud.
      */
     private void addRandomRobot() {
         Robot r;
@@ -258,7 +287,7 @@ public class Controller extends MouseAdapter implements ActionListener {
     }
 
     /**
-     * Ajoute un robot ou un incendie sur le noeud
+     * Ajoute un robot ou un incendie sur le noeud.
      *
      * @param n
      */
@@ -306,6 +335,9 @@ public class Controller extends MouseAdapter implements ActionListener {
         mainFrame.paintAll();
     }
 
+    /**
+     * Met en pause la simulation.
+     */
     private void stopSimulation() {
         this.onSimulation = false;
         mainFrame.getPanel1().setVisible(true);
@@ -313,6 +345,9 @@ public class Controller extends MouseAdapter implements ActionListener {
         mainFrame.paintAll();
     }
 
+    /**
+     * Réinitialise la simulation.
+     */
     private void resetSimu() {
         stopSimulation();
         this.manager.reset();

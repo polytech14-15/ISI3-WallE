@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view;
 
 import java.awt.Color;
@@ -21,8 +16,9 @@ import view.robot.ViewOffRoadRobot;
 import view.robot.ViewTrackedRobot;
 
 /**
- *
- * @author Jérémy
+ * Panel qui affiche les instructions de l'application. Dessine un graph chaque type de noeuds et d'arrêtes possibles.
+ * Dessine également tous les robots possibles.
+ * @author De Sousa Jérémy
  */
 public class InstructionsPanel extends MapPanel {
 

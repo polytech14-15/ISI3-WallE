@@ -1,5 +1,10 @@
 package model.graph;
 
+/**
+ * Classe qui représente une arrête d'un graph. L'arrête est composée d'un noeud de départ, un noeud d'arrivé, d'un type d'arrête,
+ * ainsi que d'un boolean et d'une valeur indiquant si l'arrête est innondée avec une valeur associée.
+ * @author Sayn-Urpar Marc
+ */
 public class Edge {
 
     private Node a, b;

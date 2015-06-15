@@ -17,6 +17,10 @@ import model.graph.TypeNode;
 import model.robot.Robot;
 import model.robot.RobotState;
 
+/**
+ * Classe représentant un manager. Le manager fait évoluer la simulation : déplace les robots, éteint les incendies ...
+ * @author Duret Sébastien
+ */
 public class Manager extends Observable implements Runnable {
 
     public static final int TIME_STEP_SIMU = 1000; // 1sec

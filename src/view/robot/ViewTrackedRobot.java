@@ -4,6 +4,10 @@ import java.awt.Color;
 import java.awt.Graphics;
 import model.robot.Robot;
 
+/**
+ * Classe représantant la vue d'un ViewTracked.
+ * @author De Sousa Jérémy
+ */
 public class ViewTrackedRobot extends AbstractRobot {
 
     public ViewTrackedRobot(Robot r) {

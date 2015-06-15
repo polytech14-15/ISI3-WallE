@@ -4,6 +4,10 @@ import model.graph.Edge;
 import model.graph.Node;
 import model.graph.TypeEdge;
 
+/**
+ * Classe représantant le model d'un TrackedRobot.
+ * @author Duret Sébastien
+ */
 public class TrackedRobot extends Robot {
 
     public TrackedRobot(){

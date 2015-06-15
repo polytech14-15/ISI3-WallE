@@ -1,5 +1,10 @@
 package model.graph;
 
+/**
+ * Classe qui représente un noeud d'un graph. Un noeud est composée d'un id, d'une position x,y, d'un type et d'une valeur correspondant à l'intensité de l'incendie.
+ * 
+ * @author Sayn-Urpar Marc
+ */
 public class Node {
 
     public static Integer previousId = 1;

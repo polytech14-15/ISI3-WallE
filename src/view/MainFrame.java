@@ -10,8 +10,9 @@ import java.util.Observer;
 import javax.swing.JViewport;
 
 /**
- * Fenêtre principale contenant la map pour afficher la simulation et les boutons neccessaire pour ajouter des robots, des arrêtes et des noeuds.
- * @author Jérémy
+ * Fenêtre principale contenant la map pour afficher la simulation et les boutons neccessaires pour ajouter des robots, des arrêtes et des noeuds.
+ * Elle contient le controller pour afficher le graph et les éléments nécessaires. 
+ * @author De Sousa Jérémy
  */
 public class MainFrame extends javax.swing.JFrame implements Observer {
 
@@ -21,7 +22,7 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
     /**
      * Creates new form Frame
      *
-     * @param controller
+     * @param controller : le controleur
      */
     public MainFrame(Controller controller) {
         applyTheme();
@@ -502,6 +503,9 @@ public class MainFrame extends javax.swing.JFrame implements Observer {
         this.textName = textName;
     }
 
+    /**
+     * Ajoute les boutons radio pour choisir le type de robot.
+     */
     private void completRobotType() {
         radioBtnFeet.setActionCommand(radioBtnFeet.getText());
         radioBtnOffRoad.setActionCommand(radioBtnOffRoad.getText());

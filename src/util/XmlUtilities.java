@@ -25,6 +25,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+/**
+ * Classe utilitaire qui permet d'importer et d'exporter des fichiers XML qui représentes les données d'un graph. 
+ * @author Duret Sébastien
+ */
 public final class XmlUtilities {
 
     /**

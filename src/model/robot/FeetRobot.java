@@ -3,6 +3,10 @@ package model.robot;
 import model.graph.Edge;
 import model.graph.Node;
 
+/**
+ * Classe représantant le model d'un FeetRobot.
+ * @author Duret Sébastien
+ */
 public class FeetRobot extends Robot {
 
     public FeetRobot(){

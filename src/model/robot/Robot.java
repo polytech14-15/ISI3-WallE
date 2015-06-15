@@ -2,6 +2,10 @@ package model.robot;
 
 import model.graph.*;
 
+/**
+ * Classe abstraite représantant le model d'un robot.
+ * @author Duret Sébastien
+ */
 public abstract class Robot {
     
     public static final int CAPACITY_MAX = 2;
