@@ -17,6 +17,12 @@ import model.graph.Node;
 import model.graph.TypeEdge;
 import view.robot.AbstractRobot;
 
+/**
+ * Panel qui affiche le graph et les éléments de la simulation. 
+ * On y retrouve une image de fond ainsi que le graph composé de noeuds et d'arrêtes. 
+ * Il y a également les différents robots. 
+ * @author De Sousa Jérémy
+ */
 public class MapPanel extends JPanel {
 
     //Rayon du noeud
@@ -63,6 +69,10 @@ public class MapPanel extends JPanel {
         showRobots(g);
     }
 
+    /**
+     * Affiche le graph sur le panel
+     * @param g 
+     */
     public void showGraph(Graphics g) {
         if (!this.graph.getNodes().isEmpty()) {
             for (Iterator it = this.graph.getNodes().iterator(); it.hasNext();) {
@@ -86,6 +96,11 @@ public class MapPanel extends JPanel {
 //        System.out.println(this.graph.getNodes().toString());
     }
 
+    /**
+     * Dessine le noeud qui est en paramètre.
+     * @param n
+     * @param g 
+     */
     private void drawNode(Node n, Graphics g) {
 
         Color c = Color.BLACK;
@@ -103,6 +118,10 @@ public class MapPanel extends JPanel {
         }
     }
 
+    /**
+     * Dessine le noeud qui est selectionné.
+     * @param g 
+     */
     private void drawSelectedNode(Graphics g) {
         if (selectedNode != null) {
             Color c = Color.BLUE;
@@ -114,6 +133,14 @@ public class MapPanel extends JPanel {
         }
     }
 
+    /**
+     * Dessine une ligne en pointillée.
+     * @param g
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2 
+     */
     public void drawDashedLine(Graphics g, int x1, int y1, int x2, int y2) {
 
         //creates a copy of the Graphics instance
@@ -127,6 +154,13 @@ public class MapPanel extends JPanel {
         g2d.dispose();
     }
 
+ /**
+  * Dessine une cercle.
+  * @param g
+  * @param x
+  * @param y
+  * @param radius 
+  */
     public void drawCircle(Graphics g, int x, int y, int radius) {
         int diameter = radius * 2;
         //shift x and y by the radius of the circle in order to correctly center it
@@ -134,6 +168,11 @@ public class MapPanel extends JPanel {
 
     }
 
+    /**
+     * Dessine l'arrête placée en paramètre.
+     * @param e
+     * @param g 
+     */
     private void drawEdge(Edge e, Graphics g) {
         Color c;
         //On dessine l'arrête bleu si elle est inondée
@@ -166,12 +205,20 @@ public class MapPanel extends JPanel {
         this.selectedNode = selectedNode;
     }
 
+    /**
+     * Ajoute un robot sur la vue.
+     * @param robot à ajouter
+     */
     public void addRobot(AbstractRobot robot) {
         if (getRobots() != null) {
             getRobots().add(robot);
         }
     }
 
+    /**
+     * Dessine tous les robots.
+     * @param g 
+     */
     protected void showRobots(Graphics g) {
         for (AbstractRobot robot : getRobots()) {
             if (this.graph.getNodes().contains(robot.getRobot().getCurrentNode())) {

@@ -3,6 +3,10 @@ package model.graph;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe qui représente un graph. Celui-ci est composé d'une liste de noeuds et d'une liste d'arrêtes.
+ * @author Sayn-Urpar Marc
+ */
 public class Graph {
 
     private List<Node> nodes;
@@ -21,23 +25,19 @@ public class Graph {
         return edges;
     }
 
-    /**
-     * @param nodes
-     */
+
     public void setNodes(ArrayList<Node> nodes) {
         this.nodes = nodes;
     }
 
-    /**
-     * @param edges
-     */
+
     public void setEdges(ArrayList<Edge> edges) {
         this.edges = edges;
     }
 
     /**
      * Ajoute un noeud au graph
-     * @param a 
+     * @param a : le noeud à ajouter.
      */
     public void addNode(Node a) {
         getNodes().add(a);
@@ -45,12 +45,17 @@ public class Graph {
 
     /**
      * Ajoute un arc au graph
-     * @param e 
+     * @param e  : l'arrête à ajouter.
      */
     public void addEdge(Edge e) {
         getEdges().add(e);
     }
 
+    /**
+     * Retourne le noeud contenant l'id définit en paramètre.
+     * @param id : id du noeud à récupérer.
+     * @return le noeud correspondant à l'id.
+     */
     public Node getNodeById(int id) {
         for (Node n : this.getNodes()) {
             if (n.getId() == id) {

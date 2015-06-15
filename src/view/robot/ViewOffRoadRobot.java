@@ -4,6 +4,10 @@ import java.awt.Color;
 import java.awt.Graphics;
 import model.robot.Robot;
 
+/**
+ * Classe représantant la vue d'un ViewOffRoad.
+ * @author De Sousa Jérémy
+ */
 public class ViewOffRoadRobot extends AbstractRobot {
 
     public ViewOffRoadRobot(Robot r) {

@@ -6,6 +6,10 @@ import model.graph.Graph;
 import model.graph.Node;
 import model.manager.Manager;
 
+/**
+ * Classe représantant le thread d'un Robot.
+ * @author Duret Sébastien
+ */
 public class RobotThread implements Runnable {
     
     private Robot robot;

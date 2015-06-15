@@ -17,6 +17,10 @@ import model.graph.TypeNode;
 import model.robot.Robot;
 import model.robot.RobotState;
 
+/**
+ * Classe représentant un manager. Le manager fait évoluer la simulation : déplace les robots, éteint les incendies ...
+ * @author Duret Sébastien
+ */
 public class Manager extends Observable implements Runnable {
 
     public static final int TIME_STEP_SIMU = 1000; // 1sec
@@ -111,13 +115,7 @@ public class Manager extends Observable implements Runnable {
 
         // Pour chaque entree de la mapFires
         for (Map.Entry<Node, Robot> entry : this.mapFires.entrySet()) {
-            // TODO - delete me
-            System.out.println(entry.getKey() + "--key" + "  " + entry.getValue() + "--value");
-            if (entry.getValue() != null) {
-                System.out.println("Robot: node =>" + entry.getValue().getCurrentNode() + "    --  state" + entry.getValue().getState());
-            }
-            // fin delete me
-
+            
             // Si le robot qui s'occupait du feu est dispo, cela siginifie que le feu est soit eteint 
             // ou soit que le robot ne peut plus atteindre sa destination
             if (entry.getValue() != null && entry.getValue().getState().equals(RobotState.AVAILABLE)) {
@@ -266,7 +264,7 @@ public class Manager extends Observable implements Runnable {
 
         // Initialise la mapFires
         this.initMapFires();
-        System.out.println("Je passe");
+        
         while (Controller.onSimulation) {
 
             // Si le manager peut requeter les robots

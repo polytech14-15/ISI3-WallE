@@ -7,6 +7,10 @@ import javax.swing.JComponent;
 import model.robot.Robot;
 import view.MapPanel;
 
+/**
+ * Classe abstraite représantant la vue des robots.
+ * @author De Sousa Jérémy
+ */
 public abstract class AbstractRobot extends JComponent{
 
     private Robot robot;
@@ -31,7 +35,7 @@ public abstract class AbstractRobot extends JComponent{
     }
 
     /**
-     * Dessine un traingle à coté du robot
+     * Dessine un triangle à coté du robot.
      * @param g
      * @param c 
      */
@@ -44,7 +48,7 @@ public abstract class AbstractRobot extends JComponent{
     }
 
     /**
-     * Dessine un rectangle à coté du robot
+     * Dessine un rectangle à coté du robot.
      * @param g
      * @param c 
      */
@@ -54,7 +58,7 @@ public abstract class AbstractRobot extends JComponent{
     }
     
     /**
-     * Dessine une croix à coté du robot
+     * Dessine une croix à coté du robot.
      * @param g
      * @param c 
      */

@@ -1,16 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 
 /**
- *
- * @author Jérémy
+ * Classe qui construit la fenêtre d'instruction. Elle appelle InstructionsPanel pour déssiner les noeuds, les robots, les arrêtes possibles.
+ * @author De Sousa Jérémy
  */
 public class InstructionsFrame extends javax.swing.JFrame {
 
@@ -41,7 +36,8 @@ public class InstructionsFrame extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Instruction");
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
